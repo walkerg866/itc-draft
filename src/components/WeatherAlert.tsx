@@ -1,12 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AlertTriangle, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
-interface WeatherAlertProps {
-  message?: string | null;
-}
-
-const WeatherAlert = ({ message }: WeatherAlertProps) => {
+const WeatherAlert = () => {
+  const [message, setMessage] = useState<string | null>(null);
   const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    const fetchActive = async () => {
+      const { data } = await supabase
+        .from("weather_alerts")
+        .select("message, expires_at")
+        .eq("is_active", true)
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (data && data.length > 0) {
+        const alert = data[0];
+        // Check if expired
+        if (alert.expires_at && new Date(alert.expires_at) < new Date()) {
+          setMessage(null);
+        } else {
+          setMessage(alert.message);
+        }
+      } else {
+        setMessage(null);
+      }
+    };
+
+    fetchActive();
+
+    // Realtime subscription for instant updates
+    const channel = supabase
+      .channel("public-weather-alerts")
+      .on("postgres_changes", { event: "*", schema: "public", table: "weather_alerts" }, () => {
+        fetchActive();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   if (!message || dismissed) return null;
 
