@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      downloads: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          file_path: string | null
+          file_url: string | null
+          id: string
+          name: string
+          section: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          file_path?: string | null
+          file_url?: string | null
+          id?: string
+          name: string
+          section: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          file_path?: string | null
+          file_url?: string | null
+          id?: string
+          name?: string
+          section?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       job_applications: {
         Row: {
           address: string
