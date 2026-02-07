@@ -11,6 +11,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Industries from "./pages/Industries";
 import Products from "./pages/Products";
+import Downloads from "./pages/Downloads";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
@@ -77,6 +78,7 @@ const App = () => (
                       <Route path="/" element={<Index />} />
                       <Route path="/industries" element={<Industries />} />
                       <Route path="/products" element={<Products />} />
+                      <Route path="/downloads" element={<Downloads />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/careers" element={<Careers />} />
