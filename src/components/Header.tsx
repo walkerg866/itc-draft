@@ -1,0 +1,113 @@
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const navLinks = [
+  { label: "Home", path: "/" },
+  { label: "Industries", path: "/industries" },
+  { label: "Products", path: "/products" },
+  { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
+];
+
+const Header = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  return (
+    <header className="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-steel-light/20">
+      <div className="container flex items-center justify-between h-16 md:h-20">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-heading font-extrabold text-sm md:text-base">
+                ITC
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-secondary-foreground font-heading font-extrabold text-lg md:text-xl leading-tight tracking-tight">
+                Indiana Tube
+              </span>
+              <span className="text-steel-muted text-[10px] md:text-xs tracking-wider uppercase">
+                A Steel Partners Company
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                location.pathname === link.path
+                  ? "text-primary"
+                  : "text-secondary-foreground/70 hover:text-secondary-foreground"
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            to="/contact"
+            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
+          >
+            Request a Quote
+          </Link>
+        </nav>
+
+        {/* Mobile Toggle */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="lg:hidden text-secondary-foreground p-2"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Nav */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden bg-secondary border-t border-steel-light/20 overflow-hidden"
+          >
+            <nav className="container py-4 flex flex-col gap-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileOpen(false)}
+                  className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                    location.pathname === link.path
+                      ? "text-primary bg-steel-light/20"
+                      : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <Link
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 px-5 py-3 bg-primary text-primary-foreground text-sm font-semibold rounded-md text-center"
+              >
+                Request a Quote
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
+
+export default Header;
