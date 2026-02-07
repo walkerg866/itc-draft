@@ -241,10 +241,10 @@ const Index = () => {
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>
               <a
-                href="tel:+18124243471"
+                href="tel:+18124249028"
                 className="inline-flex items-center gap-2 px-8 py-4 border border-secondary-foreground/20 text-secondary-foreground font-heading font-bold rounded-md hover:bg-secondary-foreground/10 transition-colors text-lg"
               >
-                Call (812) 424-3471
+                Call (812) 424-9028
               </a>
             </div>
           </SectionReveal>

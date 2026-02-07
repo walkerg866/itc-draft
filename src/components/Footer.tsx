@@ -86,17 +86,17 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
                 <span className="text-steel-muted text-sm">
-                  2610 S. Walnut Street<br />
-                  Evansville, IN 47713
+                  2100 Lexington Avenue<br />
+                  Evansville, IN 47720
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary shrink-0" />
                 <a
-                  href="tel:+18124243471"
+                  href="tel:+18124249028"
                   className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
                 >
-                  (812) 424-3471
+                  (812) 424-9028
                 </a>
               </li>
               <li className="flex items-center gap-3">
