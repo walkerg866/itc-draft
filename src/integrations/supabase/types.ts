@@ -14,7 +14,173 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      job_applications: {
+        Row: {
+          address: string
+          applicant_references: Json | null
+          applicant_signature: string | null
+          available_start_date: string | null
+          city: string
+          desired_pay: string | null
+          education: string | null
+          email: string
+          employment_history: Json | null
+          felony_explanation: string | null
+          felony_history: boolean | null
+          first_name: string
+          how_heard: string | null
+          id: string
+          job_listing_id: string | null
+          last_name: string
+          legally_authorized: boolean | null
+          middle_name: string | null
+          phone: string
+          position_applied: string
+          signature_date: string | null
+          skills: string | null
+          state: string
+          submitted_at: string
+          zip: string
+        }
+        Insert: {
+          address: string
+          applicant_references?: Json | null
+          applicant_signature?: string | null
+          available_start_date?: string | null
+          city: string
+          desired_pay?: string | null
+          education?: string | null
+          email: string
+          employment_history?: Json | null
+          felony_explanation?: string | null
+          felony_history?: boolean | null
+          first_name: string
+          how_heard?: string | null
+          id?: string
+          job_listing_id?: string | null
+          last_name: string
+          legally_authorized?: boolean | null
+          middle_name?: string | null
+          phone: string
+          position_applied: string
+          signature_date?: string | null
+          skills?: string | null
+          state: string
+          submitted_at?: string
+          zip: string
+        }
+        Update: {
+          address?: string
+          applicant_references?: Json | null
+          applicant_signature?: string | null
+          available_start_date?: string | null
+          city?: string
+          desired_pay?: string | null
+          education?: string | null
+          email?: string
+          employment_history?: Json | null
+          felony_explanation?: string | null
+          felony_history?: boolean | null
+          first_name?: string
+          how_heard?: string | null
+          id?: string
+          job_listing_id?: string | null
+          last_name?: string
+          legally_authorized?: boolean | null
+          middle_name?: string | null
+          phone?: string
+          position_applied?: string
+          signature_date?: string | null
+          skills?: string | null
+          state?: string
+          submitted_at?: string
+          zip?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_listing_id_fkey"
+            columns: ["job_listing_id"]
+            isOneToOne: false
+            referencedRelation: "job_listings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_listings: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          department: string | null
+          description: string
+          employment_type: string
+          id: string
+          is_active: boolean
+          location: string
+          requirements: string | null
+          shift: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          description: string
+          employment_type?: string
+          id?: string
+          is_active?: boolean
+          location?: string
+          requirements?: string | null
+          shift?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          description?: string
+          employment_type?: string
+          id?: string
+          is_active?: boolean
+          location?: string
+          requirements?: string | null
+          shift?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      weather_alerts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          duration_hours: number | null
+          expires_at: string | null
+          id: string
+          is_active: boolean
+          message: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          duration_hours?: number | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          message: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          duration_hours?: number | null
+          expires_at?: string | null
+          id?: string
+          is_active?: boolean
+          message?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
