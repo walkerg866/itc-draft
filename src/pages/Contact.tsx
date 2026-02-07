@@ -45,9 +45,9 @@ const Contact = () => {
                     <div>
                       <h4 className="font-heading font-bold mb-1">Address</h4>
                       <p className="text-muted-foreground">
-                        2610 S. Walnut Street
+                        2100 Lexington Avenue
                         <br />
-                        Evansville, IN 47713
+                        Evansville, IN 47720
                       </p>
                     </div>
                   </div>
@@ -59,10 +59,10 @@ const Contact = () => {
                     <div>
                       <h4 className="font-heading font-bold mb-1">Phone</h4>
                       <a
-                        href="tel:+18124243471"
+                        href="tel:+18124249028"
                         className="text-muted-foreground hover:text-primary transition-colors"
                       >
-                        (812) 424-3471
+                        (812) 424-9028
                       </a>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ const Contact = () => {
                 {/* Map embed placeholder */}
                 <div className="mt-10 rounded-lg overflow-hidden shadow-industrial border border-border">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3132.8!2d-87.5714!3d37.9598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU3JzM1LjMiTiA4N8KwMzQnMTcuMCJX!5e0!3m2!1sen!2sus!4v1"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3132.8!2d-87.5714!3d37.9718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU4JzE4LjUiTiA4N8KwMzQnMTcuMCJX!5e0!3m2!1sen!2sus!4v1"
                     width="100%"
                     height="250"
                     style={{ border: 0 }}
