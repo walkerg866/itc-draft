@@ -110,26 +110,19 @@ const Products = () => {
 
           {/* 2×2 Bento grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Top left — dark featured */}
+            {/* Top left — dark */}
             <SectionReveal delay={0}>
-              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] flex flex-col justify-between">
-                <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
-                  <svg viewBox="0 0 128 128" fill="none" className="w-full h-full">
-                    <circle cx="128" cy="0" r="96" stroke="hsl(var(--primary))" strokeWidth="2" />
-                    <circle cx="128" cy="0" r="64" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                    <circle cx="128" cy="0" r="32" stroke="hsl(var(--primary))" strokeWidth="1" />
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-4 block">01</span>
-                  <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-2">
+              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px]">
+                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">01</div>
+                <div className="relative z-10">
+                  <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
                     {productCategories[0].title}
                   </h3>
-                  <p className="text-primary/80 text-sm font-medium mb-5">{productCategories[0].specs}</p>
-                  <ul className="space-y-2.5">
+                  <p className="text-primary/80 text-base font-medium mb-5">{productCategories[0].specs}</p>
+                  <ul className="space-y-3">
                     {productCategories[0].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-sm">
-                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-base">
+                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -138,17 +131,17 @@ const Products = () => {
               </div>
             </SectionReveal>
 
-            {/* Top right */}
+            {/* Top right — light */}
             <SectionReveal delay={0.1}>
-              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] border border-border hover:border-primary/30 transition-colors duration-300">
-                <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">02</div>
+              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px] border border-border hover:border-primary/30 transition-colors duration-300">
+                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">02</div>
                 <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-xl lg:text-2xl mb-2 mt-8">{productCategories[1].title}</h3>
-                  <p className="text-primary text-sm font-medium mb-5">{productCategories[1].specs}</p>
-                  <ul className="space-y-2.5">
+                  <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[1].title}</h3>
+                  <p className="text-primary text-base font-medium mb-5">{productCategories[1].specs}</p>
+                  <ul className="space-y-3">
                     {productCategories[1].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
-                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-base">
+                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -158,17 +151,17 @@ const Products = () => {
               </div>
             </SectionReveal>
 
-            {/* Bottom left */}
+            {/* Bottom left — light */}
             <SectionReveal delay={0.2}>
-              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] border border-border hover:border-primary/30 transition-colors duration-300">
-                <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">03</div>
+              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px] border border-border hover:border-primary/30 transition-colors duration-300">
+                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">03</div>
                 <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-xl lg:text-2xl mb-2 mt-8">{productCategories[2].title}</h3>
-                  <p className="text-primary text-sm font-medium mb-5">{productCategories[2].specs}</p>
-                  <ul className="space-y-2.5">
+                  <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[2].title}</h3>
+                  <p className="text-primary text-base font-medium mb-5">{productCategories[2].specs}</p>
+                  <ul className="space-y-3">
                     {productCategories[2].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
-                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-base">
+                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -180,24 +173,17 @@ const Products = () => {
 
             {/* Bottom right — dark */}
             <SectionReveal delay={0.3}>
-              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px]">
-                <div className="absolute bottom-0 left-0 w-32 h-32 opacity-10">
-                  <svg viewBox="0 0 128 128" fill="none" className="w-full h-full">
-                    <circle cx="0" cy="128" r="96" stroke="hsl(var(--primary))" strokeWidth="2" />
-                    <circle cx="0" cy="128" r="64" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                    <circle cx="0" cy="128" r="32" stroke="hsl(var(--primary))" strokeWidth="1" />
-                  </svg>
-                </div>
-                <div>
-                  <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-4 block">04</span>
-                  <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-2">
+              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px]">
+                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">04</div>
+                <div className="relative z-10">
+                  <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
                     {productCategories[3].title}
                   </h3>
-                  <p className="text-primary/80 text-sm font-medium mb-5">{productCategories[3].specs}</p>
-                  <ul className="space-y-2.5">
+                  <p className="text-primary/80 text-base font-medium mb-5">{productCategories[3].specs}</p>
+                  <ul className="space-y-3">
                     {productCategories[3].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-sm">
-                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-base">
+                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
                         <span>{feature}</span>
                       </li>
                     ))}

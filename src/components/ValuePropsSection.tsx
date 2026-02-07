@@ -55,21 +55,14 @@ const ValuePropsSection = () => {
 
         {/* 2×2 Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* Featured dark card — top left */}
+          {/* Top left — dark */}
           <SectionReveal delay={0}>
-            <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[260px] flex flex-col justify-between">
-              <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
-                <svg viewBox="0 0 128 128" fill="none" className="w-full h-full">
-                  <circle cx="128" cy="0" r="96" stroke="hsl(var(--primary))" strokeWidth="2" />
-                  <circle cx="128" cy="0" r="64" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                  <circle cx="128" cy="0" r="32" stroke="hsl(var(--primary))" strokeWidth="1" />
-                </svg>
+            <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[280px] flex flex-col justify-between">
+              <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">
+                {valueProps[0].accent}
               </div>
-              <div>
-                <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-5 block">
-                  {valueProps[0].accent}
-                </span>
-                <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-3">
+              <div className="relative z-10">
+                <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-4 mt-8">
                   {valueProps[0].title}
                 </h3>
                 <p className="text-steel-muted leading-relaxed text-base lg:text-lg">
@@ -87,17 +80,17 @@ const ValuePropsSection = () => {
             </div>
           </SectionReveal>
 
-          {/* Top right */}
+          {/* Top right — light */}
           <SectionReveal delay={0.1}>
-            <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[260px] border border-border hover:border-primary/30 transition-colors duration-300">
-              <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">
+            <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[280px] border border-border hover:border-primary/30 transition-colors duration-300">
+              <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">
                 {valueProps[1].accent}
               </div>
               <div className="relative z-10">
-                <h3 className="font-heading font-bold text-xl lg:text-2xl mb-3 mt-8">
+                <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-4 mt-8">
                   {valueProps[1].title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed text-base">
+                <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">
                   {valueProps[1].description}
                 </p>
               </div>
@@ -105,17 +98,17 @@ const ValuePropsSection = () => {
             </div>
           </SectionReveal>
 
-          {/* Bottom left */}
+          {/* Bottom left — light */}
           <SectionReveal delay={0.2}>
-            <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[260px] border border-border hover:border-primary/30 transition-colors duration-300">
-              <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">
+            <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[280px] border border-border hover:border-primary/30 transition-colors duration-300">
+              <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">
                 {valueProps[2].accent}
               </div>
               <div className="relative z-10">
-                <h3 className="font-heading font-bold text-xl lg:text-2xl mb-3 mt-8">
+                <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-4 mt-8">
                   {valueProps[2].title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed text-base">
+                <p className="text-muted-foreground leading-relaxed text-base lg:text-lg">
                   {valueProps[2].description}
                 </p>
               </div>
@@ -123,21 +116,14 @@ const ValuePropsSection = () => {
             </div>
           </SectionReveal>
 
-          {/* Bottom right — dark card */}
+          {/* Bottom right — dark */}
           <SectionReveal delay={0.3}>
-            <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[260px] flex flex-col justify-between">
-              <div className="absolute bottom-0 left-0 w-32 h-32 opacity-10">
-                <svg viewBox="0 0 128 128" fill="none" className="w-full h-full">
-                  <circle cx="0" cy="128" r="96" stroke="hsl(var(--primary))" strokeWidth="2" />
-                  <circle cx="0" cy="128" r="64" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-                  <circle cx="0" cy="128" r="32" stroke="hsl(var(--primary))" strokeWidth="1" />
-                </svg>
+            <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[280px]">
+              <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">
+                {valueProps[3].accent}
               </div>
-              <div>
-                <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-5 block">
-                  {valueProps[3].accent}
-                </span>
-                <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-3">
+              <div className="relative z-10">
+                <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-4 mt-8">
                   {valueProps[3].title}
                 </h3>
                 <p className="text-steel-muted leading-relaxed text-base lg:text-lg">
