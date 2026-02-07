@@ -108,9 +108,9 @@ const Products = () => {
             </div>
           </SectionReveal>
 
-          {/* Bento grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {/* Featured card — Round Tubing */}
+          {/* 2×2 Bento grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {/* Top left — dark featured */}
             <SectionReveal delay={0}>
               <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] flex flex-col justify-between">
                 <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
@@ -121,9 +121,7 @@ const Products = () => {
                   </svg>
                 </div>
                 <div>
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="font-heading text-5xl font-extrabold text-primary/20 select-none">01</span>
-                  </div>
+                  <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-4 block">01</span>
                   <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-2">
                     {productCategories[0].title}
                   </h3>
@@ -140,66 +138,70 @@ const Products = () => {
               </div>
             </SectionReveal>
 
-            {/* Right column — stacked pair */}
-            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <SectionReveal delay={0.1}>
-                <div className="bg-card rounded-xl p-7 relative overflow-hidden group h-full border border-border hover:border-primary/30 transition-colors duration-300">
-                  <div className="absolute -top-2 -right-2 font-heading text-7xl font-extrabold text-muted/80 select-none leading-none">02</div>
-                  <div className="relative z-10">
-                    <h3 className="font-heading font-bold text-lg mb-2">{productCategories[1].title}</h3>
-                    <p className="text-primary text-sm font-medium mb-4">{productCategories[1].specs}</p>
-                    <ul className="space-y-2.5">
-                      {productCategories[1].features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
-                          <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Top right */}
+            <SectionReveal delay={0.1}>
+              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] border border-border hover:border-primary/30 transition-colors duration-300">
+                <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">02</div>
+                <div className="relative z-10">
+                  <h3 className="font-heading font-bold text-xl lg:text-2xl mb-2 mt-8">{productCategories[1].title}</h3>
+                  <p className="text-primary text-sm font-medium mb-5">{productCategories[1].specs}</p>
+                  <ul className="space-y-2.5">
+                    {productCategories[1].features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
+                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </SectionReveal>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </SectionReveal>
 
-              <SectionReveal delay={0.2}>
-                <div className="bg-card rounded-xl p-7 relative overflow-hidden group h-full border border-border hover:border-primary/30 transition-colors duration-300">
-                  <div className="absolute -top-2 -right-2 font-heading text-7xl font-extrabold text-muted/80 select-none leading-none">03</div>
-                  <div className="relative z-10">
-                    <h3 className="font-heading font-bold text-lg mb-2">{productCategories[2].title}</h3>
-                    <p className="text-primary text-sm font-medium mb-4">{productCategories[2].specs}</p>
-                    <ul className="space-y-2.5">
-                      {productCategories[2].features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
-                          <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Bottom left */}
+            <SectionReveal delay={0.2}>
+              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px] border border-border hover:border-primary/30 transition-colors duration-300">
+                <div className="absolute -top-2 -right-2 font-heading text-8xl font-extrabold text-muted/60 select-none leading-none">03</div>
+                <div className="relative z-10">
+                  <h3 className="font-heading font-bold text-xl lg:text-2xl mb-2 mt-8">{productCategories[2].title}</h3>
+                  <p className="text-primary text-sm font-medium mb-5">{productCategories[2].specs}</p>
+                  <ul className="space-y-2.5">
+                    {productCategories[2].features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
+                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </SectionReveal>
-            </div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </SectionReveal>
 
-            {/* Full-width bottom card — Specialty Tubing */}
+            {/* Bottom right — dark */}
             <SectionReveal delay={0.3}>
-              <div className="md:col-span-2 lg:col-span-3 bg-card rounded-xl p-7 lg:p-8 relative overflow-hidden group border border-border hover:border-primary/30 transition-colors duration-300">
-                <div className="flex flex-col lg:flex-row gap-6">
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="font-heading text-6xl font-extrabold text-muted/60 select-none leading-none">04</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-heading font-bold text-lg lg:text-xl mb-2">{productCategories[3].title}</h3>
-                    <p className="text-primary text-sm font-medium mb-4">{productCategories[3].specs}</p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                      {productCategories[3].features.map((feature) => (
-                        <li key={feature} className="flex items-start gap-3 text-muted-foreground text-sm">
-                          <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[320px]">
+                <div className="absolute bottom-0 left-0 w-32 h-32 opacity-10">
+                  <svg viewBox="0 0 128 128" fill="none" className="w-full h-full">
+                    <circle cx="0" cy="128" r="96" stroke="hsl(var(--primary))" strokeWidth="2" />
+                    <circle cx="0" cy="128" r="64" stroke="hsl(var(--primary))" strokeWidth="1.5" />
+                    <circle cx="0" cy="128" r="32" stroke="hsl(var(--primary))" strokeWidth="1" />
+                  </svg>
+                </div>
+                <div>
+                  <span className="font-heading text-5xl font-extrabold text-primary/20 select-none mb-4 block">04</span>
+                  <h3 className="font-heading font-bold text-xl lg:text-2xl text-secondary-foreground mb-2">
+                    {productCategories[3].title}
+                  </h3>
+                  <p className="text-primary/80 text-sm font-medium mb-5">{productCategories[3].specs}</p>
+                  <ul className="space-y-2.5">
+                    {productCategories[3].features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-sm">
+                        <Check className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
