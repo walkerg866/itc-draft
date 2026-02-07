@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Ruler, Users, Factory } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionReveal from "@/components/SectionReveal";
 import IndustryCard from "@/components/IndustryCard";
+import ValuePropsSection from "@/components/ValuePropsSection";
 
 import heroImage from "@/assets/hero-steel-tubes.jpg";
 import facilityImage from "@/assets/facility-aerial.jpg";
@@ -52,32 +53,6 @@ const stats = [
   { value: "Global", label: "Reach" },
 ];
 
-const valueProps = [
-  {
-    icon: Shield,
-    title: "Uncompromising Quality",
-    description:
-      "Every tube is high-frequency welded with the most advanced steel welding technology available, ensuring consistent performance.",
-  },
-  {
-    icon: Ruler,
-    title: "Precision Engineering",
-    description:
-      "Custom tubing solutions from .156\" to 1.75\" diameter, in both standard and metric sizes, with or without coatings.",
-  },
-  {
-    icon: Users,
-    title: "Customer-First Approach",
-    description:
-      "Deep product knowledge and dedicated service teams who understand your specific tubing requirements from first call to delivery.",
-  },
-  {
-    icon: Factory,
-    title: "Complete Solutions Provider",
-    description:
-      "From raw tubing to fabricated assemblies — coiled, cut to length, or custom-built to your exact specifications.",
-  },
-];
 
 const Index = () => {
   return (
@@ -195,43 +170,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Value Props */}
-      <section className="py-20 lg:py-28 bg-muted">
-        <div className="container">
-          <SectionReveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
-                Why ITC
-              </span>
-              <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-4">
-                The Right Choice for Steel Tubing
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                Deep expertise, exceptional service, and a relentless commitment
-                to understanding your tubing requirements.
-              </p>
-            </div>
-          </SectionReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {valueProps.map((prop, i) => (
-              <SectionReveal key={prop.title} delay={i * 0.1}>
-                <div className="bg-card rounded-lg p-8 shadow-industrial hover:shadow-xl transition-shadow duration-300">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5">
-                    <prop.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="font-heading font-bold text-xl mb-3">
-                    {prop.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {prop.description}
-                  </p>
-                </div>
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ValuePropsSection />
 
       {/* Facility / About Preview */}
       <section className="py-20 lg:py-28">
