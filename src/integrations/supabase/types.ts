@@ -187,6 +187,36 @@ export type Database = {
         }
         Relationships: []
       }
+      site_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          file_path: string | null
+          id: string
+          key: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          file_path?: string | null
+          id?: string
+          key: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          file_path?: string | null
+          id?: string
+          key?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       weather_alerts: {
         Row: {
           created_at: string
