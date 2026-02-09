@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
-import facilityImage from "@/assets/facility-aerial.jpg";
+import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
+import facilityFallback from "@/assets/facility-aerial.jpg";
 
 const milestones = [
   {
@@ -31,13 +32,15 @@ const milestones = [
 ];
 
 const About = () => {
+  const { data: images } = useSiteImages();
+
   return (
     <div>
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
-          src={facilityImage}
-          alt="Indiana Tube Corporation facility"
+          src={getImageUrl(images, "facility-aerial", facilityFallback)}
+          alt={getImageAlt(images, "facility-aerial", "Indiana Tube Corporation facility")}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
