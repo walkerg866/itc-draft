@@ -22,6 +22,7 @@ import WeatherAlertManager from "./pages/admin/WeatherAlertManager";
 import JobListingsManager from "./pages/admin/JobListingsManager";
 import ApplicationsViewer from "./pages/admin/ApplicationsViewer";
 import DownloadsManager from "./pages/admin/DownloadsManager";
+import ImagesManager from "./pages/admin/ImagesManager";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -72,6 +73,16 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <DownloadsManager />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/images"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <ImagesManager />
                   </AdminDashboard>
                 </ProtectedRoute>
               }

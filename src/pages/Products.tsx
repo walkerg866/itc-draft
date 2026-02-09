@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
-import heroImage from "@/assets/hero-steel-tubes.jpg";
+import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
+import heroFallback from "@/assets/hero-steel-tubes.jpg";
 
 const productCategories = [
   {
@@ -60,13 +61,15 @@ const specs = [
 ];
 
 const Products = () => {
+  const { data: images } = useSiteImages();
+
   return (
     <div>
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
-          src={heroImage}
-          alt="Steel tubing products"
+          src={getImageUrl(images, "hero-steel-tubes", heroFallback)}
+          alt={getImageAlt(images, "hero-steel-tubes", "Steel tubing products")}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-hero-overlay" />

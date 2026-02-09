@@ -3,7 +3,8 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import DownloadListCard from "@/components/DownloadListCard";
 import { useDownloads } from "@/hooks/useDownloads";
-import heroImage from "@/assets/hero-steel-tubes.jpg";
+import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
+import heroFallback from "@/assets/hero-steel-tubes.jpg";
 
 const SECTION_META = [
   {
@@ -40,6 +41,7 @@ const SECTION_META = [
 
 const Downloads = () => {
   const { data: downloads = [] } = useDownloads();
+  const { data: images } = useSiteImages();
 
   const sections = SECTION_META.map((meta) => ({
     ...meta,
@@ -51,7 +53,7 @@ const Downloads = () => {
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
-          src={heroImage}
+          src={getImageUrl(images, "hero-steel-tubes", heroFallback)}
           alt="Download information and resources"
           className="absolute inset-0 w-full h-full object-cover"
         />
