@@ -1,77 +1,50 @@
 
 
-# Employee News Page with Announcements, Timeline, and Did-You-Know
+# Add Google Translate Language Switcher
 
 ## Overview
 
-Create a new public "Employee News" page that repurposes the existing weather alert announcement system. The page will display active announcements at the top, a company history timeline in the middle, and a "Did You Know?" achievements section at the bottom. Navigation will be updated with a dropdown under "About" in the header and a new link in the footer.
+Add a site-wide language translation dropdown (matching the WordPress site's capability) using the free Google Translate Website Translator widget. This provides automatic full-page translation into multiple languages with zero API cost and no backend changes.
 
----
+## How It Works
 
-## Page Structure
+Google provides a free embeddable website translator that:
+- Injects a language selector dropdown onto your page
+- Translates all visible text client-side using Google Translate
+- Remembers the user's language preference via cookie
+- Supports 100+ languages (we will configure the same 6 the WordPress site uses)
 
-The new page at `/employee-news` will have three sections:
+## Implementation
 
-1. **Announcements Block** (top) -- Reads from the existing `weather_alerts` table, showing active/non-expired alerts in a styled banner block (not the site-wide dismissible bar). All current admin capabilities (post, set duration, deactivate) remain unchanged.
+### 1. New Component: `src/components/LanguageSwitcher.tsx`
 
-2. **Company History Timeline** -- A vertical timeline with hardcoded milestones (founding, expansions, certifications, etc.). Uses the site's existing bento/industrial design language with large decorative year numbers.
+A small React component that:
+- Loads the Google Translate script (`//translate.google.com/translate_a/element.js`) via a `useEffect`
+- Renders a hidden `div#google_translate_element` that Google populates with its dropdown
+- Wraps it in styled container that fits the site's dark header aesthetic
+- Uses CSS overrides to hide the Google branding bar and style the dropdown to match the site's design tokens (dark background, steel-muted text, orange accents)
 
-3. **Did You Know? Section** -- A grid of company achievement cards. Initially hardcoded; can be made database-driven later.
+### 2. Modified: `src/components/Header.tsx`
 
----
+- Import and render `LanguageSwitcher` in the desktop nav (to the left of the "Request a Quote" button)
+- Add it to the mobile nav as well (above the "Request a Quote" button)
 
-## Navigation Changes
+### 3. Modified: `index.html`
 
-### Header -- About Dropdown
-- Convert the "About" link into a dropdown menu with two items:
-  - "About Us" linking to `/about`
-  - "Employee News" linking to `/employee-news`
-- Use Radix `DropdownMenu` (already installed) with a solid background and high z-index
-- Desktop: hover/click dropdown; Mobile: both items listed inline in the mobile menu
+- Add a small `<style>` block to hide the Google Translate top banner frame (the iframe bar that Google injects at the top of the page) and remove the `body { top: ... }` override that Google applies. This keeps the site layout clean.
 
-### Footer -- Quick Links
-- Add "Employee News" to the Quick Links list in the footer
+## Languages
 
----
+Will configure the widget to offer the same languages as the current WordPress site. Typical industrial site translations include: English, Spanish, French, German, Chinese (Simplified), and Japanese.
 
-## Technical Details
+## Design Details
 
-### New Files
-- `src/pages/EmployeeNews.tsx` -- The full page component with three sections
+- The dropdown will be compact and styled to blend with the dark header
+- On mobile, it appears as a full-width selector in the hamburger menu
+- CSS overrides ensure the Google banner bar does not shift or cover the sticky header
 
-### Modified Files
-- `src/components/Header.tsx` -- Replace the static "About" nav link with a dropdown containing "About Us" and "Employee News"
-- `src/components/Footer.tsx` -- Add "Employee News" link to the Quick Links array
-- `src/App.tsx` -- Add route for `/employee-news` under the public routes
+## No Backend Changes
 
-### Announcement Section Implementation
-- Reuses the same Supabase query pattern from `WeatherAlert.tsx`: fetch active alerts from `weather_alerts` table, filter by `is_active` and expiration
-- Displayed as styled card blocks (not the thin site-wide banner), using the site's orange/steel design tokens
-- Includes realtime subscription so new admin posts appear instantly
-- If no active announcements, shows a friendly "No announcements at this time" message
-
-### No Database Changes Required
-- The `weather_alerts` table and admin manager already handle everything needed
-- The site-wide `WeatherAlert` banner component remains completely untouched and continues to function independently
-
-### Timeline Data (Hardcoded)
-Example milestones to include:
-- 1978: Indiana Tube Corporation founded in Evansville, IN
-- 1985: Expanded manufacturing capacity
-- 1995: ISO certification achieved
-- 2005: Entered Oil and Gas market
-- 2015: Joined Steel Partners family
-- 2020: Facility modernization completed
-
-### Did You Know Data (Hardcoded)
-Example achievements:
-- "ITC tubing is used in vehicles driven by millions of people every day"
-- "Our facility spans over 200,000 square feet"
-- "We serve customers across 5 major industries worldwide"
-
-### Design Approach
-- Hero section with the facility aerial image (via `useSiteImages`) matching the About page style
-- Timeline uses alternating left/right layout on desktop, single column on mobile, with large decorative year numbers per the project's style preference
-- Did You Know cards use the 2x2 bento grid pattern with large decorative numbering, consistent with the About page values grid
-- All sections wrapped in `SectionReveal` for scroll animations
+- No database tables, edge functions, or API keys required
+- This is a purely client-side solution, identical in approach to the WordPress GTranslate plugin
 
