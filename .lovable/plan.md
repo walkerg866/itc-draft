@@ -1,50 +1,26 @@
 
 
-# Add Google Translate Language Switcher
+# Add Diameter(s) and Annual Purchase Volume Fields to Request a Quote Form
 
 ## Overview
 
-Add a site-wide language translation dropdown (matching the WordPress site's capability) using the free Google Translate Website Translator widget. This provides automatic full-page translation into multiple languages with zero API cost and no backend changes.
+Add two new input fields to the contact form on the `/contact` page: "Diameter(s)" and "Annual Purchase Volume". These are informational fields to help the sales team better understand customer needs.
 
-## How It Works
+## Changes
 
-Google provides a free embeddable website translator that:
-- Injects a language selector dropdown onto your page
-- Translates all visible text client-side using Google Translate
-- Remembers the user's language preference via cookie
-- Supports 100+ languages (we will configure the same 6 the WordPress site uses)
+### Modified File: `src/pages/Contact.tsx`
 
-## Implementation
+Add two new fields between the "Industry" dropdown and the "How Can We Help?" textarea:
 
-### 1. New Component: `src/components/LanguageSwitcher.tsx`
+1. **Diameter(s)** -- A text input field where customers can specify one or more tube diameters they need (e.g., "1/2 inch, 3/4 inch"). Optional field with a helpful placeholder.
 
-A small React component that:
-- Loads the Google Translate script (`//translate.google.com/translate_a/element.js`) via a `useEffect`
-- Renders a hidden `div#google_translate_element` that Google populates with its dropdown
-- Wraps it in styled container that fits the site's dark header aesthetic
-- Uses CSS overrides to hide the Google branding bar and style the dropdown to match the site's design tokens (dark background, steel-muted text, orange accents)
+2. **Annual Purchase Volume** -- A text input field for customers to indicate their expected yearly quantity (e.g., "50,000 feet" or "10,000 units"). Optional field with a descriptive placeholder.
 
-### 2. Modified: `src/components/Header.tsx`
+Both fields will be placed in a side-by-side grid (matching the existing First/Last Name and Email/Phone layout) to keep the form compact.
 
-- Import and render `LanguageSwitcher` in the desktop nav (to the left of the "Request a Quote" button)
-- Add it to the mobile nav as well (above the "Request a Quote" button)
+### Technical Details
 
-### 3. Modified: `index.html`
-
-- Add a small `<style>` block to hide the Google Translate top banner frame (the iframe bar that Google injects at the top of the page) and remove the `body { top: ... }` override that Google applies. This keeps the site layout clean.
-
-## Languages
-
-Will configure the widget to offer the same languages as the current WordPress site. Typical industrial site translations include: English, Spanish, French, German, Chinese (Simplified), and Japanese.
-
-## Design Details
-
-- The dropdown will be compact and styled to blend with the dark header
-- On mobile, it appears as a full-width selector in the hamburger menu
-- CSS overrides ensure the Google banner bar does not shift or cover the sticky header
-
-## No Backend Changes
-
-- No database tables, edge functions, or API keys required
-- This is a purely client-side solution, identical in approach to the WordPress GTranslate plugin
+- Uses the same inline styling pattern as the existing form fields (no refactor to shadcn components)
+- Both fields are optional (no `required` attribute)
+- Placement: new row inserted after the Industry select and before the "How Can We Help?" textarea
 
