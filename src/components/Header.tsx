@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   DropdownMenu,
@@ -99,6 +100,7 @@ const Header = () => {
               </Link>
             );
           })}
+          <LanguageSwitcher />
           <Link
             to="/contact"
             className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
@@ -183,6 +185,9 @@ const Header = () => {
                   </Link>
                 );
               })}
+              <div className="px-4 py-2">
+                <LanguageSwitcher />
+              </div>
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
