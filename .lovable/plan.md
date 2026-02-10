@@ -1,90 +1,77 @@
 
 
-# Image Storage via Lovable Cloud
+# Employee News Page with Announcements, Timeline, and Did-You-Know
 
-## Why This Is the Right Approach
+## Overview
 
-You're correct that cloud storage is better than base64 for images. Here's why:
+Create a new public "Employee News" page that repurposes the existing weather alert announcement system. The page will display active announcements at the top, a company history timeline in the middle, and a "Did You Know?" achievements section at the bottom. Navigation will be updated with a dropdown under "About" in the header and a new link in the footer.
 
-- **Base64 problems**: Inflates file size by ~33%, gets embedded in JavaScript bundles (slowing initial page load), and can't be cached by the browser independently.
-- **Cloud storage benefits**: Images are served via CDN with proper caching, loaded on-demand, and easily swapped out without code changes.
+---
 
-## Current State
+## Page Structure
 
-The site has 7 images stored as static files in `src/assets/`:
+The new page at `/employee-news` will have three sections:
 
-| File | Used On |
-|------|---------|
-| `hero-steel-tubes.jpg` | Home, Products, Downloads |
-| `facility-aerial.jpg` | Home, About |
-| `industry-automotive.jpg` | Home, Industries |
-| `industry-oil-gas.jpg` | Home, Industries |
-| `industry-hvac.jpg` | Home, Industries |
-| `industry-heavy-equip.jpg` | Home, Industries |
-| `industry-structural.jpg` | Home, Industries |
+1. **Announcements Block** (top) -- Reads from the existing `weather_alerts` table, showing active/non-expired alerts in a styled banner block (not the site-wide dismissible bar). All current admin capabilities (post, set duration, deactivate) remain unchanged.
 
-These are currently bundled into the app via Vite's static import system — not base64, but still baked into the build. Moving them to cloud storage will decouple them from deployments and make them manageable by the admin.
+2. **Company History Timeline** -- A vertical timeline with hardcoded milestones (founding, expansions, certifications, etc.). Uses the site's existing bento/industrial design language with large decorative year numbers.
 
-## Implementation Plan
+3. **Did You Know? Section** -- A grid of company achievement cards. Initially hardcoded; can be made database-driven later.
 
-### Step 1: Create Storage Bucket
+---
 
-Create a public `site-images` storage bucket with policies for public read access and authenticated admin uploads.
+## Navigation Changes
 
-### Step 2: Create Database Table
+### Header -- About Dropdown
+- Convert the "About" link into a dropdown menu with two items:
+  - "About Us" linking to `/about`
+  - "Employee News" linking to `/employee-news`
+- Use Radix `DropdownMenu` (already installed) with a solid background and high z-index
+- Desktop: hover/click dropdown; Mobile: both items listed inline in the mobile menu
 
-Create a `site_images` table to map logical image keys to storage URLs:
+### Footer -- Quick Links
+- Add "Employee News" to the Quick Links list in the footer
 
-```text
-site_images
------------
-id          (uuid, primary key)
-key         (text, unique)  -- e.g. "hero-steel-tubes", "industry-automotive"
-file_path   (text)          -- path in the storage bucket
-url         (text)          -- public URL for the image
-alt_text    (text)          -- accessibility description
-created_at  (timestamptz)
-updated_at  (timestamptz)
-```
-
-RLS: Public read, authenticated write/update/delete.
-
-### Step 3: Seed With Current Images
-
-Upload the 7 existing images to the `site-images` bucket and insert rows into the `site_images` table so the site works immediately after the migration.
-
-### Step 4: Create a Hook
-
-Build a `useSiteImages` hook that fetches all image records at app startup and provides them by key. This replaces static imports with a single lightweight lookup.
-
-### Step 5: Update Pages
-
-Refactor these 5 files to use the hook instead of static imports:
-- `src/pages/Index.tsx`
-- `src/pages/Industries.tsx`
-- `src/pages/About.tsx`
-- `src/pages/Products.tsx`
-- `src/pages/Downloads.tsx`
-
-Each page will call `useSiteImages()` and reference images by key (e.g. `images["hero-steel-tubes"]`), with the current static imports kept as fallbacks during loading.
-
-### Step 6: Admin Image Manager
-
-Add an **Images** tab to the admin dashboard (`/admin/dashboard/images`) where the admin can:
-- View all site images with previews
-- Upload replacements (e.g. swap out the hero photo)
-- Update alt text
-- Add new images for future use
-
-### What Won't Change
-
-- The static files in `src/assets/` will remain as fallbacks during loading states
-- No visible change to end users — same images, same layout, just served more efficiently
+---
 
 ## Technical Details
 
-- Storage bucket: `site-images` (public)
-- Database table: `site_images` with unique `key` column
-- New files: `src/hooks/useSiteImages.ts`, `src/pages/admin/ImagesManager.tsx`
-- Modified files: `Index.tsx`, `Industries.tsx`, `About.tsx`, `Products.tsx`, `Downloads.tsx`, `AdminDashboard.tsx`, `App.tsx`
+### New Files
+- `src/pages/EmployeeNews.tsx` -- The full page component with three sections
+
+### Modified Files
+- `src/components/Header.tsx` -- Replace the static "About" nav link with a dropdown containing "About Us" and "Employee News"
+- `src/components/Footer.tsx` -- Add "Employee News" link to the Quick Links array
+- `src/App.tsx` -- Add route for `/employee-news` under the public routes
+
+### Announcement Section Implementation
+- Reuses the same Supabase query pattern from `WeatherAlert.tsx`: fetch active alerts from `weather_alerts` table, filter by `is_active` and expiration
+- Displayed as styled card blocks (not the thin site-wide banner), using the site's orange/steel design tokens
+- Includes realtime subscription so new admin posts appear instantly
+- If no active announcements, shows a friendly "No announcements at this time" message
+
+### No Database Changes Required
+- The `weather_alerts` table and admin manager already handle everything needed
+- The site-wide `WeatherAlert` banner component remains completely untouched and continues to function independently
+
+### Timeline Data (Hardcoded)
+Example milestones to include:
+- 1978: Indiana Tube Corporation founded in Evansville, IN
+- 1985: Expanded manufacturing capacity
+- 1995: ISO certification achieved
+- 2005: Entered Oil and Gas market
+- 2015: Joined Steel Partners family
+- 2020: Facility modernization completed
+
+### Did You Know Data (Hardcoded)
+Example achievements:
+- "ITC tubing is used in vehicles driven by millions of people every day"
+- "Our facility spans over 200,000 square feet"
+- "We serve customers across 5 major industries worldwide"
+
+### Design Approach
+- Hero section with the facility aerial image (via `useSiteImages`) matching the About page style
+- Timeline uses alternating left/right layout on desktop, single column on mobile, with large decorative year numbers per the project's style preference
+- Did You Know cards use the 2x2 bento grid pattern with large decorative numbering, consistent with the About page values grid
+- All sections wrapped in `SectionReveal` for scroll animations
 
