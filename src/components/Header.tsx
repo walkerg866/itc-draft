@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Industries", path: "/industries" },
   { label: "Products", path: "/products" },
   { label: "Downloads", path: "/downloads" },
-  { label: "About", path: "/about" },
   { label: "Careers", path: "/careers" },
   { label: "Contact", path: "/contact" },
 ];
@@ -41,19 +46,59 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                location.pathname === link.path
-                  ? "text-primary"
-                  : "text-secondary-foreground/70 hover:text-secondary-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            // Insert About dropdown after Downloads
+            if (link.label === "Careers") {
+              return (
+                <span key="about-dropdown-and-careers" className="contents">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className={`px-4 py-2 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
+                      location.pathname === "/about" || location.pathname === "/employee-news"
+                        ? "text-primary"
+                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                    }`}>
+                      About <ChevronDown className="h-3.5 w-3.5" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="bg-secondary border-steel-light/20 z-50" align="center">
+                      <DropdownMenuItem asChild>
+                        <Link to="/about" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                          About Us
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem asChild>
+                        <Link to="/employee-news" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                          Employee News
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  <Link
+                    to={link.path}
+                    className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                      location.pathname === link.path
+                        ? "text-primary"
+                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </span>
+              );
+            }
+            return (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                  location.pathname === link.path
+                    ? "text-primary"
+                    : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
           <Link
             to="/contact"
             className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
@@ -83,20 +128,61 @@ const Header = () => {
             className="lg:hidden bg-secondary border-t border-steel-light/20 overflow-hidden"
           >
             <nav className="container py-4 flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileOpen(false)}
-                  className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
-                    location.pathname === link.path
-                      ? "text-primary bg-steel-light/20"
-                      : "text-secondary-foreground/70 hover:text-secondary-foreground"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                if (link.label === "Careers") {
+                  return (
+                    <span key="mobile-about-and-careers" className="contents">
+                      <Link
+                        to="/about"
+                        onClick={() => setMobileOpen(false)}
+                        className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                          location.pathname === "/about"
+                            ? "text-primary bg-steel-light/20"
+                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        }`}
+                      >
+                        About Us
+                      </Link>
+                      <Link
+                        to="/employee-news"
+                        onClick={() => setMobileOpen(false)}
+                        className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                          location.pathname === "/employee-news"
+                            ? "text-primary bg-steel-light/20"
+                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        }`}
+                      >
+                        Employee News
+                      </Link>
+                      <Link
+                        to={link.path}
+                        onClick={() => setMobileOpen(false)}
+                        className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                          location.pathname === link.path
+                            ? "text-primary bg-steel-light/20"
+                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </span>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMobileOpen(false)}
+                    className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
+                      location.pathname === link.path
+                        ? "text-primary bg-steel-light/20"
+                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
               <Link
                 to="/contact"
                 onClick={() => setMobileOpen(false)}
