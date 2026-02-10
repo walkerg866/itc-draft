@@ -217,6 +217,29 @@ const Contact = () => {
                     </select>
                   </div>
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Diameter(s)
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                        placeholder='e.g. 1/2", 3/4", 1"'
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Annual Purchase Volume
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                        placeholder="e.g. 50,000 feet or 10,000 units"
+                      />
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium mb-2">
                       How Can We Help? *
