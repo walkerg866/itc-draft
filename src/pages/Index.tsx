@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
 import SectionReveal from "@/components/SectionReveal";
 import IndustryCard from "@/components/IndustryCard";
 import ValuePropsSection from "@/components/ValuePropsSection";
+import HeroSlider from "@/components/HeroSlider";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 
 // Static fallbacks
-import heroFallback from "@/assets/hero-steel-tubes.jpg";
 import facilityFallback from "@/assets/facility-aerial.jpg";
 import automotiveFallback from "@/assets/industry-automotive.jpg";
 import oilGasFallback from "@/assets/industry-oil-gas.jpg";
@@ -56,52 +55,7 @@ const Index = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        <img
-          src={getImageUrl(images, "hero-steel-tubes", heroFallback)}
-          alt={getImageAlt(images, "hero-steel-tubes", "Precision steel tubing")}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-hero-overlay" />
-
-        <div className="container relative z-10 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-2xl"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 mb-8">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-primary text-xs font-semibold uppercase tracking-widest">
-                45+ Years of Excellence
-              </span>
-            </div>
-
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-secondary-foreground leading-[1.1] mb-6">
-              Precision Steel Tubing.{" "}
-              <span className="text-gradient-orange">Engineered to Perform.</span>
-            </h1>
-
-            <p className="text-steel-muted text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
-              Indiana Tube Corporation is your complete source for high-quality,
-              induction-welded, low carbon steel tubing — trusted across five
-              major industries worldwide.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow">
-                Request a Quote <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/products" className="inline-flex items-center gap-2 px-7 py-3.5 border border-secondary-foreground/20 text-secondary-foreground font-heading font-bold rounded-md hover:bg-secondary-foreground/10 transition-colors">
-                Explore Products
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-      </section>
+      <HeroSlider />
 
       {/* Stats Bar */}
       <section className="bg-card border-b border-border">
