@@ -54,8 +54,14 @@ const Industries = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="bg-steel-gradient py-20 lg:py-28">
-        <div className="container">
+      <section className="relative py-20 lg:py-28 overflow-hidden">
+        <img
+          src={getImageUrl(images, "industry-key", "https://bzcsjbcnrxuqepdhjvym.supabase.co/storage/v1/object/public/site-images/repository/1770852517873-jwuew12an5.png")}
+          alt="Industries"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-hero-overlay" />
+        <div className="container relative z-10">
           <SectionReveal>
             <div className="max-w-2xl">
               <span className="text-primary text-sm font-bold uppercase tracking-widest">Industries</span>

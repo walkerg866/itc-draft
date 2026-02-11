@@ -68,8 +68,8 @@ const Products = () => {
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
-          src={getImageUrl(images, "hero-steel-tubes", heroFallback)}
-          alt={getImageAlt(images, "hero-steel-tubes", "Steel tubing products")}
+          src={getImageUrl(images, "product-image", "https://bzcsjbcnrxuqepdhjvym.supabase.co/storage/v1/object/public/site-images/repository/1770852586056-qeq1wk5h2fh.png")}
+          alt={getImageAlt(images, "product-image", "Steel tubing products")}
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
