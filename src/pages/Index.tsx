@@ -1,18 +1,13 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
-import IndustryCard from "@/components/IndustryCard";
 import ValuePropsSection from "@/components/ValuePropsSection";
 import HeroSlider from "@/components/HeroSlider";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
+import { useSiteVideos, getVideoUrl } from "@/hooks/useSiteVideos";
 
 // Static fallbacks
 import facilityFallback from "@/assets/facility-aerial.jpg";
-import automotiveFallback from "@/assets/industry-automotive.jpg";
-import oilGasFallback from "@/assets/industry-oil-gas.jpg";
-import hvacFallback from "@/assets/industry-hvac.jpg";
-import heavyEquipFallback from "@/assets/industry-heavy-equip.jpg";
-import structuralFallback from "@/assets/industry-structural.jpg";
 
 const stats = [
   { value: "45+", label: "Years of Excellence" },
@@ -23,34 +18,8 @@ const stats = [
 
 const Index = () => {
   const { data: images } = useSiteImages();
-
-  const industries = [
-    {
-      title: "Automotive & Transportation",
-      description: "Coiled, cut-to-length, and fabricated assemblies delivering exceptional value for fluid-carrying and structural applications.",
-      image: getImageUrl(images, "industry-automotive", automotiveFallback),
-    },
-    {
-      title: "Oil & Gas — Energy Services",
-      description: "Precision tubing manufactured to meet rigorous industry standards and the most demanding downhole and surface applications.",
-      image: getImageUrl(images, "industry-oil-gas", oilGasFallback),
-    },
-    {
-      title: "HVAC & Appliance",
-      description: "Clean, high-quality tubing compatible with R134a and modern refrigerants for heating, cooling, and appliance systems.",
-      image: getImageUrl(images, "industry-hvac", hvacFallback),
-    },
-    {
-      title: "Heavy Equipment & Hydraulics",
-      description: "High-pressure, induction-welded tubing built to perform in the most demanding hydraulic and heavy equipment environments.",
-      image: getImageUrl(images, "industry-heavy-equip", heavyEquipFallback),
-    },
-    {
-      title: "Hardware & Structural",
-      description: "Reliable structural tubing for lawn & garden, furniture, and general fabrication with consistent quality every time.",
-      image: getImageUrl(images, "industry-structural", structuralFallback),
-    },
-  ];
+  const { data: videos } = useSiteVideos();
+  const homepageVideoUrl = getVideoUrl(videos, "homepage-video");
 
   return (
     <div>
@@ -73,33 +42,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Industries Section */}
-      <section className="py-20 lg:py-28">
-        <div className="container">
-          <SectionReveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">Industries We Serve</span>
-              <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-4">Tubing Solutions for Every Challenge</h2>
-              <p className="text-muted-foreground text-lg">From automotive fuel lines to oil field operations, ITC tubing performs where it matters most.</p>
-            </div>
-          </SectionReveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.slice(0, 3).map((industry, i) => (
-              <SectionReveal key={industry.title} delay={i * 0.1}>
-                <IndustryCard {...industry} />
-              </SectionReveal>
-            ))}
+      {/* Video Section */}
+      {homepageVideoUrl && (
+        <section className="py-20 lg:py-28">
+          <div className="container max-w-4xl">
+            <SectionReveal>
+              <div className="text-center mb-10">
+                <span className="text-primary text-sm font-bold uppercase tracking-widest">See ITC in Action</span>
+              </div>
+              <div className="rounded-lg overflow-hidden shadow-industrial">
+                <video
+                  src={homepageVideoUrl}
+                  controls
+                  className="w-full aspect-video bg-black"
+                  preload="metadata"
+                />
+              </div>
+            </SectionReveal>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 max-w-2xl mx-auto lg:max-w-none lg:grid-cols-2">
-            {industries.slice(3).map((industry, i) => (
-              <SectionReveal key={industry.title} delay={(i + 3) * 0.1}>
-                <IndustryCard {...industry} />
-              </SectionReveal>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <ValuePropsSection />
 

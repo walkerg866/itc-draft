@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { CloudLightning, Briefcase, FileText, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal } from "lucide-react";
+import { CloudLightning, Briefcase, FileText, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { label: "Images", path: "/admin/dashboard/images", icon: Image },
   { label: "Image Repository", path: "/admin/dashboard/image-repository", icon: FileImage },
   { label: "Hero Slides", path: "/admin/dashboard/hero-slides", icon: SlidersHorizontal },
+  { label: "Videos", path: "/admin/dashboard/videos", icon: Video },
 ];
 
 const AdminDashboard = ({ children }: { children: React.ReactNode }) => {

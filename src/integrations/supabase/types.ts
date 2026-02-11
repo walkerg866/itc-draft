@@ -286,6 +286,36 @@ export type Database = {
         }
         Relationships: []
       }
+      site_videos: {
+        Row: {
+          created_at: string
+          file_path: string | null
+          id: string
+          key: string
+          name: string
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          file_path?: string | null
+          id?: string
+          key: string
+          name: string
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          file_path?: string | null
+          id?: string
+          key?: string
+          name?: string
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       weather_alerts: {
         Row: {
           created_at: string
