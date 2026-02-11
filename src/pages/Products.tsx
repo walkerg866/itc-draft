@@ -1,63 +1,95 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import heroFallback from "@/assets/hero-steel-tubes.jpg";
 
-const productCategories = [
+const productData = [
   {
-    title: "Round Tubing",
-    specs: "OD: .156\" to 1.75\" | Wall: .028\" to .134\"",
+    title: "Steel Types & Capabilities",
+    imageKey: "product-steel-types",
+    description:
+      "Indiana Tube uses the highest-quality low-carbon steel that meets our proprietary specification. Our steel tubing products are manufactured to tolerances which are more than twice as tight as the industry standards, making us the ideal choice for customers with the most exacting requirements for the most demanding applications.",
     features: [
-      "Single wall, induction welded",
-      "Low carbon steel (SAE 1008–1010)",
-      "Standard and metric sizes",
-      "Available with or without coatings",
-      "Cut to length or coiled",
+      "Low Carbon Grades (CS, DS, DDS, EDDS, HSLA, XF, DP)",
+      "HSLA Grades (50, 60, 70 & 80)",
+      "A606 Type 4 Grade 70/80",
+      "Coatings (Copper, Nickel, Aluminized)",
     ],
   },
   {
-    title: "Coated Tubing",
-    specs: "Zinc, copper, tin, and polymer coatings",
+    title: "CT Spooled Tube",
+    imageKey: "product-ct-spooled",
+    description:
+      "Indiana Tube manufactures coiled tubing up to 1.75\" diameter with premium A606 carbon steel to provide extended fatigue life for well applications.",
     features: [
-      "Corrosion protection",
-      "Enhanced brazeability",
-      "Improved appearance",
-      "Multiple coating thicknesses",
-      "Custom coating solutions",
+      "Premium A606 steel",
+      "Extended fatigue life",
+      "Up to 1.75\" diameter",
     ],
   },
   {
-    title: "Fabricated Assemblies",
-    specs: "Custom bend, cut, flare, and end-forming",
+    title: "Precision & Random Cut Length Tubing",
+    imageKey: "product-cut-length",
+    description:
+      "Indiana Tube provides solutions for mill direct cut length, random cut lengths, and precision cut lengths.",
     features: [
-      "Multi-bend configurations",
-      "End forming and flaring",
-      "Bracket and fitting assembly",
-      "Pressure tested",
-      "Ready-to-install solutions",
+      "Mill direct cut length",
+      "Random cut lengths",
+      "Precision cut lengths",
+      "Square cut & brush deburr",
+      "Gauge pin testing",
     ],
   },
   {
-    title: "Specialty Tubing",
-    specs: "Application-specific solutions",
+    title: "Coiled Tubing",
+    imageKey: "product-coiled",
+    description:
+      "Indiana Tube manufactures the longest small diameter coiled tube in the industry utilizing our custom level wound coiling process. Our product quality, weld seam control, and on time delivery is unmatched in our industry.",
     features: [
-      "High-pressure tubing",
-      "Capillary tubing",
-      "Double wall tubing",
-      "Bundy tubing",
-      "Custom OD/wall combinations",
+      "Level wound coiling",
+      "Eddy current testing",
+      "Burst pressure testing",
+      "Copper flash & nickel coatings",
+      "Annealed & un-annealed",
     ],
   },
-];
-
-const specs = [
-  { label: "Material", value: "Low Carbon Steel (SAE 1008–1010)" },
-  { label: "OD Range", value: ".156\" to 1.75\"" },
-  { label: "Wall Thickness", value: ".028\" to .134\"" },
-  { label: "Lengths", value: "Cut to length or coiled" },
-  { label: "Welding", value: "High frequency induction" },
-  { label: "Sizes", value: "Standard & Metric" },
+  {
+    title: "Galfan & Other Enhancement Coatings",
+    imageKey: "product-galfan",
+    description:
+      "Indiana Tube offers a variety of corrosion resistant and performance enhanced tube coatings. Our premier Galfan coated tubing is a proven cost-effective long-term corrosion resistance solution as compared to high-cost tubing manufactured with copper, stainless steel, or aluminum. Our Galfan coating is continuously tested beyond 4,000 hours.",
+    features: [
+      "Galfan coating",
+      "4,000+ hours corrosion testing",
+      "Cost-effective alternative",
+      "Performance enhanced coatings",
+    ],
+  },
+  {
+    title: "Welded Stainless Steel Tubing",
+    imageKey: "product-stainless",
+    description:
+      "Indiana Tube offers a wide range of small diameter Welded and Sync Drawn Stainless Steel tubing in Titanium, and Nickel Alloy Pressure Tubing for Oil & Gas, Automotive, Power Gen, Pharmaceutical, Medical, Food & Beverage, Commercial Refrigeration, and Chemical Processing.",
+    features: [
+      "Welded & drawn",
+      "Titanium & Nickel alloy",
+      "X-ray testing",
+      "Custom packaging",
+      "Cost-effective alternative to seamless",
+    ],
+  },
+  {
+    title: "Stocking Program",
+    imageKey: "product-stocking",
+    description:
+      "We understand the urgent nature of JIT business change. Indiana Tube offers stocking programs specifically designed to help high volume customers respond quickly to day-to-day OEM demand change.",
+    features: [
+      "JIT inventory",
+      "High volume programs",
+      "Quick response to demand changes",
+    ],
+  },
 ];
 
 const Products = () => {
@@ -93,145 +125,52 @@ const Products = () => {
         </div>
       </section>
 
-      {/* Product Categories */}
+      {/* Product Sections */}
       <section className="py-20 lg:py-28">
-        <div className="container">
-          <SectionReveal>
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
-                Product Lines
-              </span>
-              <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-4">
-                Complete Tubing Solutions
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                From raw tubing to finished assemblies, we deliver exactly what
-                your application demands.
-              </p>
-            </div>
-          </SectionReveal>
-
-          {/* 2×2 Bento grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Top left — dark */}
-            <SectionReveal delay={0}>
-              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px]">
-                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">01</div>
-                <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
-                    {productCategories[0].title}
-                  </h3>
-                   <p className="text-primary/80 text-lg font-medium mb-5">{productCategories[0].specs}</p>
-                   <ul className="space-y-3">
-                     {productCategories[0].features.map((feature) => (
-                       <li key={feature} className="flex items-start gap-3 text-steel-muted text-lg">
-                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
-                         <span>{feature}</span>
-                       </li>
-                     ))}
-                  </ul>
-                </div>
-              </div>
-            </SectionReveal>
-
-            {/* Top right — light */}
-            <SectionReveal delay={0.1}>
-              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px] border border-border hover:border-primary/30 transition-colors duration-300">
-                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">02</div>
-                <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[1].title}</h3>
-                   <p className="text-primary text-lg font-medium mb-5">{productCategories[1].specs}</p>
-                   <ul className="space-y-3">
-                     {productCategories[1].features.map((feature) => (
-                       <li key={feature} className="flex items-start gap-3 text-muted-foreground text-lg">
-                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
-                         <span>{feature}</span>
-                       </li>
-                     ))}
-                  </ul>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </SectionReveal>
-
-            {/* Bottom left — light */}
-            <SectionReveal delay={0.2}>
-              <div className="bg-card rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px] border border-border hover:border-primary/30 transition-colors duration-300">
-                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">03</div>
-                <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[2].title}</h3>
-                   <p className="text-primary text-lg font-medium mb-5">{productCategories[2].specs}</p>
-                   <ul className="space-y-3">
-                     {productCategories[2].features.map((feature) => (
-                       <li key={feature} className="flex items-start gap-3 text-muted-foreground text-lg">
-                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
-                         <span>{feature}</span>
-                       </li>
-                     ))}
-                  </ul>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </SectionReveal>
-
-            {/* Bottom right — dark */}
-            <SectionReveal delay={0.3}>
-              <div className="bg-steel-gradient rounded-xl p-8 lg:p-10 relative overflow-hidden group h-full min-h-[340px]">
-                <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-primary/15 select-none leading-none">04</div>
-                <div className="relative z-10">
-                  <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
-                    {productCategories[3].title}
-                  </h3>
-                   <p className="text-primary/80 text-lg font-medium mb-5">{productCategories[3].specs}</p>
-                   <ul className="space-y-3">
-                     {productCategories[3].features.map((feature) => (
-                       <li key={feature} className="flex items-start gap-3 text-steel-muted text-lg">
-                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
-                         <span>{feature}</span>
-                       </li>
-                     ))}
-                  </ul>
-                </div>
-                <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </SectionReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Specs Table */}
-      <section className="py-20 lg:py-28 bg-muted">
-        <div className="container">
-          <SectionReveal>
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-12">
-                <span className="text-primary text-sm font-bold uppercase tracking-widest">
-                  Specifications
-                </span>
-                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3">
-                  General Capabilities
-                </h2>
-              </div>
-
-              <div className="bg-card rounded-lg shadow-industrial overflow-hidden border border-border">
-                {specs.map((spec, i) => (
-                  <div
-                    key={spec.label}
-                    className={`flex items-center justify-between px-8 py-5 ${
-                      i < specs.length - 1 ? "border-b border-border" : ""
-                    }`}
-                  >
-                    <span className="font-heading font-bold text-sm text-muted-foreground uppercase tracking-wide">
-                      {spec.label}
-                    </span>
-                    <span className="font-medium text-foreground">
-                      {spec.value}
-                    </span>
+        <div className="container space-y-24">
+          {productData.map((product, i) => (
+            <SectionReveal key={product.title}>
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center`}>
+                <div className={i % 2 === 1 ? "lg:order-2" : ""}>
+                  <div className="relative rounded-lg overflow-hidden shadow-industrial bg-white">
+                    <img
+                      src={getImageUrl(images, product.imageKey, heroFallback)}
+                      alt={getImageAlt(images, product.imageKey, product.title)}
+                      className="w-full aspect-[4/3] object-contain"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent" />
                   </div>
-                ))}
+                </div>
+
+                <div className={i % 2 === 1 ? "lg:order-1" : ""}>
+                  <h2 className="font-heading font-extrabold text-2xl lg:text-3xl mb-4">
+                    {product.title}
+                  </h2>
+                  <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                    {product.description}
+                  </p>
+                  <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                    Key Features
+                  </h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                    {product.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-muted-foreground">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
+                  >
+                    Request a Quote <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </SectionReveal>
+            </SectionReveal>
+          ))}
         </div>
       </section>
 
