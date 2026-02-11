@@ -30,7 +30,7 @@ const industryData = [
     fallback: hvacFallback,
     description: "ITC produces clean, high-quality tubing compatible with R134a and modern refrigerants, suitable for fabrication in the appliance and heating element industries.",
     applications: ["Refrigeration lines", "Heating elements", "Condenser tubing", "Evaporator tubing", "Appliance components"],
-    objectFit: "contain" as const,
+    
   },
   {
     title: "Heavy Equipment — Hydraulic & High Pressure",
@@ -77,11 +77,11 @@ const Industries = () => {
             <SectionReveal key={industry.title}>
               <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "lg:direction-rtl" : ""}`}>
                 <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                  <div className={`relative rounded-lg overflow-hidden shadow-industrial ${industry.objectFit === "contain" ? "bg-secondary" : ""}`}>
+                  <div className="relative rounded-lg overflow-hidden shadow-industrial bg-white">
                     <img
                       src={getImageUrl(images, industry.imageKey, industry.fallback)}
                       alt={industry.title}
-                      className={`w-full aspect-[4/3] ${industry.objectFit === "contain" ? "object-contain p-4" : "object-cover"}`}
+                      className="w-full aspect-[4/3] object-contain"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent" />
