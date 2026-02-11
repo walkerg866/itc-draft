@@ -47,7 +47,7 @@ const Index = () => {
         <section className="bg-steel-gradient py-6">
           <div className="container max-w-4xl">
             <SectionReveal>
-              <div className="rounded-lg overflow-hidden shadow-industrial border border-white/10">
+              <div className="rounded-lg overflow-hidden shadow-orange-glow border border-white/10">
                 <video
                   src={homepageVideoUrl}
                   controls
