@@ -50,6 +50,75 @@ export type Database = {
         }
         Relationships: []
       }
+      hero_slides: {
+        Row: {
+          created_at: string
+          cta_link: string | null
+          cta_text: string | null
+          headline: string
+          id: string
+          image_url: string
+          is_active: boolean
+          sort_order: number
+          subtitle: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          headline: string
+          id?: string
+          image_url: string
+          is_active?: boolean
+          sort_order?: number
+          subtitle?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cta_link?: string | null
+          cta_text?: string | null
+          headline?: string
+          id?: string
+          image_url?: string
+          is_active?: boolean
+          sort_order?: number
+          subtitle?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      image_repository: {
+        Row: {
+          alt_text: string | null
+          created_at: string
+          file_path: string
+          id: string
+          name: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string
+          file_path: string
+          id?: string
+          name: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string
+          file_path?: string
+          id?: string
+          name?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       job_applications: {
         Row: {
           address: string

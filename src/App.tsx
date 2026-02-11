@@ -24,6 +24,8 @@ import JobListingsManager from "./pages/admin/JobListingsManager";
 import ApplicationsViewer from "./pages/admin/ApplicationsViewer";
 import DownloadsManager from "./pages/admin/DownloadsManager";
 import ImagesManager from "./pages/admin/ImagesManager";
+import ImageRepositoryManager from "./pages/admin/ImageRepositoryManager";
+import HeroSlidesManager from "./pages/admin/HeroSlidesManager";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -84,6 +86,26 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <ImagesManager />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/image-repository"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <ImageRepositoryManager />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/hero-slides"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <HeroSlidesManager />
                   </AdminDashboard>
                 </ProtectedRoute>
               }
