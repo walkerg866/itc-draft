@@ -60,7 +60,7 @@ const HeroSlider = () => {
               Precision Steel Tubing.{" "}
               <span className="text-gradient-orange">Engineered to Perform.</span>
             </h1>
-            <p className="text-steel-muted text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
+            <p className="text-white/90 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
               Indiana Tube Corporation is your complete source for high-quality, induction-welded, low carbon steel tubing.
             </p>
             <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow">
@@ -113,7 +113,7 @@ const HeroSlider = () => {
             </h1>
 
             {slide.subtitle && (
-              <p className="text-steel-muted text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
+              <p className="text-white/90 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
                 {slide.subtitle}
               </p>
             )}
