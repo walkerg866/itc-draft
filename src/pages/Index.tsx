@@ -13,7 +13,7 @@ const stats = [
   { value: "45+", label: "Years of Excellence" },
   { value: ".156\"–1.75\"", label: "Diameter Range" },
   { value: "5", label: "Key Industries" },
-  { value: "Global", label: "Reach" },
+  { value: "5", label: "Continents Worldwide" },
 ];
 
 const Index = () => {
