@@ -121,14 +121,14 @@ const Products = () => {
                   <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
                     {productCategories[0].title}
                   </h3>
-                  <p className="text-primary/80 text-base font-medium mb-5">{productCategories[0].specs}</p>
-                  <ul className="space-y-3">
-                    {productCategories[0].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-base">
-                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                   <p className="text-primary/80 text-lg font-medium mb-5">{productCategories[0].specs}</p>
+                   <ul className="space-y-3">
+                     {productCategories[0].features.map((feature) => (
+                       <li key={feature} className="flex items-start gap-3 text-steel-muted text-lg">
+                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
+                         <span>{feature}</span>
+                       </li>
+                     ))}
                   </ul>
                 </div>
               </div>
@@ -140,14 +140,14 @@ const Products = () => {
                 <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">02</div>
                 <div className="relative z-10">
                   <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[1].title}</h3>
-                  <p className="text-primary text-base font-medium mb-5">{productCategories[1].specs}</p>
-                  <ul className="space-y-3">
-                    {productCategories[1].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-base">
-                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                   <p className="text-primary text-lg font-medium mb-5">{productCategories[1].specs}</p>
+                   <ul className="space-y-3">
+                     {productCategories[1].features.map((feature) => (
+                       <li key={feature} className="flex items-start gap-3 text-muted-foreground text-lg">
+                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
+                         <span>{feature}</span>
+                       </li>
+                     ))}
                   </ul>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -160,14 +160,14 @@ const Products = () => {
                 <div className="absolute -top-3 -right-3 font-heading text-8xl lg:text-9xl font-extrabold text-muted/60 select-none leading-none">03</div>
                 <div className="relative z-10">
                   <h3 className="font-heading font-bold text-2xl lg:text-3xl mb-2 mt-8">{productCategories[2].title}</h3>
-                  <p className="text-primary text-base font-medium mb-5">{productCategories[2].specs}</p>
-                  <ul className="space-y-3">
-                    {productCategories[2].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-muted-foreground text-base">
-                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                   <p className="text-primary text-lg font-medium mb-5">{productCategories[2].specs}</p>
+                   <ul className="space-y-3">
+                     {productCategories[2].features.map((feature) => (
+                       <li key={feature} className="flex items-start gap-3 text-muted-foreground text-lg">
+                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
+                         <span>{feature}</span>
+                       </li>
+                     ))}
                   </ul>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary/0 via-primary/40 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -182,14 +182,14 @@ const Products = () => {
                   <h3 className="font-heading font-bold text-2xl lg:text-3xl text-secondary-foreground mb-2 mt-8">
                     {productCategories[3].title}
                   </h3>
-                  <p className="text-primary/80 text-base font-medium mb-5">{productCategories[3].specs}</p>
-                  <ul className="space-y-3">
-                    {productCategories[3].features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-steel-muted text-base">
-                        <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
+                   <p className="text-primary/80 text-lg font-medium mb-5">{productCategories[3].specs}</p>
+                   <ul className="space-y-3">
+                     {productCategories[3].features.map((feature) => (
+                       <li key={feature} className="flex items-start gap-3 text-steel-muted text-lg">
+                         <Check className="h-5 w-5 text-primary mt-1 shrink-0" />
+                         <span>{feature}</span>
+                       </li>
+                     ))}
                   </ul>
                 </div>
                 <div className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary/0 via-primary/50 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
