@@ -1,105 +1,73 @@
 
 
-# Image Repository and Hero Slider
+# Homepage Video Section
 
 ## Overview
 
-Two features: (1) an image repository system so you can upload and store any number of images from the admin dashboard for future use anywhere on the site, and (2) a five-panel auto-rotating hero slider on the homepage where each slide has a background image and editable overlay copy (headline + subtitle + CTA).
+Replace the five industry cards section on the homepage with a single video player. You will be able to upload a video file through the admin dashboard and manage it from there. The video will display prominently on the homepage with a clean, centered layout.
 
 ---
 
-## Part 1: Image Repository
+## Video Storage
 
-### Current Limitation
-The existing `site_images` table only holds images with predefined keys (like `hero-steel-tubes`, `facility-aerial`). You cannot freely upload new images -- only replace existing ones.
-
-### Solution: New `image_repository` Table
-A new database table to store an unlimited number of uploaded images with metadata:
+A new database table `site_videos` will store a reference to the uploaded video:
 
 - `id` (UUID, primary key)
-- `name` (text) -- a friendly label you give each image
+- `key` (text, unique) -- logical identifier, e.g. "homepage-video"
+- `name` (text) -- friendly label
 - `file_path` (text) -- path in the `site-images` storage bucket
 - `url` (text) -- public URL
-- `alt_text` (text, nullable)
 - `created_at` / `updated_at` (timestamps)
 
-RLS policies: public SELECT (so the frontend can display them), authenticated-only INSERT/UPDATE/DELETE (admin only).
+RLS: public SELECT, authenticated-only INSERT/UPDATE/DELETE.
 
-### New Admin Page: Image Repository Manager (`src/pages/admin/ImageRepositoryManager.tsx`)
-- "Upload Image" button opens a dialog to pick a file and give it a name
-- Grid view of all uploaded images with thumbnails
-- Edit name/alt text inline
-- Delete images (removes from storage bucket and database)
-- Separate from the existing "Site Images" manager which stays for the predefined image slots
-
-### Navigation Update
-- Add "Image Repository" as a new item in the admin sidebar (`src/pages/AdminDashboard.tsx`)
-- New route `/admin/dashboard/image-repository` in `src/App.tsx`
+Only one video is needed right now (keyed as `homepage-video`), but the table supports adding more in the future.
 
 ---
 
-## Part 2: Five-Panel Hero Slider
+## Admin: Video Manager
 
-### New `hero_slides` Table
-Stores the five hero slides with admin-editable content:
+A new admin page at `/admin/dashboard/videos` will let you:
 
-- `id` (UUID, primary key)
-- `sort_order` (integer) -- 1 through 5
-- `image_url` (text) -- URL of the background image (can be picked from the image repository or uploaded directly)
-- `headline` (text) -- main heading displayed over the image
-- `subtitle` (text, nullable) -- secondary text below the headline
-- `cta_text` (text, nullable) -- button label (e.g., "Request a Quote")
-- `cta_link` (text, nullable) -- button destination (e.g., "/contact")
-- `is_active` (boolean, default true)
-- `created_at` / `updated_at` (timestamps)
+- Upload a video file (MP4 recommended, stored in the existing `site-images` bucket)
+- See the current homepage video with a preview player
+- Replace or delete the video
+- Simple, single-purpose interface -- no complex grid needed since there is just one video slot for now
 
-RLS: public SELECT, authenticated INSERT/UPDATE/DELETE.
+A new sidebar link "Videos" will be added to the admin dashboard.
 
-Pre-seed with 5 default slides so the hero works immediately.
+---
 
-### Homepage Hero Rewrite (`src/pages/Index.tsx`)
-- Replace the single static hero image with a five-panel slider using Embla Carousel (already installed)
-- Each slide is full-bleed with the background image, a dark gradient overlay, and the headline/subtitle/CTA text positioned on top
-- Auto-advances every 6 seconds with a pause on hover
-- Navigation dots at the bottom to indicate which slide is active and allow manual selection
-- Smooth crossfade or slide transition using Framer Motion (already installed)
-- Falls back to the current static hero if no slides are returned from the database
+## Homepage Changes
 
-### Hero Slides Admin Manager (`src/pages/admin/HeroSlidesManager.tsx`)
-- List all 5 slides in order with image preview and copy fields
-- Upload/replace background image for each slide (uploads to `site-images` bucket)
-- Edit headline, subtitle, CTA text, and CTA link inline
-- Toggle slides active/inactive
-- Drag or arrow buttons to reorder slides
+The "Industries We Serve" section (lines 76-102 in `Index.tsx`) -- containing the heading, subheading, and five industry cards -- will be **replaced** with a video section:
 
-### Admin Navigation
-- Add "Hero Slides" to the admin sidebar
-- New route `/admin/dashboard/hero-slides` in `src/App.tsx`
+- Centered container with a 16:9 aspect ratio video player
+- Uses the native HTML `<video>` tag with controls (play/pause, volume, fullscreen)
+- Optional section heading above the video (e.g. "See ITC in Action")
+- Rounded corners and a subtle shadow to match the site's visual style
+- If no video has been uploaded yet, the section is hidden entirely
+- Responsive: scales cleanly on mobile
+
+The industry card imports and data will be removed from the page since they are no longer used.
 
 ---
 
 ## Technical Details
 
-### Database Migration (single migration)
-1. Create `image_repository` table with columns described above
-2. Create `hero_slides` table with columns described above
-3. Add RLS policies for both tables (public read, authenticated write)
-4. Seed `hero_slides` with 5 default rows using the existing hero image and placeholder copy
+### Database Migration
+1. Create `site_videos` table with the columns listed above
+2. Add RLS policies (public read, authenticated write)
 
 ### New Files
-- `src/pages/admin/ImageRepositoryManager.tsx` -- upload/manage image library
-- `src/pages/admin/HeroSlidesManager.tsx` -- manage the 5 hero slides
-- `src/components/HeroSlider.tsx` -- the carousel component used on the homepage
+- `src/pages/admin/VideosManager.tsx` -- upload/replace the homepage video
+- `src/hooks/useSiteVideos.ts` -- query hook to fetch videos by key
 
 ### Modified Files
-- `src/pages/Index.tsx` -- replace static hero with `<HeroSlider />`
-- `src/pages/AdminDashboard.tsx` -- add two new sidebar items (Image Repository, Hero Slides)
-- `src/App.tsx` -- add two new admin routes
+- `src/pages/Index.tsx` -- remove industry cards section, add video section
+- `src/pages/AdminDashboard.tsx` -- add "Videos" sidebar link
+- `src/App.tsx` -- add `/admin/dashboard/videos` route
 
-### Design Approach
-- Hero slider maintains the current dark overlay + left-aligned copy layout
-- Each slide can have unique headline text, subtitle, and optional CTA button
-- Dot indicators styled with the site's orange primary color for the active dot
-- Transitions are smooth with a slight zoom effect on the background image for visual interest
-- Fully responsive: text scales down on mobile, dots remain accessible
+### Cleanup
+- The `IndustryCard` component and industry-specific image imports in `Index.tsx` will be removed from the homepage (the component file itself can stay in case it is used on the Industries page)
 
