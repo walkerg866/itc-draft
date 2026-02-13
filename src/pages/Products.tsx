@@ -115,7 +115,7 @@ const Products = () => {
                 Precision Tubing{" "}
                 <span className="text-gradient-orange">Your Way</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 Indiana Tube is a solution provider for a wide range of precision
                 custom tubing products. We produce tubing from .156" to 1.75"
                 diameter, in both standard and metric sizes.
