@@ -27,6 +27,7 @@ import ImagesManager from "./pages/admin/ImagesManager";
 import ImageRepositoryManager from "./pages/admin/ImageRepositoryManager";
 import HeroSlidesManager from "./pages/admin/HeroSlidesManager";
 import VideosManager from "./pages/admin/VideosManager";
+import UserManagement from "./pages/admin/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -117,6 +118,16 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <VideosManager />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/users"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <UserManagement />
                   </AdminDashboard>
                 </ProtectedRoute>
               }

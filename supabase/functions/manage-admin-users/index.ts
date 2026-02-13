@@ -1,0 +1,215 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
+};
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+  const adminClient = createClient(supabaseUrl, serviceRoleKey);
+
+  // Verify caller is authenticated
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  const anonKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY")!;
+  const userClient = createClient(supabaseUrl, anonKey, {
+    global: { headers: { Authorization: authHeader } },
+  });
+  const { data: { user: caller }, error: authError } = await userClient.auth.getUser();
+  if (authError || !caller) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
+  // Helper: check caller role
+  const { data: callerRoles } = await adminClient
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", caller.id);
+
+  const callerIsSuperAdmin = callerRoles?.some((r: any) => r.role === "super_admin") ?? false;
+  const callerHasAnyRole = (callerRoles?.length ?? 0) > 0;
+
+  try {
+    if (req.method === "GET") {
+      // List all users with roles
+      const { data: roles, error: rolesErr } = await adminClient
+        .from("user_roles")
+        .select("user_id, role, created_at");
+
+      if (rolesErr) throw rolesErr;
+
+      // Get user details for each role entry
+      const userIds = [...new Set((roles || []).map((r: any) => r.user_id))];
+      const users = [];
+
+      for (const uid of userIds) {
+        const { data: { user } } = await adminClient.auth.admin.getUserById(uid as string);
+        if (user) {
+          const userRole = roles!.find((r: any) => r.user_id === uid);
+          users.push({
+            id: user.id,
+            email: user.email,
+            role: userRole?.role,
+            created_at: userRole?.created_at,
+          });
+        }
+      }
+
+      return new Response(JSON.stringify(users), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (req.method === "POST") {
+      const body = await req.json();
+      const { action } = body;
+
+      if (action === "create") {
+        const { email, password, role } = body;
+        if (!email || !password || !role) {
+          return new Response(JSON.stringify({ error: "email, password, and role required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Bootstrap: if no roles exist at all, first user becomes super_admin
+        const { count } = await adminClient
+          .from("user_roles")
+          .select("id", { count: "exact", head: true });
+
+        const isBootstrap = (count ?? 0) === 0;
+
+        if (!isBootstrap && !callerIsSuperAdmin) {
+          // Only super admins can assign roles (admins can invite but role defaults)
+          if (role === "super_admin") {
+            return new Response(JSON.stringify({ error: "Only super admins can create super admin users" }), {
+              status: 403,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+          }
+        }
+
+        // Create user
+        const { data: newUser, error: createErr } = await adminClient.auth.admin.createUser({
+          email,
+          password,
+          email_confirm: true,
+        });
+
+        if (createErr) {
+          return new Response(JSON.stringify({ error: createErr.message }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Insert role using admin client (bypasses RLS)
+        const { error: roleErr } = await adminClient
+          .from("user_roles")
+          .insert({ user_id: newUser.user.id, role });
+
+        if (roleErr) {
+          // Rollback user creation
+          await adminClient.auth.admin.deleteUser(newUser.user.id);
+          return new Response(JSON.stringify({ error: roleErr.message }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        return new Response(JSON.stringify({ id: newUser.user.id, email, role }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      if (action === "delete") {
+        const { userId } = body;
+        if (!userId) {
+          return new Response(JSON.stringify({ error: "userId required" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Super admins can delete anyone; others can only delete themselves
+        if (!callerIsSuperAdmin && userId !== caller.id) {
+          return new Response(JSON.stringify({ error: "You can only delete your own account" }), {
+            status: 403,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        // Delete role first, then user
+        await adminClient.from("user_roles").delete().eq("user_id", userId);
+        const { error: delErr } = await adminClient.auth.admin.deleteUser(userId);
+
+        if (delErr) {
+          return new Response(JSON.stringify({ error: delErr.message }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      if (action === "bootstrap") {
+        // If no roles exist, assign the caller as super_admin
+        const { count } = await adminClient
+          .from("user_roles")
+          .select("id", { count: "exact", head: true });
+
+        if ((count ?? 0) > 0) {
+          return new Response(JSON.stringify({ error: "Roles already exist" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
+        }
+
+        const { error: insertErr } = await adminClient
+          .from("user_roles")
+          .insert({ user_id: caller.id, role: "super_admin" });
+
+        if (insertErr) throw insertErr;
+
+        return new Response(JSON.stringify({ success: true, role: "super_admin" }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
+      return new Response(JSON.stringify({ error: "Unknown action" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    return new Response(JSON.stringify({ error: "Method not allowed" }), {
+      status: 405,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: (err as Error).message }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+});
