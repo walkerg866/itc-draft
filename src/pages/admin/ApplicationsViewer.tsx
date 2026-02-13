@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { FileText, ChevronDown, ChevronUp, Loader2, Download } from "lucide-react";
+import { FileText, ChevronDown, ChevronUp, Loader2, Download, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import jsPDF from "jspdf";
 
 interface JobApplication {
   id: string;
@@ -79,6 +80,109 @@ const ApplicationsViewer = () => {
     a.download = `applications-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const downloadPDF = (app: JobApplication) => {
+    const doc = new jsPDF();
+    const margin = 20;
+    let y = margin;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const maxWidth = pageWidth - margin * 2;
+
+    const addText = (label: string, value: string | null | undefined) => {
+      if (!value) return;
+      if (y > 270) { doc.addPage(); y = margin; }
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9);
+      doc.text(label, margin, y);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      const lines = doc.splitTextToSize(value, maxWidth - 45);
+      doc.text(lines, margin + 45, y);
+      y += Math.max(lines.length * 5, 6) + 2;
+    };
+
+    const addSection = (title: string) => {
+      if (y > 260) { doc.addPage(); y = margin; }
+      y += 4;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.text(title, margin, y);
+      y += 2;
+      doc.setDrawColor(200);
+      doc.line(margin, y, pageWidth - margin, y);
+      y += 6;
+    };
+
+    // Header
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("Job Application", margin, y);
+    y += 8;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(100);
+    doc.text(`Submitted: ${new Date(app.submitted_at).toLocaleDateString()}`, margin, y);
+    doc.setTextColor(0);
+    y += 10;
+
+    addSection("Personal Information");
+    addText("Name:", `${app.first_name} ${app.middle_name ? app.middle_name + " " : ""}${app.last_name}`);
+    addText("Email:", app.email);
+    addText("Phone:", app.phone);
+    addText("Address:", `${app.address}, ${app.city}, ${app.state} ${app.zip}`);
+
+    addSection("Position Details");
+    addText("Position:", app.position_applied);
+    addText("Desired Pay:", app.desired_pay);
+    addText("Start Date:", app.available_start_date);
+    addText("How Heard:", app.how_heard);
+    addText("Authorized:", app.legally_authorized === null ? null : app.legally_authorized ? "Yes" : "No");
+    addText("Felony:", app.felony_history === null ? null : app.felony_history ? "Yes" : "No");
+    if (app.felony_explanation) addText("Explanation:", app.felony_explanation);
+
+    if (app.education || app.skills) {
+      addSection("Education & Skills");
+      addText("Education:", app.education);
+      addText("Skills:", app.skills);
+    }
+
+    if (Array.isArray(app.employment_history) && app.employment_history.length > 0) {
+      addSection("Employment History");
+      app.employment_history.forEach((job: any, i: number) => {
+        if (y > 260) { doc.addPage(); y = margin; }
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.text(`${i + 1}. ${job.company || "N/A"} — ${job.title || "N/A"}`, margin, y);
+        y += 5;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text(`${job.start_date || "?"} to ${job.end_date || "Present"}${job.reason_for_leaving ? ` · Left: ${job.reason_for_leaving}` : ""}`, margin + 5, y);
+        y += 7;
+      });
+    }
+
+    if (Array.isArray(app.applicant_references) && app.applicant_references.length > 0) {
+      addSection("References");
+      app.applicant_references.forEach((ref: any, i: number) => {
+        if (y > 260) { doc.addPage(); y = margin; }
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.text(`${i + 1}. ${ref.name || "N/A"}`, margin, y);
+        y += 5;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text(`${ref.relationship || ""} ${ref.phone ? `· ${ref.phone}` : ""}`, margin + 5, y);
+        y += 7;
+      });
+    }
+
+    if (app.applicant_signature) {
+      addSection("Signature");
+      addText("Signed:", `${app.applicant_signature}${app.signature_date ? ` on ${app.signature_date}` : ""}`);
+    }
+
+    doc.save(`application-${app.first_name}-${app.last_name}.pdf`);
   };
 
   return (
@@ -207,8 +311,17 @@ const ApplicationsViewer = () => {
                     </div>
                   )}
 
-                  {app.resume_url && (
-                    <div className="mt-4 pt-3 border-t border-border">
+                  <div className="mt-4 pt-3 border-t border-border flex items-center gap-2 flex-wrap">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                      onClick={() => downloadPDF(app)}
+                    >
+                      <FileDown className="h-4 w-4" /> Download PDF
+                    </Button>
+
+                    {app.resume_url && (
                       <Button
                         variant="outline"
                         size="sm"
@@ -226,8 +339,8 @@ const ApplicationsViewer = () => {
                       >
                         <Download className="h-4 w-4" /> Download Resume
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
             </div>
