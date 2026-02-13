@@ -47,7 +47,7 @@ const Careers = () => {
                 Join the{" "}
                 <span className="text-gradient-orange">ITC Team</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 We're always looking for talented, hard-working individuals to
                 join our team. Explore open positions below and apply today.
               </p>

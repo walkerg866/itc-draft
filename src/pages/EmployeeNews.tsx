@@ -75,7 +75,7 @@ const EmployeeNews = () => {
               <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-secondary-foreground mt-3 mb-6 leading-tight">
                 Announcements &amp; <span className="text-gradient-orange">Company Updates</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 Stay informed with the latest company announcements, milestones, and achievements.
               </p>
             </div>
