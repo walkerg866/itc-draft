@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import facilityFallback from "@/assets/facility-aerial.jpg";
+import steelPartnersLogo from "@/assets/steel-partners-logo.webp";
 
 const milestones = [
   {
@@ -197,25 +198,39 @@ const About = () => {
 
       {/* Steel Partners */}
       <section className="py-20 lg:py-28">
-        <div className="container text-center">
+        <div className="container">
           <SectionReveal>
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
-              Our Parent Company
-            </span>
-            <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-6">
-              A Steel Partners Company
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              Indiana Tube Corporation operates as part of the Steel Partners
-              family, bringing the backing of a diversified global holding
-              company to our precision tubing operations.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
-            >
-              Get in Touch <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Logo */}
+              <div className="flex items-center justify-center">
+                <img
+                  src={steelPartnersLogo}
+                  alt="Steel Partners Holdings logo"
+                  className="max-w-[280px] lg:max-w-[340px] w-full"
+                />
+              </div>
+
+              {/* Text */}
+              <div>
+                <span className="text-primary text-sm font-bold uppercase tracking-widest">
+                  Our Parent Company
+                </span>
+                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-6">
+                  A Steel Partners Company
+                </h2>
+                <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                  Indiana Tube Corporation operates as part of the Steel Partners
+                  family, bringing the backing of a diversified global holding
+                  company to our precision tubing operations.
+                </p>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
+                >
+                  Get in Touch <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
           </SectionReveal>
         </div>
       </section>
