@@ -17,6 +17,7 @@ export const useDownloads = () => {
       const { data, error } = await supabase
         .from("downloads")
         .select("id, section, name, file_path, file_url, sort_order")
+        .eq("is_active", true)
         .order("section")
         .order("sort_order");
       if (error) throw error;
