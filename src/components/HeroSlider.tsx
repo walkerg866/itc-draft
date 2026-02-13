@@ -48,26 +48,11 @@ const HeroSlider = () => {
     return () => clearInterval(timer);
   }, [count, paused, next]);
 
-  // Fallback to static hero
+  // Loading state – show empty hero shell while slides load
   if (!activeSlides) {
     return (
-      <section className="relative min-h-[85vh] flex items-center overflow-hidden">
-        <img src={heroFallback} alt="Precision steel tubing" className="absolute inset-0 w-full h-full object-cover" />
+      <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-secondary">
         <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="container relative z-10 py-20">
-          <div className="max-w-2xl">
-            <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-secondary-foreground leading-[1.1] mb-6">
-              Precision Steel Tubing.{" "}
-              <span className="text-gradient-orange">Engineered to Perform.</span>
-            </h1>
-            <p className="text-white/90 text-lg sm:text-xl leading-relaxed mb-10 max-w-lg">
-              Indiana Tube Corporation is your complete source for high-quality, induction-welded, low carbon steel tubing.
-            </p>
-            <Link to="/contact" className="inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow">
-              Request a Quote <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-secondary to-transparent" />
       </section>
     );
