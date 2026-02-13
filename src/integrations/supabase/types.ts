@@ -141,6 +141,7 @@ export type Database = {
           middle_name: string | null
           phone: string
           position_applied: string
+          resume_url: string | null
           signature_date: string | null
           skills: string | null
           state: string
@@ -168,6 +169,7 @@ export type Database = {
           middle_name?: string | null
           phone: string
           position_applied: string
+          resume_url?: string | null
           signature_date?: string | null
           skills?: string | null
           state: string
@@ -195,6 +197,7 @@ export type Database = {
           middle_name?: string | null
           phone?: string
           position_applied?: string
+          resume_url?: string | null
           signature_date?: string | null
           skills?: string | null
           state?: string

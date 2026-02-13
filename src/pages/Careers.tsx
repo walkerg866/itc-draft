@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Briefcase, MapPin, Clock, ArrowRight, Loader2 } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
+import GeneralInterestForm from "@/components/GeneralInterestForm";
 
 interface JobListing {
   id: string;
@@ -71,13 +72,9 @@ const Careers = () => {
                   No Open Positions
                 </h2>
                 <p className="text-muted-foreground">
-                  We don't have any openings right now, but check back soon! You
-                  can also{" "}
-                  <Link to="/contact" className="text-primary hover:underline">
-                    contact us
-                  </Link>{" "}
-                  to submit a general inquiry.
+                  We don't have any openings right now, but check back soon!
                 </p>
+                <GeneralInterestForm />
               </div>
             </SectionReveal>
           ) : (
