@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Briefcase, MapPin, Clock, ArrowRight, Loader2 } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import GeneralInterestForm from "@/components/GeneralInterestForm";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface JobListing {
   id: string;
@@ -71,10 +73,19 @@ const Careers = () => {
                 <h2 className="font-heading font-bold text-xl mb-2">
                   No Open Positions
                 </h2>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground mb-6">
                   We don't have any openings right now, but check back soon!
                 </p>
-                <GeneralInterestForm />
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="gap-2">
+                      <ArrowRight className="h-4 w-4" /> Submit Your Resume
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+                    <GeneralInterestForm />
+                  </DialogContent>
+                </Dialog>
               </div>
             </SectionReveal>
           ) : (
