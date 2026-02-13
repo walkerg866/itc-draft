@@ -57,7 +57,7 @@ const About = () => {
                   Steel Tubing Excellence
                 </span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 Indiana Tube Corporation is a diversified solution provider and
                 manufacturer of low carbon mechanical grade welded steel tubing,
                 serving customers worldwide.

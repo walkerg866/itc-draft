@@ -16,7 +16,7 @@ const Contact = () => {
                 Let's Talk{" "}
                 <span className="text-gradient-orange">Tubing</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 Whether you need a custom quote, product specifications, or
                 want to discuss your tubing requirements — our team is ready
                 to help.

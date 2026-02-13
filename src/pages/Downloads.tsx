@@ -68,7 +68,7 @@ const Downloads = () => {
                 Download{" "}
                 <span className="text-gradient-orange">Information</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed max-w-2xl mx-auto">
+              <p className="text-white text-lg leading-relaxed max-w-2xl mx-auto">
                 You can download or request Certifications, Declarations,
                 Product Literature, Technical Specifications, or our Terms &
                 Conditions:
