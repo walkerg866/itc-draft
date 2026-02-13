@@ -29,7 +29,7 @@ const LanguageSwitcher = () => {
         new window.google.translate.TranslateElement(
           {
             pageLanguage: "en",
-            includedLanguages: "en,es,fr,de,zh-CN,ja",
+            includedLanguages: "en,es,fr,de,nl,zh-CN,ja",
             layout: 0, // SIMPLE layout
             autoDisplay: false,
           },
