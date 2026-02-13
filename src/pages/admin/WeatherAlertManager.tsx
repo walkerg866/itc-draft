@@ -17,10 +17,6 @@ interface WeatherAlert {
 }
 
 const DURATION_OPTIONS = [
-  { label: "1 hour", value: 1 },
-  { label: "2 hours", value: 2 },
-  { label: "4 hours", value: 4 },
-  { label: "8 hours", value: 8 },
   { label: "12 hours", value: 12 },
   { label: "24 hours", value: 24 },
   { label: "Until cleared", value: 0 },
@@ -31,7 +27,7 @@ const WeatherAlertManager = () => {
   const { toast } = useToast();
   const [alerts, setAlerts] = useState<WeatherAlert[]>([]);
   const [message, setMessage] = useState("");
-  const [duration, setDuration] = useState(4);
+  const [duration, setDuration] = useState(12);
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
 
