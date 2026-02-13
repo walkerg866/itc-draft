@@ -29,6 +29,7 @@ interface JobApplication {
   signature_date: string | null;
   submitted_at: string;
   job_listing_id: string | null;
+  resume_url: string | null;
 }
 
 const ApplicationsViewer = () => {
@@ -203,6 +204,28 @@ const ApplicationsViewer = () => {
                         Signed: {app.applicant_signature}
                         {app.signature_date && ` on ${app.signature_date}`}
                       </p>
+                    </div>
+                  )}
+
+                  {app.resume_url && (
+                    <div className="mt-4 pt-3 border-t border-border">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                        onClick={async () => {
+                          const { data, error } = await supabase.storage
+                            .from("resumes")
+                            .createSignedUrl(app.resume_url!, 60);
+                          if (error || !data?.signedUrl) {
+                            alert("Could not generate download link.");
+                            return;
+                          }
+                          window.open(data.signedUrl, "_blank");
+                        }}
+                      >
+                        <Download className="h-4 w-4" /> Download Resume
+                      </Button>
                     </div>
                   )}
                 </div>
