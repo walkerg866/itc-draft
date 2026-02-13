@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -44,6 +45,7 @@ interface DownloadRow {
   file_path: string | null;
   file_url: string | null;
   sort_order: number;
+  is_active: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -127,7 +129,6 @@ const DownloadsManager = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (item: DownloadRow) => {
-      // Delete file from storage if exists
       if (item.file_path) {
         await supabase.storage.from("downloads").remove([item.file_path]);
       }
@@ -144,6 +145,25 @@ const DownloadsManager = () => {
     onError: (err: Error) =>
       toast({
         title: "Error deleting",
+        description: err.message,
+        variant: "destructive",
+      }),
+  });
+
+  const toggleActiveMutation = useMutation({
+    mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
+      const { error } = await supabase
+        .from("downloads")
+        .update({ is_active } as any)
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-downloads"] });
+    },
+    onError: (err: Error) =>
+      toast({
+        title: "Error toggling visibility",
         description: err.message,
         variant: "destructive",
       }),
@@ -311,7 +331,7 @@ const DownloadsManager = () => {
                     i < group.items.length - 1 ? "border-b border-border" : ""
                   }`}
                 >
-                  <FileText className="h-5 w-5 text-primary shrink-0" />
+                  <FileText className={`h-5 w-5 shrink-0 ${(item as any).is_active === false ? 'text-muted-foreground' : 'text-primary'}`} />
 
                   {editingId === item.id ? (
                     <div className="flex-1 flex gap-2">
@@ -348,6 +368,20 @@ const DownloadsManager = () => {
                       </span>
                     </div>
                   )}
+
+                  {/* Active toggle */}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Switch
+                      checked={(item as any).is_active !== false}
+                      onCheckedChange={(checked) =>
+                        toggleActiveMutation.mutate({ id: item.id, is_active: checked })
+                      }
+                      title={`${(item as any).is_active !== false ? 'Active' : 'Inactive'} — click to toggle`}
+                    />
+                    <span className={`text-xs ${(item as any).is_active !== false ? 'text-primary' : 'text-muted-foreground'}`}>
+                      {(item as any).is_active !== false ? 'Active' : 'Inactive'}
+                    </span>
+                  </div>
 
                   {/* Status indicator */}
                   {item.file_url ? (

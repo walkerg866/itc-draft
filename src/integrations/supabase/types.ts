@@ -21,6 +21,7 @@ export type Database = {
           file_path: string | null
           file_url: string | null
           id: string
+          is_active: boolean
           name: string
           section: string
           sort_order: number
@@ -32,6 +33,7 @@ export type Database = {
           file_path?: string | null
           file_url?: string | null
           id?: string
+          is_active?: boolean
           name: string
           section: string
           sort_order?: number
@@ -43,6 +45,7 @@ export type Database = {
           file_path?: string | null
           file_url?: string | null
           id?: string
+          is_active?: boolean
           name?: string
           section?: string
           sort_order?: number
