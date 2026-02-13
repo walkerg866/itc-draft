@@ -68,7 +68,7 @@ const Industries = () => {
               <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-secondary-foreground mt-3 mb-6 leading-tight">
                 Precision Tubing for <span className="text-gradient-orange">Every Industry</span>
               </h1>
-              <p className="text-steel-muted text-lg leading-relaxed">
+              <p className="text-white text-lg leading-relaxed">
                 For over 45 years, Indiana Tube has specialized as a solution provider for standard and custom tubing across the world's most demanding industries.
               </p>
             </div>
