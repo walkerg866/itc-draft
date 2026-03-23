@@ -497,7 +497,7 @@ const DownloadsManager = () => {
 
       {/* Document Preview Dialog */}
       <Dialog open={!!previewItem} onOpenChange={(open) => !open && setPreviewItem(null)}>
-        <DialogContent className="sm:max-w-2xl max-h-[80vh] flex flex-col">
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] flex flex-col" aria-describedby={undefined}>
           <DialogHeader>
             <DialogTitle className="truncate pr-8">{previewItem?.name}</DialogTitle>
           </DialogHeader>
@@ -505,7 +505,7 @@ const DownloadsManager = () => {
             {previewItem?.file_url && (
               previewItem.file_url.toLowerCase().match(/\.(pdf)(\?|$)/) ? (
                 <iframe
-                  src={previewItem.file_url}
+                  src={`https://docs.google.com/gview?url=${encodeURIComponent(previewItem.file_url)}&embedded=true`}
                   className="w-full h-[60vh] rounded-md border border-border"
                   title={`Preview of ${previewItem.name}`}
                 />
