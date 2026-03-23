@@ -41,7 +41,7 @@ const Header = () => {
               return (
                 <span key="about-dropdown-and-careers" className="contents">
                   <DropdownMenu>
-                    <DropdownMenuTrigger className={`px-4 py-2 text-base font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
+                    <DropdownMenuTrigger className={`px-4 py-2 text-lg font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
                       location.pathname === "/about" || location.pathname === "/employee-news"
                         ? "text-primary"
                         : "text-foreground/70 hover:text-foreground"
