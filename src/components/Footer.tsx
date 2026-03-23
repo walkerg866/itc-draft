@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logo from "@/assets/indiana-tube-logo.svg";
 
 const Footer = () => {
   return (
@@ -8,21 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-extrabold text-base">
-                  ITC
-                </span>
-              </div>
-              <div className="flex flex-col">
-                <span className="font-heading font-extrabold text-xl leading-tight tracking-tight">
-                  Indiana Tube
-                </span>
-                <span className="text-steel-muted text-xs tracking-wider uppercase">
-                  A Steel Partners Company
-                </span>
-              </div>
-            </div>
+            <img src={logo} alt="Indiana Tube Corporation" className="h-12 w-auto mb-4" />
             <p className="text-steel-muted text-sm leading-relaxed mt-4">
               45+ years engineering precision steel tubing solutions for the world's most demanding industries.
             </p>

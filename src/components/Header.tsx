@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "@/assets/indiana-tube-logo.svg";
 import { Menu, X, ChevronDown } from "lucide-react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { motion, AnimatePresence } from "framer-motion";
@@ -29,21 +30,7 @@ const Header = () => {
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-heading font-extrabold text-sm md:text-base">
-                ITC
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-secondary-foreground font-heading font-extrabold text-lg md:text-xl leading-tight tracking-tight">
-                Indiana Tube
-              </span>
-              <span className="text-steel-muted text-[10px] md:text-xs tracking-wider uppercase">
-                A Steel Partners Company
-              </span>
-            </div>
-          </div>
+          <img src={logo} alt="Indiana Tube Corporation" className="h-8 md:h-10 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
