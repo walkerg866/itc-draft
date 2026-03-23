@@ -1,59 +1,66 @@
 
 
-## Plan: Quote Request Storage + Admin Notification Preferences + Email Alerts
+## Plan: Admin Dashboard Home, Quote Requests Viewer, and Email Setup Button
 
-This is a multi-part feature with four main pieces:
+Three distinct additions to the admin panel:
 
-### 1. Save Quote Requests to Database
+### 1. Admin Dashboard Home Page
 
-Create a new `quote_requests` table to store form submissions from the Contact page. Wire the existing form to insert data instead of showing an `alert()`.
+Create a new `AdminHome.tsx` page that becomes the default landing page at `/admin/dashboard`. It shows three summary stat cards:
+- **Total Admin Users** — count from the `manage-admin-users` edge function
+- **Job Applications (last 30 days)** — count from `job_applications` where `submitted_at >= 30 days ago`
+- **Quote Requests (last 30 days)** — count from `quote_requests` where `submitted_at >= 30 days ago`
 
-**Table: `quote_requests`**
-- id, first_name, last_name, company, email, phone, industry, diameters, annual_volume, message, submitted_at
-- RLS: public INSERT, authenticated SELECT
+Each card uses the existing Card component with an icon, count, and label. The current Weather Alerts page moves to its own nav item (it already has one), and the `/admin/dashboard` route renders AdminHome instead of WeatherAlertManager.
 
-### 2. Notification Preferences Table + Admin UI
+**Sidebar update**: Add a "Dashboard" nav item at the top pointing to `/admin/dashboard`. Move Weather Alerts to `/admin/dashboard/weather`.
 
-Create a `notification_preferences` table that maps admin users to notification types they want to receive.
+### 2. Quote Requests Viewer
 
-**Table: `notification_preferences`**
-- id, user_id (references auth.users), notify_job_applications (boolean, default false), notify_quote_requests (boolean, default false), created_at
-- RLS: authenticated SELECT, super_admin INSERT/UPDATE/DELETE
+Create `src/pages/admin/QuoteRequestsViewer.tsx` modeled after `ApplicationsViewer.tsx` with:
+- List of all quote requests from `quote_requests` table, ordered by `submitted_at` desc
+- Expandable rows showing full details (name, company, email, phone, industry, diameters, annual volume, message)
+- CSV export button
+- PDF download per request (using jsPDF, same pattern as applications)
+- Add "Quote Requests" nav item and route in `App.tsx`
 
-**Admin UI**: New "Notifications" page in admin sidebar (super_admin only). Shows a table of all admin users with toggle switches for "Job Applications" and "Quote Requests". Super admin can toggle any user on/off.
+### 3. Email Setup Button on Notification Settings
 
-### 3. Edge Function: Generate & Store PDF, Send Notification Email
+Add a section below the notification preferences table in `NotificationSettings.tsx` with:
+- A card/section titled "Email Sending Setup"
+- Brief description explaining this configures the email domain for sending notification emails
+- A "Set Up Email Domain" button that opens the email domain setup dialog via `<lov-open-email-setup>`
 
-Create a `send-notification` edge function that:
-- Accepts a payload with type (`job_application` or `quote_request`) and the record data
-- Generates a PDF of the submission using a simple text-based layout
-- Uploads the PDF to a new `notification-pdfs` storage bucket (private, with signed URL access)
-- Looks up `notification_preferences` to find which users should be notified
-- Sends an email to each opted-in user with a brief summary and a signed download URL for the PDF (valid for 7 days)
+Since this is an admin UI button (not a chat action), the implementation will instead link to or display instructions directing the super admin to configure the email domain through Cloud settings. The button can trigger a toast or info dialog explaining how to set up email sending.
 
-The download link lets recipients get the PDF directly without logging into the admin panel.
+**Wait** — I need to check the email domain status first to determine what to show.
 
-### 4. Wire Up Triggers
-
-- **Contact page**: After inserting into `quote_requests`, invoke the `send-notification` edge function with type `quote_request`
-- **Apply Job page / General Interest form**: After inserting into `job_applications`, invoke `send-notification` with type `job_application`
-
-### Email Domain Requirement
-
-This project does not have an email domain configured yet. Before emails can actually send, you'll need to set up a sender domain through Cloud settings. I'll build all the infrastructure so it's ready to go, and we'll set up the email domain as part of the process.
+Actually, since this is a plan, I'll structure it so: on the Notification Settings page, below the recipients table, add a "Email Delivery" info card. It will note that email notifications require an email domain to be configured, and provide guidance. During implementation I'll check domain status and adapt.
 
 ### Technical Summary
 
 | Change | Details |
 |--------|---------|
-| New DB table | `quote_requests` |
-| New DB table | `notification_preferences` |
-| New storage bucket | `notification-pdfs` (private) |
-| New edge function | `send-notification` |
-| New admin page | Notification Settings (super_admin only) |
-| Modified files | `Contact.tsx` (wire form), `ApplyJob.tsx` / `GeneralInterestForm.tsx` (trigger notification), `AdminDashboard.tsx` (add nav item), `App.tsx` (add route) |
+| New file | `src/pages/admin/AdminHome.tsx` — dashboard with stat cards |
+| New file | `src/pages/admin/QuoteRequestsViewer.tsx` — quote request viewer with expand/CSV/PDF |
+| Modified | `src/pages/AdminDashboard.tsx` — add Dashboard + Quote Requests nav items, move Weather Alerts path |
+| Modified | `src/App.tsx` — add routes for AdminHome, QuoteRequestsViewer, move WeatherAlertManager to `/admin/dashboard/weather` |
+| Modified | `src/pages/admin/NotificationSettings.tsx` — add email setup info section below recipients table |
 
-### Admin Sidebar Addition
+### Sidebar Navigation (new order)
 
-A new "Notifications" nav item will appear in the admin sidebar, visible to all but only editable by super admins.
+```text
+Dashboard          /admin/dashboard
+Weather Alerts     /admin/dashboard/weather
+Job Listings       /admin/dashboard/jobs
+Applications       /admin/dashboard/applications
+Quote Requests     /admin/dashboard/quotes
+Downloads          /admin/dashboard/downloads
+Images             /admin/dashboard/images
+Image Repository   /admin/dashboard/image-repository
+Hero Slides        /admin/dashboard/hero-slides
+Videos             /admin/dashboard/videos
+Users              /admin/dashboard/users
+Notifications      /admin/dashboard/notifications
+```
 
