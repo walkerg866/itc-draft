@@ -10,14 +10,14 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <img src={logo} alt="Indiana Tube Corporation" className="h-12 w-auto mb-4" />
-            <p className="text-muted-foreground text-base leading-relaxed mt-4">
+            <p className="text-muted-foreground text-lg leading-relaxed mt-4">
               45+ years engineering precision steel tubing solutions for the world's most demanding industries.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-bold text-base uppercase tracking-wider mb-4 text-primary">
+            <h4 className="font-heading font-bold text-lg uppercase tracking-wider mb-4 text-primary">
               Quick Links
             </h4>
             <ul className="space-y-3">
@@ -33,7 +33,7 @@ const Footer = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-muted-foreground text-base hover:text-foreground transition-colors"
+                    className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -44,7 +44,7 @@ const Footer = () => {
 
           {/* Industries */}
           <div>
-            <h4 className="font-heading font-bold text-base uppercase tracking-wider mb-4 text-primary">
+            <h4 className="font-heading font-bold text-lg uppercase tracking-wider mb-4 text-primary">
               Industries
             </h4>
             <ul className="space-y-3">
@@ -58,7 +58,7 @@ const Footer = () => {
                 <li key={industry}>
                   <Link
                     to="/industries"
-                    className="text-muted-foreground text-base hover:text-foreground transition-colors"
+                    className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                   >
                     {industry}
                   </Link>
@@ -69,31 +69,31 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="font-heading font-bold text-base uppercase tracking-wider mb-4 text-primary">
+            <h4 className="font-heading font-bold text-lg uppercase tracking-wider mb-4 text-primary">
               Contact Us
             </h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                <span className="text-muted-foreground text-base">
+                <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                <span className="text-muted-foreground text-lg">
                   2100 Lexington Avenue<br />
                   Evansville, IN 47720
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary shrink-0" />
+                <Phone className="h-5 w-5 text-primary shrink-0" />
                 <a
                   href="tel:+18124249028"
-                  className="text-muted-foreground text-base hover:text-foreground transition-colors"
+                  className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                 >
                   (812) 424-9028
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-primary shrink-0" />
+                <Mail className="h-5 w-5 text-primary shrink-0" />
                 <a
                   href="mailto:sales@indianatube.com"
-                  className="text-muted-foreground text-base hover:text-foreground transition-colors"
+                  className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                 >
                   sales@indianatube.com
                 </a>
@@ -106,14 +106,14 @@ const Footer = () => {
       {/* Bottom bar */}
       <div className="border-t border-border">
         <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-sm">
+          <p className="text-muted-foreground text-base">
             © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/contact" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
+            <Link to="/contact" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/contact" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
+            <Link to="/contact" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>

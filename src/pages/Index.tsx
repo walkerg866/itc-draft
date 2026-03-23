@@ -44,10 +44,10 @@ const Index = () => {
 
       {/* Video Section */}
       {homepageVideoUrl && (
-        <section className="bg-steel-gradient py-6 relative">
+        <section className="bg-background py-12">
           <div className="container max-w-4xl">
             <SectionReveal>
-              <div className="rounded-lg overflow-hidden shadow-orange-glow border border-white/10">
+              <div className="rounded-lg overflow-hidden shadow-industrial border border-border">
                 <video
                   src={homepageVideoUrl}
                   controls

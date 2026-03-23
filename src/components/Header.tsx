@@ -41,7 +41,7 @@ const Header = () => {
               return (
                 <span key="about-dropdown-and-careers" className="contents">
                   <DropdownMenu>
-                    <DropdownMenuTrigger className={`px-4 py-2 text-base font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
+                    <DropdownMenuTrigger className={`px-4 py-2 text-lg font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
                       location.pathname === "/about" || location.pathname === "/employee-news"
                         ? "text-primary"
                         : "text-foreground/70 hover:text-foreground"
@@ -63,7 +63,7 @@ const Header = () => {
                   </DropdownMenu>
                   <Link
                     to={link.path}
-                    className={`px-4 py-2 text-base font-medium rounded-md transition-colors ${
+                    className={`px-4 py-2 text-lg font-medium rounded-md transition-colors ${
                       location.pathname === link.path
                         ? "text-primary"
                         : "text-foreground/70 hover:text-foreground"
@@ -78,7 +78,7 @@ const Header = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 text-base font-medium rounded-md transition-colors ${
+                className={`px-4 py-2 text-lg font-medium rounded-md transition-colors ${
                   location.pathname === link.path
                     ? "text-primary"
                     : "text-foreground/70 hover:text-foreground"
@@ -91,7 +91,7 @@ const Header = () => {
           <LanguageSwitcher />
           <Link
             to="/contact"
-            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-base font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
+            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-lg font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
           >
             Request a Quote
           </Link>
