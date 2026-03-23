@@ -44,7 +44,7 @@ const Header = () => {
                     <DropdownMenuTrigger className={`px-4 py-2 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
                       location.pathname === "/about" || location.pathname === "/employee-news"
                         ? "text-primary"
-                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}>
                       About <ChevronDown className="h-3.5 w-3.5" />
                     </DropdownMenuTrigger>
