@@ -1,7 +1,67 @@
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
+import { Phone, Mail, MapPin, Clock, Loader2, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import SectionReveal from "@/components/SectionReveal";
 
 const Contact = () => {
+  const [form, setForm] = useState({
+    first_name: "",
+    last_name: "",
+    company: "",
+    email: "",
+    phone: "",
+    industry: "",
+    diameters: "",
+    annual_volume: "",
+    message: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const update = (field: string, value: string) =>
+    setForm((prev) => ({ ...prev, [field]: value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.first_name || !form.last_name || !form.email || !form.message) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const id = crypto.randomUUID();
+      const { error } = await supabase.from("quote_requests" as any).insert({
+        id,
+        first_name: form.first_name.trim(),
+        last_name: form.last_name.trim(),
+        company: form.company.trim() || null,
+        email: form.email.trim(),
+        phone: form.phone.trim() || null,
+        industry: form.industry || null,
+        diameters: form.diameters.trim() || null,
+        annual_volume: form.annual_volume.trim() || null,
+        message: form.message.trim(),
+      } as any);
+
+      if (error) throw error;
+
+      // Trigger notification (fire and forget)
+      supabase.functions.invoke("send-notification", {
+        body: {
+          type: "quote_request",
+          record: { id, ...form },
+        },
+      }).catch((err) => console.error("Notification error:", err));
+
+      setSubmitted(true);
+    } catch (err: any) {
+      toast.error(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div>
       {/* Hero */}
@@ -97,7 +157,7 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Map embed placeholder */}
+                {/* Map embed */}
                 <div className="mt-10 rounded-lg overflow-hidden shadow-industrial border border-border">
                   <iframe
                     src="https://www.google.com/maps?q=2100+Lexington+Avenue,+Evansville,+IN+47720&output=embed"
@@ -116,149 +176,177 @@ const Contact = () => {
             {/* Contact Form */}
             <SectionReveal delay={0.2}>
               <div className="bg-card rounded-lg p-8 lg:p-10 shadow-industrial border border-border">
-                <h3 className="font-heading font-bold text-2xl mb-2">
-                  Request a Quote
-                </h3>
-                <p className="text-muted-foreground mb-8">
-                  Fill out the form below and our team will get back to you
-                  within one business day.
-                </p>
-
-                <form
-                  className="space-y-5"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    // Form submission will be handled when backend is connected
-                    alert(
-                      "Thank you for your inquiry! Our team will contact you shortly."
-                    );
-                  }}
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        First Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder="John"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Last Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder="Smith"
-                      />
-                    </div>
+                {submitted ? (
+                  <div className="text-center py-10">
+                    <CheckCircle2 className="h-12 w-12 mx-auto mb-4 text-primary" />
+                    <h3 className="font-heading font-bold text-2xl mb-2">
+                      Thank You!
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Your inquiry has been submitted. Our team will contact you
+                      within one business day.
+                    </p>
                   </div>
+                ) : (
+                  <>
+                    <h3 className="font-heading font-bold text-2xl mb-2">
+                      Request a Quote
+                    </h3>
+                    <p className="text-muted-foreground mb-8">
+                      Fill out the form below and our team will get back to you
+                      within one business day.
+                    </p>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                      placeholder="Your Company"
-                    />
-                  </div>
+                    <form className="space-y-5" onSubmit={handleSubmit}>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            First Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={form.first_name}
+                            onChange={(e) => update("first_name", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder="John"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Last Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={form.last_name}
+                            onChange={(e) => update("last_name", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder="Smith"
+                          />
+                        </div>
+                      </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder="john@company.com"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Phone
-                      </label>
-                      <input
-                        type="tel"
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder="(555) 123-4567"
-                      />
-                    </div>
-                  </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Company
+                        </label>
+                        <input
+                          type="text"
+                          value={form.company}
+                          onChange={(e) => update("company", e.target.value)}
+                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                          placeholder="Your Company"
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Industry
-                    </label>
-                    <select className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow">
-                      <option value="">Select an industry</option>
-                      <option value="automotive">
-                        Automotive & Transportation
-                      </option>
-                      <option value="oil-gas">
-                        Oil & Gas — Energy Services
-                      </option>
-                      <option value="hvac">HVAC & Appliance</option>
-                      <option value="heavy-equip">
-                        Heavy Equipment & Hydraulics
-                      </option>
-                      <option value="structural">
-                        Hardware & Structural
-                      </option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Email *
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            value={form.email}
+                            onChange={(e) => update("email", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder="john@company.com"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Phone
+                          </label>
+                          <input
+                            type="tel"
+                            value={form.phone}
+                            onChange={(e) => update("phone", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder="(555) 123-4567"
+                          />
+                        </div>
+                      </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Diameter(s)
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder='e.g. 1/2", 3/4", 1"'
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-2">
-                        Annual Purchase Volume
-                      </label>
-                      <input
-                        type="text"
-                        className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        placeholder="e.g. 50,000 feet or 10,000 units"
-                      />
-                    </div>
-                  </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          Industry
+                        </label>
+                        <select
+                          value={form.industry}
+                          onChange={(e) => update("industry", e.target.value)}
+                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                        >
+                          <option value="">Select an industry</option>
+                          <option value="Automotive & Transportation">
+                            Automotive & Transportation
+                          </option>
+                          <option value="Oil & Gas — Energy Services">
+                            Oil & Gas — Energy Services
+                          </option>
+                          <option value="HVAC & Appliance">HVAC & Appliance</option>
+                          <option value="Heavy Equipment & Hydraulics">
+                            Heavy Equipment & Hydraulics
+                          </option>
+                          <option value="Hardware & Structural">
+                            Hardware & Structural
+                          </option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
 
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      How Can We Help? *
-                    </label>
-                    <textarea
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow resize-none"
-                      placeholder="Tell us about your tubing requirements, quantities, specifications, or any questions you have..."
-                    />
-                  </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Diameter(s)
+                          </label>
+                          <input
+                            type="text"
+                            value={form.diameters}
+                            onChange={(e) => update("diameters", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder='e.g. 1/2", 3/4", 1"'
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">
+                            Annual Purchase Volume
+                          </label>
+                          <input
+                            type="text"
+                            value={form.annual_volume}
+                            onChange={(e) => update("annual_volume", e.target.value)}
+                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
+                            placeholder="e.g. 50,000 feet or 10,000 units"
+                          />
+                        </div>
+                      </div>
 
-                  <button
-                    type="submit"
-                    className="w-full px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
-                  >
-                    Submit Inquiry
-                  </button>
-                </form>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">
+                          How Can We Help? *
+                        </label>
+                        <textarea
+                          required
+                          rows={5}
+                          value={form.message}
+                          onChange={(e) => update("message", e.target.value)}
+                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow resize-none"
+                          placeholder="Tell us about your tubing requirements, quantities, specifications, or any questions you have..."
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={submitting}
+                        className="w-full px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                        {submitting ? "Submitting…" : "Submit Inquiry"}
+                      </button>
+                    </form>
+                  </>
+                )}
               </div>
             </SectionReveal>
           </div>
