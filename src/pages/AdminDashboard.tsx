@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import logo from "@/assets/indiana-tube-logo.svg";
 import { LayoutDashboard, CloudLightning, Briefcase, FileText, MessageSquareQuote, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
