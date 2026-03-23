@@ -166,33 +166,40 @@ Deno.serve(async (req) => {
       : formatQuoteRequestText(record);
 
     const pdfBytes = generatePdfBytes(text);
-    const fileName = `${type}-${record.id || crypto.randomUUID()}.pdf`;
+    const csvContent = generateCsvContent(type, record);
+    const csvBytes = new TextEncoder().encode(csvContent);
+    const fileId = record.id || crypto.randomUUID();
+    const pdfFileName = `${type}-${fileId}.pdf`;
+    const csvFileName = `${type}-${fileId}.csv`;
 
-    // Upload PDF to notification-pdfs bucket (create bucket if needed)
+    // Upload files to notification-pdfs bucket (create bucket if needed)
     const { data: buckets } = await supabase.storage.listBuckets();
     const bucketExists = buckets?.some((b: any) => b.name === "notification-pdfs");
     if (!bucketExists) {
       await supabase.storage.createBucket("notification-pdfs", { public: false });
     }
 
-    const { error: uploadError } = await supabase.storage
-      .from("notification-pdfs")
-      .upload(fileName, pdfBytes, { contentType: "application/pdf", upsert: true });
+    const [pdfUpload, csvUpload] = await Promise.all([
+      supabase.storage.from("notification-pdfs").upload(pdfFileName, pdfBytes, { contentType: "application/pdf", upsert: true }),
+      supabase.storage.from("notification-pdfs").upload(csvFileName, csvBytes, { contentType: "text/csv", upsert: true }),
+    ]);
 
-    if (uploadError) {
-      console.error("Upload error:", uploadError);
-      throw new Error(`Failed to upload PDF: ${uploadError.message}`);
-    }
+    if (pdfUpload.error) throw new Error(`Failed to upload PDF: ${pdfUpload.error.message}`);
+    if (csvUpload.error) throw new Error(`Failed to upload CSV: ${csvUpload.error.message}`);
 
-    // Generate signed URL (7 days)
-    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
-      .from("notification-pdfs")
-      .createSignedUrl(fileName, 7 * 24 * 60 * 60);
+    // Generate signed URLs (7 days)
+    const sevenDays = 7 * 24 * 60 * 60;
+    const [pdfSigned, csvSigned] = await Promise.all([
+      supabase.storage.from("notification-pdfs").createSignedUrl(pdfFileName, sevenDays),
+      supabase.storage.from("notification-pdfs").createSignedUrl(csvFileName, sevenDays),
+    ]);
 
-    if (signedUrlError) throw signedUrlError;
-    const downloadUrl = signedUrlData.signedUrl;
+    if (pdfSigned.error) throw pdfSigned.error;
+    if (csvSigned.error) throw csvSigned.error;
+    const pdfUrl = pdfSigned.data.signedUrl;
+    const csvUrl = csvSigned.data.signedUrl;
 
-    // Look up notification preferences — now uses email column directly
+    // Look up notification preferences
     const prefColumn = type === "job_application" ? "notify_job_applications" : "notify_quote_requests";
     const { data: prefs, error: prefsError } = await supabase
       .from("notification_preferences")
@@ -211,7 +218,6 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Collect emails: use email column directly, fall back to auth user lookup for legacy rows
     const directEmails = prefs.filter((p: any) => p.email).map((p: any) => p.email);
     const legacyUserIds = prefs.filter((p: any) => !p.email && p.user_id !== "00000000-0000-0000-0000-000000000000").map((p: any) => p.user_id);
     
@@ -232,11 +238,13 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Send email notifications using Lovable API
     const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     const subjectLine = type === "job_application"
       ? `New Job Application: ${record.first_name} ${record.last_name} — ${record.position_applied}`
       : `New Quote Request: ${record.first_name} ${record.last_name}${record.company ? ` (${record.company})` : ""}`;
+
+    const btnPrimary = "display:inline-block;background:#E8600A;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;margin-right:10px;margin-bottom:8px";
+    const btnOutline = "display:inline-block;background:white;color:#E8600A;padding:11px 23px;text-decoration:none;border-radius:6px;font-weight:bold;border:2px solid #E8600A;margin-bottom:8px";
 
     const summaryHtml = type === "job_application"
       ? `<p>A new job application has been submitted.</p>
@@ -244,13 +252,19 @@ Deno.serve(async (req) => {
          <p><strong>Position:</strong> ${record.position_applied}</p>
          <p><strong>Email:</strong> ${record.email}</p>
          <p><strong>Phone:</strong> ${record.phone}</p>
-         <p style="margin-top:20px"><a href="${downloadUrl}" style="background:#E8600A;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold">Download Application PDF</a></p>`
+         <p style="margin-top:20px">
+           <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
+           <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
+         </p>`
       : `<p>A new quote request has been submitted.</p>
          <p><strong>Name:</strong> ${record.first_name} ${record.last_name}</p>
          <p><strong>Company:</strong> ${record.company || "N/A"}</p>
          <p><strong>Email:</strong> ${record.email}</p>
          <p><strong>Industry:</strong> ${record.industry || "N/A"}</p>
-         <p style="margin-top:20px"><a href="${downloadUrl}" style="background:#E8600A;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold">Download Quote Request PDF</a></p>`;
+         <p style="margin-top:20px">
+           <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
+           <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
+         </p>`;
 
     const emailBody = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
@@ -259,14 +273,12 @@ Deno.serve(async (req) => {
         </div>
         ${summaryHtml}
         <hr style="margin-top:30px;border:none;border-top:1px solid #eee" />
-        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. The download link expires in 7 days.</p>
+        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Download links expire in 7 days.</p>
       </div>`;
 
     let notified = 0;
     for (const email of emails) {
       try {
-        // Use fetch to send via Lovable's email API (simple SMTP-style)
-        // For now, log the notification - actual email sending requires email domain setup
         console.log(`Would send notification to: ${email}, subject: ${subjectLine}`);
         notified++;
       } catch (emailErr) {
@@ -275,7 +287,7 @@ Deno.serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, notified, downloadUrl }),
+      JSON.stringify({ success: true, notified, pdfUrl, csvUrl }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
