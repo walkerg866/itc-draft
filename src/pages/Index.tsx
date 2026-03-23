@@ -12,15 +12,15 @@ import facilityFallback from "@/assets/facility-aerial.jpg";
 const impactStatements = [
   {
     headline: "Your Specs. Delivered Exactly.",
-    supporting: "Tolerances twice as tight as industry standard — so your production line never stops.",
+    supporting: "Industry leading tolerance controls, so your production line never stops.",
   },
   {
     headline: "One Call. Complete Tubing Solutions.",
-    supporting: "From raw coil to finished assembly, we handle it all so you don't manage multiple vendors.",
+    supporting: "From raw coil to finished assembly.",
   },
   {
     headline: "Proven Reliable. Every Shipment.",
-    supporting: "45+ years of on-time, in-spec delivery to the world's most demanding industries.",
+    supporting: "Over 45 years of on-time, in-spec delivery.",
   },
 ];
 
