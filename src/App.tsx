@@ -86,6 +86,16 @@ const App = () => (
               }
             />
             <Route
+              path="/admin/dashboard/quotes"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <QuoteRequestsViewer />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/admin/dashboard/downloads"
               element={
                 <ProtectedRoute>
