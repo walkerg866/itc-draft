@@ -44,7 +44,7 @@ const Footer = () => {
 
           {/* Industries */}
           <div>
-            <h4 className="font-heading font-bold text-sm uppercase tracking-wider mb-4 text-primary">
+            <h4 className="font-heading font-bold text-base uppercase tracking-wider mb-4 text-primary">
               Industries
             </h4>
             <ul className="space-y-3">
