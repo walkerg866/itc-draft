@@ -50,7 +50,7 @@ const Header = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-warm-white border-border z-50" align="center">
                       <DropdownMenuItem asChild>
-                        <Link to="/about" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                        <Link to="/about" className="text-foreground/80 hover:text-foreground cursor-pointer">
                           About Us
                         </Link>
                       </DropdownMenuItem>
