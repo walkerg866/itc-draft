@@ -14,6 +14,7 @@ const navItems = [
   { label: "Hero Slides", path: "/admin/dashboard/hero-slides", icon: SlidersHorizontal },
   { label: "Videos", path: "/admin/dashboard/videos", icon: Video },
   { label: "Users", path: "/admin/dashboard/users", icon: Users },
+  { label: "Notifications", path: "/admin/dashboard/notifications", icon: Bell },
 ];
 
 const AdminDashboard = ({ children }: { children: React.ReactNode }) => {

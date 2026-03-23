@@ -101,7 +101,9 @@ const ApplyJob = () => {
   const handleSubmit = async () => {
     setSubmitting(true);
 
-    const { error } = await supabase.from("job_applications").insert([{
+    const applicationId = crypto.randomUUID();
+    const applicationData = {
+      id: applicationId,
       job_listing_id: id || null,
       position_applied: jobTitle || "General Application",
       first_name: firstName,
@@ -125,12 +127,21 @@ const ApplyJob = () => {
       applicant_references: references.filter((r) => r.name) as unknown as import("@/integrations/supabase/types").Json,
       applicant_signature: signature,
       signature_date: new Date().toISOString().slice(0, 10),
-    }]);
+    };
+
+    const { error } = await supabase.from("job_applications").insert([applicationData]);
 
     if (error) {
       toast({ title: "Error submitting application", description: error.message, variant: "destructive" });
       setSubmitting(false);
     } else {
+      // Trigger notification (fire and forget)
+      supabase.functions.invoke("send-notification", {
+        body: {
+          type: "job_application",
+          record: { id: applicationId, first_name: firstName, last_name: lastName, position_applied: jobTitle || "General Application", email, phone, address, city, state, zip, desired_pay: desiredPay, available_start_date: startDate, education, skills, how_heard: howHeard },
+        },
+      }).catch((err) => console.error("Notification error:", err));
       setSubmitted(true);
     }
   };
