@@ -15,7 +15,7 @@ const impactStatements = [
     supporting: "Industry leading tolerance controls, so your production line never stops.",
   },
   {
-    headline: "One Call. Complete Tubing Solutions.",
+    headline: "Complete Tubing Solutions.",
     supporting: "From raw coil to finished assembly.",
   },
   {
