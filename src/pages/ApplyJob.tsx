@@ -135,13 +135,6 @@ const ApplyJob = () => {
       toast({ title: "Error submitting application", description: error.message, variant: "destructive" });
       setSubmitting(false);
     } else {
-      // Trigger notification (fire and forget)
-      supabase.functions.invoke("send-notification", {
-        body: {
-          type: "job_application",
-          record: { id: applicationId, first_name: firstName, last_name: lastName, position_applied: jobTitle || "General Application", email, phone, address, city, state, zip, desired_pay: desiredPay, available_start_date: startDate, education, skills, how_heard: howHeard },
-        },
-      }).catch((err) => console.error("Notification error:", err));
       setSubmitted(true);
     }
   };

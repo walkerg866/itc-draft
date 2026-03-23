@@ -46,14 +46,6 @@ const Contact = () => {
 
       if (error) throw error;
 
-      // Trigger notification (fire and forget)
-      supabase.functions.invoke("send-notification", {
-        body: {
-          type: "quote_request",
-          record: { id, ...form },
-        },
-      }).catch((err) => console.error("Notification error:", err));
-
       setSubmitted(true);
     } catch (err: any) {
       toast.error(err.message || "Something went wrong. Please try again.");
