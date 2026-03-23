@@ -50,6 +50,16 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <AdminDashboard>
+                    <AdminHome />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/weather"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
                     <WeatherAlertManager />
                   </AdminDashboard>
                 </ProtectedRoute>
