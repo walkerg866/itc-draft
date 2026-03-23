@@ -53,6 +53,31 @@ function formatQuoteRequestText(record: Record<string, any>): string {
   return lines.join("\n");
 }
 
+function generateCsvContent(type: string, record: Record<string, any>): string {
+  if (type === "job_application") {
+    const headers = ["Name", "Email", "Phone", "Address", "Position", "Desired Pay", "Start Date", "Education", "Skills", "How Heard", "Submitted"];
+    const row = [
+      `${record.first_name} ${record.middle_name ? record.middle_name + " " : ""}${record.last_name}`,
+      record.email, record.phone,
+      `${record.address}, ${record.city}, ${record.state} ${record.zip}`,
+      record.position_applied, record.desired_pay || "", record.available_start_date || "",
+      record.education || "", record.skills || "", record.how_heard || "",
+      new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+    ];
+    return [headers, row].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  } else {
+    const headers = ["Name", "Company", "Email", "Phone", "Industry", "Diameters", "Annual Volume", "Message", "Submitted"];
+    const row = [
+      `${record.first_name} ${record.last_name}`,
+      record.company || "", record.email, record.phone || "",
+      record.industry || "", record.diameters || "", record.annual_volume || "",
+      record.message || "",
+      new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+    ];
+    return [headers, row].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  }
+}
+
 function generatePdfBytes(text: string): Uint8Array {
   // Generate a simple text-based PDF
   const lines = text.split("\n");
