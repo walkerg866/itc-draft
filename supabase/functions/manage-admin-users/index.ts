@@ -47,6 +47,12 @@ Deno.serve(async (req) => {
 
   try {
     if (req.method === "GET") {
+      if (!callerIsSuperAdmin) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
       // List all users with roles
       const { data: roles, error: rolesErr } = await adminClient
         .from("user_roles")
