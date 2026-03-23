@@ -36,10 +36,19 @@ const NotificationSettings = () => {
         .select("*");
 
       // Get admin user emails for labeling
-      const { data: adminData } = await supabase.functions.invoke("manage-admin-users", {
-        body: { action: "list" },
-      });
-      const adminUsers = adminData?.users || [];
+      const { data: { session } } = await supabase.auth.getSession();
+      const adminData = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+        }
+      ).then((response) => response.json());
+
+      const adminUsers = Array.isArray(adminData) ? adminData : [];
       const adminMap = new Map(adminUsers.map((u: any) => [u.id, u.email]));
 
       // Build recipients from preferences
