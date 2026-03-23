@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, FileText, MessageSquareQuote, Loader2, LayoutDashboard } from "lucide-react";
+import { Users, FileText, MessageSquareQuote, Loader2, LayoutDashboard, Bell } from "lucide-react";
 
 const AdminHome = () => {
-  const [stats, setStats] = useState({ admins: 0, applications: 0, quotes: 0 });
+  const [stats, setStats] = useState({ admins: 0, applications: 0, quotes: 0, recipients: 0 });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const AdminHome = () => {
 
       const { data: { session } } = await supabase.auth.getSession();
 
-      const [adminRes, appsRes, quotesRes] = await Promise.all([
+      const [adminRes, appsRes, quotesRes, notifRes] = await Promise.all([
         fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
           {
@@ -34,12 +34,16 @@ const AdminHome = () => {
           .from("quote_requests")
           .select("id", { count: "exact", head: true })
           .gte("submitted_at", since),
+        supabase
+          .from("notification_preferences")
+          .select("id", { count: "exact", head: true }),
       ]);
 
       setStats({
         admins: Array.isArray(adminRes) ? adminRes.length : 0,
         applications: appsRes.count ?? 0,
         quotes: quotesRes.count ?? 0,
+        recipients: notifRes.count ?? 0,
       });
       setLoading(false);
     };
@@ -58,6 +62,7 @@ const AdminHome = () => {
     { label: "Admin Users", value: stats.admins, icon: Users, color: "text-blue-600" },
     { label: "Job Applications (30d)", value: stats.applications, icon: FileText, color: "text-emerald-600" },
     { label: "Quote Requests (30d)", value: stats.quotes, icon: MessageSquareQuote, color: "text-amber-600" },
+    { label: "Notification Recipients", value: stats.recipients, icon: Bell, color: "text-violet-600" },
   ];
 
   return (
