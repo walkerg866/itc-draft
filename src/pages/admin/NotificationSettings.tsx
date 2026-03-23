@@ -256,6 +256,19 @@ const NotificationSettings = () => {
       <p className="text-xs text-muted-foreground mt-4">
         Notifications include a brief summary and a PDF download link (valid for 7 days) so recipients don't need to log in.
       </p>
+
+      {/* Email Delivery Setup */}
+      {isSuperAdmin && (
+        <div className="mt-8 border border-border rounded-lg p-6">
+          <h2 className="font-heading font-bold text-lg mb-2">Email Delivery Setup</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            To send notification emails from your own domain, you need to configure a sender domain. This improves deliverability and ensures emails come from your brand (e.g. notify@yourdomain.com).
+          </p>
+          <p className="text-sm text-muted-foreground">
+            Go to <strong>Settings → Cloud → Emails</strong> in Lovable to set up your email domain. Once configured, notification emails will be sent automatically when new applications or quote requests are submitted.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

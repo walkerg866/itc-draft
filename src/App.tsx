@@ -29,6 +29,8 @@ import HeroSlidesManager from "./pages/admin/HeroSlidesManager";
 import VideosManager from "./pages/admin/VideosManager";
 import UserManagement from "./pages/admin/UserManagement";
 import NotificationSettings from "./pages/admin/NotificationSettings";
+import AdminHome from "./pages/admin/AdminHome";
+import QuoteRequestsViewer from "./pages/admin/QuoteRequestsViewer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +47,16 @@ const App = () => (
             <Route path="/admin" element={<AdminLogin />} />
             <Route
               path="/admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <AdminHome />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/weather"
               element={
                 <ProtectedRoute>
                   <AdminDashboard>
@@ -69,6 +81,16 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <ApplicationsViewer />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/quotes"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <QuoteRequestsViewer />
                   </AdminDashboard>
                 </ProtectedRoute>
               }
