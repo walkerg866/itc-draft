@@ -29,6 +29,7 @@ import {
   CheckCircle,
   AlertCircle,
   Pencil,
+  Eye,
 } from "lucide-react";
 
 const SECTIONS = [
@@ -55,6 +56,7 @@ const DownloadsManager = () => {
   const queryClient = useQueryClient();
   const [filterSection, setFilterSection] = useState<string>("all");
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [previewItem, setPreviewItem] = useState<DownloadRow | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newName, setNewName] = useState("");
   const [newSection, setNewSection] = useState("certifications");
@@ -397,20 +399,30 @@ const DownloadsManager = () => {
                   {/* Actions */}
                   <div className="flex items-center gap-1 shrink-0">
                     {item.file_url && (
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        asChild
-                        title="Download"
-                      >
-                        <a
-                          href={item.file_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      <>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          title="Preview"
+                          onClick={() => setPreviewItem(item)}
                         >
-                          <Download className="h-4 w-4" />
-                        </a>
-                      </Button>
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          asChild
+                          title="Download"
+                        >
+                          <a
+                            href={item.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Download className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      </>
                     )}
 
                     <Button
@@ -482,6 +494,44 @@ const DownloadsManager = () => {
           </div>
         ))
       )}
+
+      {/* Document Preview Dialog */}
+      <Dialog open={!!previewItem} onOpenChange={(open) => !open && setPreviewItem(null)}>
+        <DialogContent className="sm:max-w-2xl max-h-[80vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="truncate pr-8">{previewItem?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="flex-1 min-h-0 mt-2">
+            {previewItem?.file_url && (
+              previewItem.file_url.toLowerCase().match(/\.(pdf)(\?|$)/) ? (
+                <iframe
+                  src={previewItem.file_url}
+                  className="w-full h-[60vh] rounded-md border border-border"
+                  title={`Preview of ${previewItem.name}`}
+                />
+              ) : previewItem.file_url.toLowerCase().match(/\.(png|jpg|jpeg|gif|webp|svg)(\?|$)/) ? (
+                <div className="flex items-center justify-center h-[60vh] bg-muted/30 rounded-md border border-border overflow-hidden">
+                  <img
+                    src={previewItem.file_url}
+                    alt={previewItem.name}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-[60vh] bg-muted/30 rounded-md border border-border text-muted-foreground gap-3">
+                  <FileText className="h-12 w-12 opacity-40" />
+                  <p className="text-sm">Preview not available for this file type.</p>
+                  <Button variant="outline" size="sm" asChild>
+                    <a href={previewItem.file_url} target="_blank" rel="noopener noreferrer">
+                      <Download className="h-4 w-4 mr-2" /> Download to view
+                    </a>
+                  </Button>
+                </div>
+              )
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
