@@ -265,6 +265,7 @@ export type Database = {
       notification_preferences: {
         Row: {
           created_at: string | null
+          email: string | null
           id: string
           notify_job_applications: boolean
           notify_quote_requests: boolean
@@ -272,6 +273,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          email?: string | null
           id?: string
           notify_job_applications?: boolean
           notify_quote_requests?: boolean
@@ -279,6 +281,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          email?: string | null
           id?: string
           notify_job_applications?: boolean
           notify_quote_requests?: boolean
