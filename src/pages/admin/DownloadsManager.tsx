@@ -399,20 +399,30 @@ const DownloadsManager = () => {
                   {/* Actions */}
                   <div className="flex items-center gap-1 shrink-0">
                     {item.file_url && (
-                      <Button
-                        size="icon"
-                        variant="ghost"
-                        asChild
-                        title="Download"
-                      >
-                        <a
-                          href={item.file_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      <>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          title="Preview"
+                          onClick={() => setPreviewItem(item)}
                         >
-                          <Download className="h-4 w-4" />
-                        </a>
-                      </Button>
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          asChild
+                          title="Download"
+                        >
+                          <a
+                            href={item.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Download className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      </>
                     )}
 
                     <Button
