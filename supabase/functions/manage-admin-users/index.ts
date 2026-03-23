@@ -47,6 +47,12 @@ Deno.serve(async (req) => {
 
   try {
     if (req.method === "GET") {
+      if (!callerIsSuperAdmin) {
+        return new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
       // List all users with roles
       const { data: roles, error: rolesErr } = await adminClient
         .from("user_roles")
@@ -97,13 +103,10 @@ Deno.serve(async (req) => {
         const isBootstrap = (count ?? 0) === 0;
 
         if (!isBootstrap && !callerIsSuperAdmin) {
-          // Only super admins can assign roles (admins can invite but role defaults)
-          if (role === "super_admin") {
-            return new Response(JSON.stringify({ error: "Only super admins can create super admin users" }), {
-              status: 403,
-              headers: { ...corsHeaders, "Content-Type": "application/json" },
-            });
-          }
+          return new Response(JSON.stringify({ error: "Forbidden" }), {
+            status: 403,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          });
         }
 
         // Create user
