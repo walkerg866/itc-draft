@@ -26,7 +26,7 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-steel-light/20">
+    <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 shrink-0">
