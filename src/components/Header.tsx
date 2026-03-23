@@ -48,7 +48,7 @@ const Header = () => {
                     }`}>
                       About <ChevronDown className="h-3.5 w-3.5" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-secondary border-steel-light/20 z-50" align="center">
+                    <DropdownMenuContent className="bg-warm-white border-border z-50" align="center">
                       <DropdownMenuItem asChild>
                         <Link to="/about" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
                           About Us
