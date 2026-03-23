@@ -31,6 +31,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import NotificationSettings from "./pages/admin/NotificationSettings";
 import AdminHome from "./pages/admin/AdminHome";
 import QuoteRequestsViewer from "./pages/admin/QuoteRequestsViewer";
+import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -184,6 +185,7 @@ const App = () => (
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/careers" element={<Careers />} />
                       <Route path="/careers/apply/:id" element={<ApplyJob />} />
+                      <Route path="/legal" element={<Legal />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>
