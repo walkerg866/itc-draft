@@ -28,6 +28,7 @@ import ImageRepositoryManager from "./pages/admin/ImageRepositoryManager";
 import HeroSlidesManager from "./pages/admin/HeroSlidesManager";
 import VideosManager from "./pages/admin/VideosManager";
 import UserManagement from "./pages/admin/UserManagement";
+import NotificationSettings from "./pages/admin/NotificationSettings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
