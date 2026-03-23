@@ -129,8 +129,8 @@ const Header = () => {
                         onClick={() => setAboutOpen(!aboutOpen)}
                         className={`flex items-center justify-between px-4 py-3 text-sm font-medium rounded-md transition-colors w-full text-left ${
                           aboutActive
-                            ? "text-primary bg-steel-light/20"
-                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                            ? "text-primary bg-muted"
+                            : "text-foreground/70 hover:text-foreground"
                         }`}
                       >
                         About
