@@ -167,11 +167,11 @@ Deno.serve(async (req) => {
     if (signedUrlError) throw signedUrlError;
     const downloadUrl = signedUrlData.signedUrl;
 
-    // Look up notification preferences
+    // Look up notification preferences — now uses email column directly
     const prefColumn = type === "job_application" ? "notify_job_applications" : "notify_quote_requests";
     const { data: prefs, error: prefsError } = await supabase
       .from("notification_preferences")
-      .select("user_id")
+      .select("email, user_id")
       .eq(prefColumn, true);
 
     if (prefsError) {
@@ -186,14 +186,20 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Get emails for opted-in users
-    const userIds = prefs.map((p: any) => p.user_id);
-    const { data: usersData } = await supabase.auth.admin.listUsers();
+    // Collect emails: use email column directly, fall back to auth user lookup for legacy rows
+    const directEmails = prefs.filter((p: any) => p.email).map((p: any) => p.email);
+    const legacyUserIds = prefs.filter((p: any) => !p.email && p.user_id !== "00000000-0000-0000-0000-000000000000").map((p: any) => p.user_id);
     
-    const emails = usersData?.users
-      ?.filter((u: any) => userIds.includes(u.id))
-      ?.map((u: any) => u.email)
-      ?.filter(Boolean) || [];
+    let authEmails: string[] = [];
+    if (legacyUserIds.length > 0) {
+      const { data: usersData } = await supabase.auth.admin.listUsers();
+      authEmails = usersData?.users
+        ?.filter((u: any) => legacyUserIds.includes(u.id))
+        ?.map((u: any) => u.email)
+        ?.filter(Boolean) || [];
+    }
+
+    const emails = [...new Set([...directEmails, ...authEmails])];
 
     if (emails.length === 0) {
       return new Response(JSON.stringify({ success: true, notified: 0 }), {
