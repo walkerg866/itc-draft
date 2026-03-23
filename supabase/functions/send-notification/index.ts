@@ -269,19 +269,19 @@ Deno.serve(async (req) => {
 
     const summaryHtml = type === "job_application"
       ? `<p>A new job application has been submitted.</p>
-         <p><strong>Applicant:</strong> ${record.first_name} ${record.last_name}</p>
-         <p><strong>Position:</strong> ${record.position_applied}</p>
-         <p><strong>Email:</strong> ${record.email}</p>
-         <p><strong>Phone:</strong> ${record.phone}</p>
+         <p><strong>Applicant:</strong> ${escHtml(record.first_name)} ${escHtml(record.last_name)}</p>
+         <p><strong>Position:</strong> ${escHtml(record.position_applied)}</p>
+         <p><strong>Email:</strong> ${escHtml(record.email)}</p>
+         <p><strong>Phone:</strong> ${escHtml(record.phone)}</p>
          <p style="margin-top:20px">
            <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
            <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
          </p>`
       : `<p>A new quote request has been submitted.</p>
-         <p><strong>Name:</strong> ${record.first_name} ${record.last_name}</p>
-         <p><strong>Company:</strong> ${record.company || "N/A"}</p>
-         <p><strong>Email:</strong> ${record.email}</p>
-         <p><strong>Industry:</strong> ${record.industry || "N/A"}</p>
+         <p><strong>Name:</strong> ${escHtml(record.first_name)} ${escHtml(record.last_name)}</p>
+         <p><strong>Company:</strong> ${escHtml(record.company) || "N/A"}</p>
+         <p><strong>Email:</strong> ${escHtml(record.email)}</p>
+         <p><strong>Industry:</strong> ${escHtml(record.industry) || "N/A"}</p>
          <p style="margin-top:20px">
            <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
            <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
@@ -290,7 +290,7 @@ Deno.serve(async (req) => {
     const emailBody = `
       <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px">
         <div style="border-bottom:3px solid #E8600A;padding-bottom:15px;margin-bottom:20px">
-          <h2 style="margin:0;color:#1a1a2e">${subjectLine}</h2>
+          <h2 style="margin:0;color:#1a1a2e">${escHtml(subjectLine)}</h2>
         </div>
         ${summaryHtml}
         <hr style="margin-top:30px;border:none;border-top:1px solid #eee" />
