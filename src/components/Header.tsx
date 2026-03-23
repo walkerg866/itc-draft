@@ -81,7 +81,7 @@ const Header = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                   location.pathname === link.path
                     ? "text-primary"
-                    : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                    : "text-foreground/70 hover:text-foreground"
                 }`}
               >
                 {link.label}
