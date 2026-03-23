@@ -75,7 +75,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                <span className="text-muted-foreground text-base">
+                <span className="text-muted-foreground text-lg">
                   2100 Lexington Avenue<br />
                   Evansville, IN 47720
                 </span>
