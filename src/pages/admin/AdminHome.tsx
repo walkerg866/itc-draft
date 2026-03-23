@@ -8,13 +8,24 @@ const AdminHome = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetch = async () => {
+    const loadStats = async () => {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       const since = thirtyDaysAgo.toISOString();
 
+      const { data: { session } } = await supabase.auth.getSession();
+
       const [adminRes, appsRes, quotesRes] = await Promise.all([
-        supabase.functions.invoke("manage-admin-users", { body: { action: "list" } }),
+        fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${session?.access_token}`,
+              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+          }
+        ).then((r) => r.json()).catch(() => []),
         supabase
           .from("job_applications")
           .select("id", { count: "exact", head: true })
@@ -26,13 +37,13 @@ const AdminHome = () => {
       ]);
 
       setStats({
-        admins: adminRes.data?.users?.length ?? 0,
+        admins: Array.isArray(adminRes) ? adminRes.length : 0,
         applications: appsRes.count ?? 0,
         quotes: quotesRes.count ?? 0,
       });
       setLoading(false);
     };
-    fetch();
+    loadStats();
   }, []);
 
   if (loading) {
