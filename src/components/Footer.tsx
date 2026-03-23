@@ -110,10 +110,10 @@ const Footer = () => {
             © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/contact" className="text-muted-foreground text-base hover:text-foreground transition-colors">
+            <Link to="/legal#privacy" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/contact" className="text-muted-foreground text-base hover:text-foreground transition-colors">
+            <Link to="/legal#terms" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>
