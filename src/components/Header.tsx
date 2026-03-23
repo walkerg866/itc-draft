@@ -183,8 +183,8 @@ const Header = () => {
                     onClick={() => setMobileOpen(false)}
                     className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                       location.pathname === link.path
-                        ? "text-primary bg-steel-light/20"
-                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        ? "text-primary bg-muted"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}
                   >
                     {link.label}
