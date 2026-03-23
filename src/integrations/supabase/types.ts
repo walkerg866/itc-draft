@@ -262,6 +262,72 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_preferences: {
+        Row: {
+          created_at: string | null
+          id: string
+          notify_job_applications: boolean
+          notify_quote_requests: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          notify_job_applications?: boolean
+          notify_quote_requests?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          notify_job_applications?: boolean
+          notify_quote_requests?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          annual_volume: string | null
+          company: string | null
+          diameters: string | null
+          email: string
+          first_name: string
+          id: string
+          industry: string | null
+          last_name: string
+          message: string
+          phone: string | null
+          submitted_at: string
+        }
+        Insert: {
+          annual_volume?: string | null
+          company?: string | null
+          diameters?: string | null
+          email: string
+          first_name: string
+          id?: string
+          industry?: string | null
+          last_name: string
+          message: string
+          phone?: string | null
+          submitted_at?: string
+        }
+        Update: {
+          annual_volume?: string | null
+          company?: string | null
+          diameters?: string | null
+          email?: string
+          first_name?: string
+          id?: string
+          industry?: string | null
+          last_name?: string
+          message?: string
+          phone?: string | null
+          submitted_at?: string
+        }
+        Relationships: []
+      }
       site_images: {
         Row: {
           alt_text: string | null
