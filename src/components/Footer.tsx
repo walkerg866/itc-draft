@@ -58,7 +58,7 @@ const Footer = () => {
                 <li key={industry}>
                   <Link
                     to="/industries"
-                    className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
+                    className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                   >
                     {industry}
                   </Link>
