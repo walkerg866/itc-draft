@@ -104,7 +104,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-steel-light/20">
+      <div className="border-t border-border">
         <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-steel-muted text-xs">
             © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
