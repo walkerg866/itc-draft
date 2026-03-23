@@ -113,7 +113,7 @@ const Footer = () => {
             <Link to="/contact" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/contact" className="text-muted-foreground text-xs hover:text-foreground transition-colors">
+            <Link to="/contact" className="text-muted-foreground text-sm hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>

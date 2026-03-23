@@ -91,7 +91,7 @@ const Header = () => {
           <LanguageSwitcher />
           <Link
             to="/contact"
-            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
+            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-base font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow"
           >
             Request a Quote
           </Link>
