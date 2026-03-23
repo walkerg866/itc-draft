@@ -53,7 +53,7 @@ const HeroSlider = () => {
     return (
       <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-secondary">
         <div className="absolute inset-0 bg-hero-overlay" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-secondary to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </section>
     );
   }
