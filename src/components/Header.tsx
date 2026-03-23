@@ -154,8 +154,8 @@ const Header = () => {
                             onClick={() => setMobileOpen(false)}
                             className={`px-4 py-2.5 text-sm font-medium rounded-md transition-colors ${
                               location.pathname === "/employee-news"
-                                ? "text-primary bg-steel-light/20"
-                                : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                                ? "text-primary bg-muted"
+                                : "text-foreground/70 hover:text-foreground"
                             }`}
                           >
                             Employee News
