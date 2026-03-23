@@ -11,12 +11,12 @@ import facilityFallback from "@/assets/facility-aerial.jpg";
 
 const impactStatements = [
   {
-    headline: "Your Specs. Delivered Exactly.",
-    supporting: "Industry leading tolerance controls, so your production line never stops.",
-  },
-  {
     headline: "Complete Tubing Solutions.",
     supporting: "From raw coil to finished assembly.",
+  },
+  {
+    headline: "Your Specs. Delivered Exactly.",
+    supporting: "Industry leading tolerance controls, so your production line never stops.",
   },
   {
     headline: "Proven Reliable. Every Shipment.",
