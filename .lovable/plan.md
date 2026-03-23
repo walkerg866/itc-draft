@@ -1,26 +1,58 @@
 
 
-## Plan: Replace ITC Placeholder Logo with Uploaded SVG
+## Plan: Increase Nav Font Size + Unify Homepage Color Flow
 
-### What Changes
-Replace the circular "ITC" text placeholder in both the **Header** and **Footer** with the actual Indiana Tube Corporation logo SVG.
+### Problem
+1. Header/footer nav text needs one more size bump
+2. The video section's dark `bg-steel-gradient` background creates an ugly dark band between two light sections, making the page feel choppy and amateur
+3. The homepage has too many abrupt light-to-dark-to-light transitions: Hero (dark) -> Stats (white) -> Video (dark) -> Value Props (light gray) -> About (white) -> CTA (dark) -> Footer (light)
 
-### Steps
+### Design Approach
+Adopt a predominantly light, clean page flow with dark reserved only for the hero and the final CTA. This creates a professional rhythm: one dark hero at top, clean light content in the middle, one dark CTA at the bottom.
 
-1. **Copy the SVG to the project**
-   - Copy `user-uploads://IndianaTube_transparent.svg` to `src/assets/indiana-tube-logo.svg`
+```text
+Current flow:               Proposed flow:
+┌─────────────────┐         ┌─────────────────┐
+│  HERO (dark)    │         │  HERO (dark)    │
+├─────────────────┤         ├─────────────────┤
+│  Stats (white)  │         │  Stats (white)  │
+├─────────────────┤         │                 │
+│  Video (DARK)   │ ← ugly  │  Video (white)  │ ← seamless
+├─────────────────┤         │                 │
+│  Value Props    │         ├─────────────────┤
+│  (light gray)   │         │  Value Props    │
+├─────────────────┤         │  (light gray)   │
+│  About (white)  │         ├─────────────────┤
+├─────────────────┤         │  About (white)  │
+│  CTA (DARK)     │         ├─────────────────┤
+├─────────────────┤         │  CTA (dark)     │
+│  Footer (light) │         ├─────────────────┤
+└─────────────────┘         │  Footer (light) │
+                            └─────────────────┘
+```
 
-2. **Update Header (`src/components/Header.tsx`)**
-   - Import the logo SVG as an image asset
-   - Replace the circular div with "ITC" text and the adjacent "Indiana Tube / A Steel Partners Company" text block with a single `<img>` tag using the logo
-   - Size it appropriately for the navbar (approximately h-8 on mobile, h-10 on desktop)
+### Changes
 
-3. **Update Footer (`src/components/Footer.tsx`)**
-   - Same approach: import the logo and replace the circular placeholder + text block with the logo image
-   - Size slightly larger for the footer brand section
+**1. Header (`Header.tsx`)**
+- Increase nav link font from `text-base` to `text-lg`
+- Increase "Request a Quote" button text to `text-lg`
 
-### Technical Notes
-- The SVG already contains both the company name and "A Steel Partners Company" tagline, so the separate text elements currently in the header/footer can be removed
-- The logo has a transparent background and uses the brand orange (#f14b1c) and dark gray (#4f4c4c) colors, which align with the existing design system
-- Using `import logo from "@/assets/indiana-tube-logo.svg"` ensures proper Vite bundling
+**2. Footer (`Footer.tsx`)**
+- Increase footer link and body text from `text-base` to `text-lg`
+- Increase section headers from `text-base` to `text-lg`
+- Increase bottom bar text from `text-sm` to `text-base`
+
+**3. Video Section (`Index.tsx`)**
+- Remove `bg-steel-gradient` dark background
+- Use `bg-background` (the default light page background) instead
+- Remove `border-white/10` on the video container (no longer needed on light bg)
+- Replace with a subtle `shadow-industrial` and standard `border-border` for a clean, embedded look
+- Increase vertical padding slightly (`py-12`) so the video breathes without needing a color-block to define the section
+
+**4. Hero bottom gradient (`HeroSlider.tsx`)**
+- Change the bottom gradient from `from-secondary` (dark slate that bleeds into stats) to `from-background` so it fades cleanly into the white stats bar below
+
+**5. CTA Section (`Index.tsx`)**
+- Keep dark `bg-steel-gradient` -- this is the one intentional dark block before the footer and works as a strong call-to-action anchor
+- Remove `shadow-orange-glow` from the video section (reserve orange glow for CTA only, making it more impactful)
 
