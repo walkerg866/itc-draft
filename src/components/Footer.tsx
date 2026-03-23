@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <img src={logo} alt="Indiana Tube Corporation" className="h-16 w-auto mb-4" />
+            <img src={logo} alt="Indiana Tube Corporation" className="h-20 w-auto mb-4" />
             <p className="text-muted-foreground text-lg leading-relaxed mt-4">
               45+ years engineering precision steel tubing solutions for the world's most demanding industries.
             </p>
