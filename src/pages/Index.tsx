@@ -9,11 +9,19 @@ import { useSiteVideos, getVideoUrl } from "@/hooks/useSiteVideos";
 // Static fallbacks
 import facilityFallback from "@/assets/facility-aerial.jpg";
 
-const stats = [
-  { value: "45+", label: "Years of Excellence" },
-  { value: ".156\"–1.75\"", label: "Diameter Range" },
-  { value: "5", label: "Key Industries" },
-  { value: "5", label: "Continents Worldwide" },
+const impactStatements = [
+  {
+    headline: "Your Specs. Delivered Exactly.",
+    supporting: "Tolerances twice as tight as industry standard — so your production line never stops.",
+  },
+  {
+    headline: "One Call. Complete Tubing Solutions.",
+    supporting: "From raw coil to finished assembly, we handle it all so you don't manage multiple vendors.",
+  },
+  {
+    headline: "Proven Reliable. Every Shipment.",
+    supporting: "45+ years of on-time, in-spec delivery to the world's most demanding industries.",
+  },
 ];
 
 const Index = () => {
@@ -26,22 +34,21 @@ const Index = () => {
       {/* Hero Section */}
       <HeroSlider />
 
-      {/* Stats Bar */}
+      {/* Impact Statements */}
       <section className="bg-card border-b border-border">
-        <div className="container py-10">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
-              <SectionReveal key={stat.label} delay={i * 0.1}>
-                <div className="text-center">
-                  <div className="font-heading font-extrabold text-3xl lg:text-4xl text-primary mb-1">{stat.value}</div>
-                  <div className="text-muted-foreground text-sm font-medium">{stat.label}</div>
+        <div className="container py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {impactStatements.map((statement, i) => (
+              <SectionReveal key={statement.headline} delay={i * 0.1}>
+                <div className="text-center px-4">
+                  <h3 className="font-heading font-extrabold text-xl lg:text-2xl text-primary mb-2">{statement.headline}</h3>
+                  <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">{statement.supporting}</p>
                 </div>
               </SectionReveal>
             ))}
           </div>
         </div>
       </section>
-
       {/* Video Section */}
       {homepageVideoUrl && (
         <section className="bg-background py-12">
