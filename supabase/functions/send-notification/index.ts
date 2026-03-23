@@ -11,6 +11,15 @@ interface NotificationPayload {
   record: Record<string, any>;
 }
 
+// HTML-encode user-controlled values to prevent injection
+const escHtml = (s: unknown): string =>
+  String(s ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
 function formatJobApplicationText(record: Record<string, any>): string {
   const lines = [
     `NEW JOB APPLICATION`,
