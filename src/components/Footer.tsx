@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <img src={logo} alt="Indiana Tube Corporation" className="h-12 w-auto mb-4" />
-            <p className="text-steel-muted text-sm leading-relaxed mt-4">
+            <p className="text-muted-foreground text-sm leading-relaxed mt-4">
               45+ years engineering precision steel tubing solutions for the world's most demanding industries.
             </p>
           </div>
