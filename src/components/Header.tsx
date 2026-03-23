@@ -55,7 +55,7 @@ const Header = () => {
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/employee-news" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                        <Link to="/employee-news" className="text-foreground/80 hover:text-foreground cursor-pointer">
                           Employee News
                         </Link>
                       </DropdownMenuItem>
