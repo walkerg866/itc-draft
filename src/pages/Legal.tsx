@@ -1,17 +1,23 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SectionReveal from "@/components/SectionReveal";
 
 const Legal = () => {
   const { hash } = useLocation();
-  const defaultTab = hash === "#terms" ? "terms" : "privacy";
+  const [tab, setTab] = useState(hash === "#terms" ? "terms" : "privacy");
+
+  useEffect(() => {
+    setTab(hash === "#terms" ? "terms" : "privacy");
+    window.scrollTo(0, 0);
+  }, [hash]);
 
   return (
     <div className="container py-16 max-w-4xl">
       <SectionReveal>
         <h1 className="font-heading text-4xl font-bold mb-8 text-foreground">Legal</h1>
 
-        <Tabs defaultValue={defaultTab}>
+        <Tabs value={tab} onValueChange={setTab}>
           <TabsList className="mb-8">
             <TabsTrigger value="privacy">Privacy Policy</TabsTrigger>
             <TabsTrigger value="terms">Terms of Service</TabsTrigger>
