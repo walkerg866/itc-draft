@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { CloudLightning, Briefcase, FileText, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell } from "lucide-react";
+import { LayoutDashboard, CloudLightning, Briefcase, FileText, MessageSquareQuote, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { label: "Weather Alerts", path: "/admin/dashboard", icon: CloudLightning },
+  { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Weather Alerts", path: "/admin/dashboard/weather", icon: CloudLightning },
   { label: "Job Listings", path: "/admin/dashboard/jobs", icon: Briefcase },
   { label: "Applications", path: "/admin/dashboard/applications", icon: FileText },
+  { label: "Quote Requests", path: "/admin/dashboard/quotes", icon: MessageSquareQuote },
   { label: "Downloads", path: "/admin/dashboard/downloads", icon: Download },
   { label: "Images", path: "/admin/dashboard/images", icon: Image },
   { label: "Image Repository", path: "/admin/dashboard/image-repository", icon: FileImage },
@@ -54,7 +56,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
           </button>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1">
+        <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             return (
