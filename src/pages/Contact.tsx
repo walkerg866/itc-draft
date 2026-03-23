@@ -160,7 +160,7 @@ const Contact = () => {
                 {/* Map embed */}
                 <div className="mt-10 rounded-lg overflow-hidden shadow-industrial border border-border">
                   <iframe
-                    src="https://www.google.com/maps?q=2100+Lexington+Avenue,+Evansville,+IN+47720&output=embed"
+                    src="https://maps.google.com/maps?q=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720&t=&z=15&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="250"
                     style={{ border: 0 }}

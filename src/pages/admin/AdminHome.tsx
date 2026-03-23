@@ -62,6 +62,7 @@ const AdminHome = () => {
     { label: "Admin Users", value: stats.admins, icon: Users, color: "text-blue-600" },
     { label: "Job Applications (30d)", value: stats.applications, icon: FileText, color: "text-emerald-600" },
     { label: "Quote Requests (30d)", value: stats.quotes, icon: MessageSquareQuote, color: "text-amber-600" },
+    { label: "Notification Recipients", value: stats.recipients, icon: Bell, color: "text-violet-600" },
   ];
 
   return (
