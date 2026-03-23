@@ -78,7 +78,7 @@ const Header = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                className={`px-4 py-2 text-base font-medium rounded-md transition-colors ${
                   location.pathname === link.path
                     ? "text-primary"
                     : "text-foreground/70 hover:text-foreground"
