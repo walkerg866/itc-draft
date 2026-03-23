@@ -133,6 +133,16 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/admin/dashboard/notifications"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <NotificationSettings />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
 
             {/* Public routes */}
             <Route
