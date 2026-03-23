@@ -26,7 +26,7 @@ const Header = () => {
   const location = useLocation();
 
   return (
-    <header className="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-steel-light/20">
+    <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-md border-b border-border shadow-sm">
       <div className="container flex items-center justify-between h-16 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3 shrink-0">
@@ -44,18 +44,18 @@ const Header = () => {
                     <DropdownMenuTrigger className={`px-4 py-2 text-sm font-medium rounded-md transition-colors inline-flex items-center gap-1 outline-none ${
                       location.pathname === "/about" || location.pathname === "/employee-news"
                         ? "text-primary"
-                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}>
                       About <ChevronDown className="h-3.5 w-3.5" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="bg-secondary border-steel-light/20 z-50" align="center">
+                    <DropdownMenuContent className="bg-warm-white border-border z-50" align="center">
                       <DropdownMenuItem asChild>
-                        <Link to="/about" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                        <Link to="/about" className="text-foreground/80 hover:text-foreground cursor-pointer">
                           About Us
                         </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem asChild>
-                        <Link to="/employee-news" className="text-secondary-foreground/80 hover:text-secondary-foreground cursor-pointer">
+                        <Link to="/employee-news" className="text-foreground/80 hover:text-foreground cursor-pointer">
                           Employee News
                         </Link>
                       </DropdownMenuItem>
@@ -66,7 +66,7 @@ const Header = () => {
                     className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                       location.pathname === link.path
                         ? "text-primary"
-                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}
                   >
                     {link.label}
@@ -81,7 +81,7 @@ const Header = () => {
                 className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                   location.pathname === link.path
                     ? "text-primary"
-                    : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                    : "text-foreground/70 hover:text-foreground"
                 }`}
               >
                 {link.label}
@@ -100,7 +100,7 @@ const Header = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden text-secondary-foreground p-2"
+          className="lg:hidden text-foreground p-2"
           aria-label="Toggle menu"
         >
           {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -115,7 +115,7 @@ const Header = () => {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="lg:hidden bg-secondary border-t border-steel-light/20 overflow-hidden"
+            className="lg:hidden bg-warm-white border-t border-border overflow-hidden"
           >
             <nav className="container py-4 flex flex-col gap-1">
               {navLinks.map((link) => {
@@ -129,8 +129,8 @@ const Header = () => {
                         onClick={() => setAboutOpen(!aboutOpen)}
                         className={`flex items-center justify-between px-4 py-3 text-sm font-medium rounded-md transition-colors w-full text-left ${
                           aboutActive
-                            ? "text-primary bg-steel-light/20"
-                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                            ? "text-primary bg-muted"
+                            : "text-foreground/70 hover:text-foreground"
                         }`}
                       >
                         About
@@ -143,8 +143,8 @@ const Header = () => {
                             onClick={() => setMobileOpen(false)}
                             className={`px-4 py-2.5 text-sm font-medium rounded-md transition-colors ${
                               location.pathname === "/about"
-                                ? "text-primary bg-steel-light/20"
-                                : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                                ? "text-primary bg-muted"
+                                : "text-foreground/70 hover:text-foreground"
                             }`}
                           >
                             About Us
@@ -154,8 +154,8 @@ const Header = () => {
                             onClick={() => setMobileOpen(false)}
                             className={`px-4 py-2.5 text-sm font-medium rounded-md transition-colors ${
                               location.pathname === "/employee-news"
-                                ? "text-primary bg-steel-light/20"
-                                : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                                ? "text-primary bg-muted"
+                                : "text-foreground/70 hover:text-foreground"
                             }`}
                           >
                             Employee News
@@ -167,8 +167,8 @@ const Header = () => {
                         onClick={() => setMobileOpen(false)}
                         className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                           location.pathname === link.path
-                            ? "text-primary bg-steel-light/20"
-                            : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                            ? "text-primary bg-muted"
+                            : "text-foreground/70 hover:text-foreground"
                         }`}
                       >
                         {link.label}
@@ -183,8 +183,8 @@ const Header = () => {
                     onClick={() => setMobileOpen(false)}
                     className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                       location.pathname === link.path
-                        ? "text-primary bg-steel-light/20"
-                        : "text-secondary-foreground/70 hover:text-secondary-foreground"
+                        ? "text-primary bg-muted"
+                        : "text-foreground/70 hover:text-foreground"
                     }`}
                   >
                     {link.label}

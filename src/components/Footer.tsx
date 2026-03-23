@@ -4,13 +4,13 @@ import logo from "@/assets/indiana-tube-logo.svg";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary text-secondary-foreground">
+    <footer className="bg-warm-white text-foreground">
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <img src={logo} alt="Indiana Tube Corporation" className="h-12 w-auto mb-4" />
-            <p className="text-steel-muted text-sm leading-relaxed mt-4">
+            <p className="text-muted-foreground text-sm leading-relaxed mt-4">
               45+ years engineering precision steel tubing solutions for the world's most demanding industries.
             </p>
           </div>
@@ -33,7 +33,7 @@ const Footer = () => {
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
+                    className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -58,7 +58,7 @@ const Footer = () => {
                 <li key={industry}>
                   <Link
                     to="/industries"
-                    className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
+                    className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                   >
                     {industry}
                   </Link>
@@ -75,7 +75,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                <span className="text-steel-muted text-sm">
+                <span className="text-muted-foreground text-sm">
                   2100 Lexington Avenue<br />
                   Evansville, IN 47720
                 </span>
@@ -84,7 +84,7 @@ const Footer = () => {
                 <Phone className="h-4 w-4 text-primary shrink-0" />
                 <a
                   href="tel:+18124249028"
-                  className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
+                  className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                 >
                   (812) 424-9028
                 </a>
@@ -93,7 +93,7 @@ const Footer = () => {
                 <Mail className="h-4 w-4 text-primary shrink-0" />
                 <a
                   href="mailto:sales@indianatube.com"
-                  className="text-steel-muted text-sm hover:text-secondary-foreground transition-colors"
+                  className="text-muted-foreground text-sm hover:text-foreground transition-colors"
                 >
                   sales@indianatube.com
                 </a>
@@ -104,16 +104,16 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-steel-light/20">
+      <div className="border-t border-border">
         <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-steel-muted text-xs">
+          <p className="text-muted-foreground text-xs">
             © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/contact" className="text-steel-muted text-xs hover:text-secondary-foreground transition-colors">
+            <Link to="/contact" className="text-muted-foreground text-xs hover:text-foreground transition-colors">
               Privacy Policy
             </Link>
-            <Link to="/contact" className="text-steel-muted text-xs hover:text-secondary-foreground transition-colors">
+            <Link to="/contact" className="text-muted-foreground text-xs hover:text-foreground transition-colors">
               Terms of Service
             </Link>
           </div>
