@@ -83,14 +83,6 @@ const GeneralInterestForm = () => {
 
       if (error) throw error;
 
-      // Trigger notification (fire and forget)
-      supabase.functions.invoke("send-notification", {
-        body: {
-          type: "job_application",
-          record: { id: applicationId, first_name: form.first_name.trim(), last_name: form.last_name.trim(), position_applied: "General Interest", email: form.email.trim(), phone: form.phone.trim(), skills: form.roles_interest.trim() || null, address: "N/A", city: "N/A", state: "N/A", zip: "N/A" },
-        },
-      }).catch((err) => console.error("Notification error:", err));
-
       setSubmitted(true);
     } catch (err: any) {
       toast.error(err.message || "Something went wrong. Please try again.");
