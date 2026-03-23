@@ -29,6 +29,7 @@ import {
   CheckCircle,
   AlertCircle,
   Pencil,
+  Eye,
 } from "lucide-react";
 
 const SECTIONS = [
