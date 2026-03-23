@@ -56,6 +56,7 @@ const DownloadsManager = () => {
   const queryClient = useQueryClient();
   const [filterSection, setFilterSection] = useState<string>("all");
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [previewItem, setPreviewItem] = useState<DownloadRow | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newName, setNewName] = useState("");
   const [newSection, setNewSection] = useState("certifications");
