@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import logo from "@/assets/indiana-tube-logo.svg";
 import { LayoutDashboard, CloudLightning, Briefcase, FileText, MessageSquareQuote, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -39,11 +40,7 @@ const AdminDashboard = ({ children }: { children: React.ReactNode }) => {
         } lg:static lg:flex`}
       >
         <div className="flex items-center gap-3 p-5 border-b border-steel-light/20">
-          <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-heading font-extrabold text-sm">
-              ITC
-            </span>
-          </div>
+          <img src={logo} alt="Indiana Tube Corporation" className="h-10 w-auto" />
           <div>
             <div className="font-heading font-bold text-sm leading-tight">Admin Panel</div>
             <div className="text-steel-muted text-xs">Indiana Tube Corp</div>
