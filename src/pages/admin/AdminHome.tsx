@@ -15,7 +15,7 @@ const AdminHome = () => {
 
       const { data: { session } } = await supabase.auth.getSession();
 
-      const [adminRes, appsRes, quotesRes] = await Promise.all([
+      const [adminRes, appsRes, quotesRes, notifRes] = await Promise.all([
         fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
           {
@@ -34,12 +34,16 @@ const AdminHome = () => {
           .from("quote_requests")
           .select("id", { count: "exact", head: true })
           .gte("submitted_at", since),
+        supabase
+          .from("notification_preferences")
+          .select("id", { count: "exact", head: true }),
       ]);
 
       setStats({
         admins: Array.isArray(adminRes) ? adminRes.length : 0,
         applications: appsRes.count ?? 0,
         quotes: quotesRes.count ?? 0,
+        recipients: notifRes.count ?? 0,
       });
       setLoading(false);
     };
