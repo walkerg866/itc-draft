@@ -117,6 +117,7 @@ const Footer = () => {
             <Link to="/legal#terms" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Terms of Service
             </Link>
+            <CookieSettingsButton className="text-muted-foreground text-base hover:text-foreground transition-colors" />
           </div>
         </div>
       </div>
