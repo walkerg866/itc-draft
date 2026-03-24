@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logo from "@/assets/indiana-tube-logo.svg";
+import { CookieSettingsButton } from "@/components/CookieConsent";
 
 const Footer = () => {
   return (
@@ -116,6 +117,7 @@ const Footer = () => {
             <Link to="/legal#terms" className="text-muted-foreground text-base hover:text-foreground transition-colors">
               Terms of Service
             </Link>
+            <CookieSettingsButton className="text-muted-foreground text-base hover:text-foreground transition-colors" />
           </div>
         </div>
       </div>
