@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logo from "@/assets/indiana-tube-logo.svg";
+import { CookieSettingsButton } from "@/components/CookieConsent";
 
 const Footer = () => {
   return (
