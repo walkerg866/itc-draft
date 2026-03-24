@@ -1,27 +1,27 @@
 
 
-## Plan: Single Legal Page with Privacy Policy & Terms of Service
+## Plan: Add Cookie Consent from AltLine Project
 
-### What we'll build
-A new `/legal` page containing both the Privacy Policy and Terms of Service, organized with tabs so visitors can switch between them. Footer links will be updated to point to this page with hash anchors (`/legal#privacy` and `/legal#terms`) so each link opens the correct tab.
+Copy over the cookie consent banner and preferences dialog from the [AltLine Main site](/projects/4469fc67-929c-458a-b2bd-1afb70e49521) project, with minor adaptations for this project's branding.
 
 ### Steps
 
-1. **Create `src/pages/Legal.tsx`**
-   - Two-tab layout using the existing shadcn Tabs component
-   - Tab 1: Privacy Policy (placeholder content tailored to Indiana Tube Corporation)
-   - Tab 2: Terms of Service (placeholder content)
-   - Read the URL hash on mount to auto-select the correct tab
-   - Wrapped in SectionReveal for consistency with other pages
+1. **Create `src/hooks/useCookieConsent.ts`**
+   - Copy the hook as-is, changing the localStorage key from `alt-line-cookie-consent` to `itc-cookie-consent`
 
-2. **Update `src/components/Footer.tsx`**
-   - Change "Privacy Policy" link from `/contact` to `/legal#privacy`
-   - Change "Terms of Service" link from `/contact` to `/legal#terms`
+2. **Create `src/components/CookieConsent.tsx`**
+   - Copy the component, adapting two things:
+     - Change the `variant="brand"` button props to `variant="default"` (this project doesn't have a `brand` variant)
+     - Update the privacy policy link from `/privacy-policy` to `/legal#privacy`
 
 3. **Update `src/App.tsx`**
-   - Add `/legal` route to the public routes block
+   - Add `<CookieConsent />` inside the `BrowserRouter`, after the `Routes` block so it renders on all pages
+
+4. **Update `src/components/Footer.tsx`**
+   - Add a "Cookie Settings" link using the exported `CookieSettingsButton` component alongside the existing Privacy Policy and Terms links
 
 ### Technical notes
-- The placeholder policy text will include standard sections (data collection, cookies, liability, etc.) clearly marked as drafts for legal review.
-- Hash-based tab selection will use `useLocation().hash` from react-router-dom.
+- The hook stores consent state in localStorage with a versioned schema
+- The banner auto-hides once consent is given; `CookieSettingsButton` revokes consent to re-show it
+- No database changes needed — this is entirely client-side
 
