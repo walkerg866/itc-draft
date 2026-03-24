@@ -162,21 +162,22 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Validate webhook secret
-    const expectedSecret = Deno.env.get("NOTIFICATION_WEBHOOK_SECRET");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+    // Validate webhook secret by reading expected value from Vault
+    const { data: vaultRow, error: vaultErr } = await supabase.rpc("get_webhook_secret");
+    const expectedSecret = vaultRow;
     const providedSecret = req.headers.get("x-webhook-secret");
 
-    if (!expectedSecret || providedSecret !== expectedSecret) {
-      console.error("Unauthorized: invalid or missing webhook secret");
+    if (vaultErr || !expectedSecret || providedSecret !== expectedSecret) {
+      console.error("Unauthorized: invalid or missing webhook secret", vaultErr?.message);
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, serviceRoleKey);
 
     const payload: NotificationPayload = await req.json();
     const { type, record } = payload;
