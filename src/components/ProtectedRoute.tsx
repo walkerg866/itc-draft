@@ -15,8 +15,22 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return <Navigate to="/admin" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
+        <p className="text-destructive font-medium">Access denied. You do not have admin privileges.</p>
+        <button
+          onClick={() => { supabase.auth.signOut(); }}
+          className="text-sm text-muted-foreground underline hover:text-foreground"
+        >
+          Sign out
+        </button>
+      </div>
+    );
   }
 
   return <>{children}</>;
