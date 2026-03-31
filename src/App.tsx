@@ -34,6 +34,7 @@ import AdminHome from "./pages/admin/AdminHome";
 import QuoteRequestsViewer from "./pages/admin/QuoteRequestsViewer";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Routes>
             {/* Admin routes — no Header/Footer */}
             <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/admin/dashboard"
               element={
