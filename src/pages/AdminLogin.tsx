@@ -12,6 +12,8 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [forgotMode, setForgotMode] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
   const { signIn, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -44,6 +46,29 @@ const AdminLogin = () => {
     } else {
       navigate("/admin/dashboard", { replace: true });
     }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+
+    if (!email.trim()) {
+      setError("Please enter your email address.");
+      setIsLoading(false);
+      return;
+    }
+
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+
+    if (resetError) {
+      setError(resetError.message);
+    } else {
+      setResetSent(true);
+    }
+    setIsLoading(false);
   };
 
   return (
