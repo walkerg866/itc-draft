@@ -48,6 +48,7 @@ const App = () => (
           <Routes>
             {/* Admin routes — no Header/Footer */}
             <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/admin/dashboard"
               element={
