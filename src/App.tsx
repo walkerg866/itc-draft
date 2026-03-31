@@ -34,6 +34,7 @@ import AdminHome from "./pages/admin/AdminHome";
 import QuoteRequestsViewer from "./pages/admin/QuoteRequestsViewer";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 
 const queryClient = new QueryClient();
 
