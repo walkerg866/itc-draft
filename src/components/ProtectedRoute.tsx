@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserRole } from "@/hooks/useUserRole";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -15,8 +16,22 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (!user || !isAdmin) {
+  if (!user) {
     return <Navigate to="/admin" replace />;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background gap-4">
+        <p className="text-destructive font-medium">Access denied. You do not have admin privileges.</p>
+        <button
+          onClick={() => { supabase.auth.signOut(); }}
+          className="text-sm text-muted-foreground underline hover:text-foreground"
+        >
+          Sign out
+        </button>
+      </div>
+    );
   }
 
   return <>{children}</>;

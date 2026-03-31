@@ -14,10 +14,14 @@ export const useUserRole = () => {
         .select("role")
         .eq("user_id", user.id)
         .maybeSingle();
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching user role:", error.message);
+        return null;
+      }
       return data?.role as "super_admin" | "admin" | null;
     },
     enabled: !!user,
+    retry: false,
   });
 
   return {

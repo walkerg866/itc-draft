@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { Lock, AlertCircle, Loader2 } from "lucide-react";
@@ -11,14 +11,14 @@ const AdminLogin = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn, user } = useAuth();
+  const { signIn, user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect if already logged in
-  if (user) {
-    navigate("/admin/dashboard", { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (!authLoading && user) {
+      navigate("/admin/dashboard", { replace: true });
+    }
+  }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
