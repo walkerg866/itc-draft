@@ -16,6 +16,19 @@ const productData = [
       "A606 Type 4 Grade 70/80",
       "Coatings (Copper, Nickel, Aluminized)",
     ],
+    specs: {
+      title: "Industry Standard Specifications",
+      items: [
+        "SAE J526",
+        "SAE J356",
+        "ASTM 513 Type 1",
+        "ASTM 513 Type 2",
+        "STKM 11A",
+        "EN10305-3",
+        "GM-124M",
+        "JIS 3445",
+      ],
+    },
   },
   {
     title: "CT Spooled Tube",
