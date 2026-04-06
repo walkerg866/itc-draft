@@ -16,6 +16,19 @@ const productData = [
       "A606 Type 4 Grade 70/80",
       "Coatings (Copper, Nickel, Aluminized)",
     ],
+    specs: {
+      title: "Industry Standard Specifications",
+      items: [
+        "SAE J526",
+        "SAE J356",
+        "ASTM 513 Type 1",
+        "ASTM 513 Type 2",
+        "STKM 11A",
+        "EN10305-3",
+        "GM-124M",
+        "JIS 3445",
+      ],
+    },
   },
   {
     title: "CT Spooled Tube",
@@ -137,7 +150,22 @@ const Products = () => {
                         {feature}
                       </li>
                     ))}
-                  </ul>
+                   </ul>
+                  {product.specs && (
+                    <>
+                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                        {product.specs.title}
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                        {product.specs.items.map((spec) => (
+                          <li key={spec} className="flex items-center gap-2 text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                            {spec}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                   <Link
                     to="/contact"
                     className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
