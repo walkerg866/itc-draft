@@ -66,19 +66,6 @@ const productData = [
       "Performance enhanced coatings",
     ],
   },
-  {
-    title: "Welded Stainless Steel Tubing",
-    imageKey: "product-stainless",
-    description:
-      "Indiana Tube offers a wide range of small diameter Welded and Sync Drawn Stainless Steel tubing in Titanium, and Nickel Alloy Pressure Tubing for Oil & Gas, Automotive, Power Gen, Pharmaceutical, Medical, Food & Beverage, Commercial Refrigeration, and Chemical Processing.",
-    features: [
-      "Welded & drawn",
-      "Titanium & Nickel alloy",
-      "X-ray testing",
-      "Custom packaging",
-      "Cost-effective alternative to seamless",
-    ],
-  },
 ];
 
 const Products = () => {
