@@ -1,27 +1,34 @@
 
 
-## Plan: Add Cookie Consent from AltLine Project
+## Plan: Steel Partners Link + Executive Bios Section
 
-Copy over the cookie consent banner and preferences dialog from the [AltLine Main site](/projects/4469fc67-929c-458a-b2bd-1afb70e49521) project, with minor adaptations for this project's branding.
+### What we're building
 
-### Steps
+1. **Steel Partners logo hyperlink** — wrap the existing logo on the About page so it opens https://www.steelpartners.com/ in a new tab.
 
-1. **Create `src/hooks/useCookieConsent.ts`**
-   - Copy the hook as-is, changing the localStorage key from `alt-line-cookie-consent` to `itc-cookie-consent`
+2. **Executive Bios section on /about** — a new section (between Values and Steel Partners sections) showing a 3×2 grid of executive bios. Each bio card has a photo, name, title, and a clickable LinkedIn link on the image. Data is fetched from a new database table. Only bios marked `is_active` are shown.
 
-2. **Create `src/components/CookieConsent.tsx`**
-   - Copy the component, adapting two things:
-     - Change the `variant="brand"` button props to `variant="default"` (this project doesn't have a `brand` variant)
-     - Update the privacy policy link from `/privacy-policy` to `/legal#privacy`
+3. **New database table: `executive_bios`** with columns: `id`, `name`, `title`, `image_url`, `linkedin_url`, `is_active`, `sort_order`, `created_at`, `updated_at`. RLS: public SELECT for active bios, admin INSERT/UPDATE/DELETE.
 
-3. **Update `src/App.tsx`**
-   - Add `<CookieConsent />` inside the `BrowserRouter`, after the `Routes` block so it renders on all pages
+4. **Admin panel page: Executive Bios Manager** — CRUD interface with image upload (to `site-images` bucket), name/title/LinkedIn URL fields, and on/off toggle for each bio. Added to sidebar nav and routes.
 
-4. **Update `src/components/Footer.tsx`**
-   - Add a "Cookie Settings" link using the exported `CookieSettingsButton` component alongside the existing Privacy Policy and Terms links
+### Technical details
 
-### Technical notes
-- The hook stores consent state in localStorage with a versioned schema
-- The banner auto-hides once consent is given; `CookieSettingsButton` revokes consent to re-show it
-- No database changes needed — this is entirely client-side
+**Migration SQL:**
+- Create `executive_bios` table with columns listed above
+- RLS policies: public can SELECT where `is_active = true`, authenticated admins can do all operations (using `has_role`)
+
+**Files to create:**
+- `src/pages/admin/ExecutiveBiosManager.tsx` — admin CRUD page with toggle switches, image upload, name/title/LinkedIn fields, reorder by sort_order
+
+**Files to modify:**
+- `src/pages/About.tsx` — (a) wrap Steel Partners logo in `<a href="https://www.steelpartners.com/" target="_blank">`, (b) add new Executive Leadership section with a grid querying `executive_bios` table
+- `src/pages/AdminDashboard.tsx` — add "Executive Bios" nav item
+- `src/App.tsx` — add route `/admin/dashboard/executive-bios`
+
+**About page bios section design:**
+- Section header: "Executive Leadership"
+- 3-column grid (responsive: 1 col mobile, 2 col tablet, 3 col desktop)
+- Each card: rounded image (clickable to LinkedIn if URL exists, opens new tab), name in bold below, title in muted text
+- Only shows bios where `is_active = true`, ordered by `sort_order`
 
