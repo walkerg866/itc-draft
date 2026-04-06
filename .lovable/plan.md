@@ -1,9 +1,12 @@
 
 
-## Plan: Remove Stocking Program from Products Page
+## Plan: Update CT Spooled Tube Section
 
-Remove the "Stocking Program" entry (the 7th and last object) from the `productData` array in `src/pages/Products.tsx`. No other files reference it.
+### Changes to `src/pages/Products.tsx`
 
-### Changes
-- **`src/pages/Products.tsx`** — Delete lines 82–92 (the Stocking Program object from the array)
+**Description (line 24):** Replace `"up to 1.75\" diameter"` with `"in a range of 0.625\" to 1.750\" outside diameters and .065\" to 0.109\" wall thickness,"`
+
+**Features (lines 26-28):** Remove `"Up to 1.75\" diameter"` bullet and replace with two new bullets:
+- `"Outside Diameters from 0.625\" to 1.750\""`
+- `"Wall Thicknesses from .065\" to 0.109\""`
 
