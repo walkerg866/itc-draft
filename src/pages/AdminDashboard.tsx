@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import logo from "@/assets/indiana-tube-logo.svg";
-import { LayoutDashboard, CloudLightning, Briefcase, FileText, MessageSquareQuote, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell } from "lucide-react";
+import { LayoutDashboard, CloudLightning, Briefcase, FileText, MessageSquareQuote, Download, Image, LogOut, Menu, X, FileImage, SlidersHorizontal, Video, Users, Bell, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
@@ -16,6 +16,7 @@ const navItems = [
   { label: "Image Repository", path: "/admin/dashboard/image-repository", icon: FileImage },
   { label: "Hero Slides", path: "/admin/dashboard/hero-slides", icon: SlidersHorizontal },
   { label: "Videos", path: "/admin/dashboard/videos", icon: Video },
+  { label: "Executive Bios", path: "/admin/dashboard/executive-bios", icon: UserCircle },
   { label: "Users", path: "/admin/dashboard/users", icon: Users },
   { label: "Notifications", path: "/admin/dashboard/notifications", icon: Bell },
 ];

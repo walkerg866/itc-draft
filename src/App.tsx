@@ -32,6 +32,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import NotificationSettings from "./pages/admin/NotificationSettings";
 import AdminHome from "./pages/admin/AdminHome";
 import QuoteRequestsViewer from "./pages/admin/QuoteRequestsViewer";
+import ExecutiveBiosManager from "./pages/admin/ExecutiveBiosManager";
 import Legal from "./pages/Legal";
 import NotFound from "./pages/NotFound";
 import ResetPassword from "./pages/ResetPassword";
@@ -145,6 +146,16 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <VideosManager />
+                  </AdminDashboard>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/dashboard/executive-bios"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard>
+                    <ExecutiveBiosManager />
                   </AdminDashboard>
                 </ProtectedRoute>
               }
