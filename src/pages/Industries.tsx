@@ -15,7 +15,7 @@ const industryData = [
     imageKey: "industry-automotive",
     fallback: automotiveFallback,
     description: "Our automotive tubing products are available as coiled, cut to length, and as fabricated assemblies. ITC tubing delivers exceptional value and performance for brake lines, fuel lines, transmission cooler lines, and more.",
-    applications: ["Brake lines", "Fuel lines", "Transmission cooler lines", "Power steering lines", "Vapor return lines"],
+    applications: ["A/C lines", "Fuel lines", "Transmission cooler lines", "Power steering lines", "Vapor return lines"],
   },
   {
     title: "Oil & Gas — Energy Services",
