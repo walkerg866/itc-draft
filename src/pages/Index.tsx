@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import ValuePropsSection from "@/components/ValuePropsSection";
 import HeroSlider from "@/components/HeroSlider";
