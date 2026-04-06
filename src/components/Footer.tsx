@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/indiana-tube-logo.svg";
 import { CookieSettingsButton } from "@/components/CookieConsent";
 
@@ -100,6 +100,26 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+            <div className="flex items-center gap-4 mt-6">
+              <a
+                href="https://www.facebook.com/IndianaTubeCorporation/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-6 w-6" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/indiana-tube-corporation/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-6 w-6" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
