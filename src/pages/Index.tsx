@@ -51,6 +51,16 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Certification Badges */}
+      <section className="bg-background border-b border-border py-8">
+        <div className="container flex justify-center items-center gap-8 md:gap-12">
+          <img src="/images/badge-1.png" alt="UL Registered Firm" className="h-16 md:h-20 w-auto" />
+          <img src="/images/badge-2.png" alt="Made in USA - Premium Quality" className="h-16 md:h-20 w-auto" />
+          <img src="/images/badge-3-gold-award.png" alt="Gold Award Certification" className="h-16 md:h-20 w-auto" />
+        </div>
+      </section>
+
       {/* Video Section */}
       {homepageVideoUrl && (
         <section className="bg-background py-12">
