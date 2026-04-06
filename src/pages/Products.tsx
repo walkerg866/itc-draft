@@ -55,12 +55,12 @@ const productData = [
     ],
   },
   {
-    title: "Galfan & Other Enhancement Coatings",
+    title: "Galfan® & Other Enhancement Coatings",
     imageKey: "product-galfan",
     description:
-      "Indiana Tube offers a variety of corrosion resistant and performance enhanced tube coatings. Our premier Galfan coated tubing is a proven cost-effective long-term corrosion resistance solution as compared to high-cost tubing manufactured with copper, stainless steel, or aluminum. Our Galfan coating is continuously tested beyond 4,000 hours.",
+      "Indiana Tube offers a variety of corrosion resistant and performance enhanced tube coatings. Our premier Galfan® coated tubing is a proven cost-effective long-term corrosion resistance solution as compared to high-cost tubing manufactured with copper, stainless steel, or aluminum. Our Galfan® coating is continuously tested beyond 4,000 hours.",
     features: [
-      "Galfan coating",
+      "Galfan® coating",
       "4,000+ hours corrosion testing",
       "Cost-effective alternative",
       "Performance enhanced coatings",
