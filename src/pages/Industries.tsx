@@ -22,7 +22,7 @@ const industryData = [
     imageKey: "industry-oil-gas",
     fallback: oilGasFallback,
     description: "Indiana Tube Corporation tubing is manufactured to meet rigorous industry standards and the most demanding customer applications in the energy sector. From downhole to surface, ITC delivers.",
-    applications: ["Control lines", "Injection tubing", "Capillary tubing", "Instrument tubing", "Umbilical components"],
+    applications: ["Clean Out/Intervention Applications", "Injection tubing", "Capillary tubing", "Cementing", "Velocity Strings", "Water Lift – Pumping Applications"],
   },
   {
     title: "HVAC & Appliance",
