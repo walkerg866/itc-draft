@@ -12,7 +12,7 @@ const valueProps = [
   {
     title: "Precision Engineering",
     description:
-      'Custom tubing solutions from .156" to 1.75" diameter, in both standard and metric sizes, with or without coatings.',
+      'Custom tubing solutions from .156" to 1.75" diameter, in both standard and metric sizes, with or without coatings. Specializing in Welded Low Carbon Tubing such as SAE J526, SAE J356, ASTM A513 Types 1 & 2 and EN 10305-3 along with many others.',
     accent: "02",
   },
   {
