@@ -15,7 +15,7 @@ const impactStatements = [
     supporting: "From raw coil to finished tube.",
   },
   {
-    headline: "Your Specs. Delivered Exactly.",
+    headline: "Your Specifications. Delivered Exactly.",
     supporting: "Industry leading tolerance controls, so your production line never stops.",
   },
   {
