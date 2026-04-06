@@ -49,7 +49,7 @@ const industryData = [
     imageKey: "industry-structural",
     fallback: structuralFallback,
     description: "ITC produces high-quality tubing suitable for fabrication in lawn and garden, structural, furniture, and general fabrication industries. All tubing is high-frequency welded with modern welding technology.",
-    applications: ["Lawn & garden equipment", "Furniture frames", "Structural supports", "Fencing components", "Display fixtures"],
+    applications: ["Lawn & garden equipment", "Furniture frames", "Structural supports", "Display fixtures"],
   },
 ];
 
