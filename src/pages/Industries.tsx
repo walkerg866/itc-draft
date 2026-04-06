@@ -29,8 +29,13 @@ const industryData = [
     imageKey: "industry-hvac",
     fallback: hvacFallback,
     description: "ITC produces clean, high-quality tubing compatible with R134a and modern refrigerants, suitable for fabrication in the appliance and heating element industries.",
-    applications: ["Refrigeration lines", "Heating elements", "Condenser tubing", "Evaporator tubing", "Appliance components"],
-    
+    applications: ["Refrigeration lines", "Heating elements", "Condenser tubing", "Evaporator tubing", "Appliance components", "Hot Water Heater Gas Lines"],
+    extraSections: [
+      {
+        title: "Refrigerants",
+        items: ["R32", "R454"],
+      },
+    ],
   },
   {
     title: "Heavy Equipment — Hydraulic & High Pressure",
