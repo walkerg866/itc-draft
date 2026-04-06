@@ -141,6 +141,33 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Certification Badges */}
+      <div className="border-t border-border">
+        <div className="container py-8 flex justify-center items-center gap-8 md:gap-12">
+          <img src="/images/badge-1.png" alt="UL Registered Firm" className="h-16 md:h-20 w-auto" />
+          <img src="/images/badge-2.png" alt="Made in USA - Premium Quality" className="h-16 md:h-20 w-auto" />
+          <img src="/images/badge-3-gold-award.png" alt="Gold Award Certification" className="h-16 md:h-20 w-auto" />
+        </div>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="border-t border-border">
+        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-muted-foreground text-base">
+            © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <Link to="/legal#privacy" className="text-muted-foreground text-base hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/legal#terms" className="text-muted-foreground text-base hover:text-foreground transition-colors">
+              Terms of Service
+            </Link>
+            <CookieSettingsButton className="text-muted-foreground text-base hover:text-foreground transition-colors" />
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };
