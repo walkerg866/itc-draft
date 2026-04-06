@@ -81,7 +81,7 @@ const About = () => {
       </section>
 
       {/* About Content */}
-      <section className="py-20 lg:py-28">
+      <section className="pt-20 pb-10 lg:pt-28 lg:pb-14">
         <div className="container">
           <div className="max-w-3xl mx-auto">
             <SectionReveal>
@@ -116,7 +116,7 @@ const About = () => {
 
       {/* Executive Leadership */}
       {bios.length > 0 && (
-        <section className="py-20 lg:py-28">
+        <section className="pt-10 pb-20 lg:pt-14 lg:pb-28">
           <div className="container">
             <SectionReveal>
               <div className="text-center max-w-2xl mx-auto mb-16">
