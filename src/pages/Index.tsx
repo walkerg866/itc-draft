@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import ValuePropsSection from "@/components/ValuePropsSection";
 import HeroSlider from "@/components/HeroSlider";
@@ -110,7 +110,51 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Published Articles */}
+      <section className="bg-card border-y border-border py-20 lg:py-28">
+        <div className="container">
+          <SectionReveal>
+            <div className="text-center mb-12">
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">Industry Insights</span>
+              <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3">
+                Featured in The Fabricator
+              </h2>
+            </div>
+          </SectionReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                title: "Trends in Hydraulic Tube Production, Part 1",
+                url: "https://www.thefabricator.com/tubepipejournal/article/tubepipeproduction/trends-in-hydraulic-tube-production-during-times-of-shortages-part-i-1",
+              },
+              {
+                title: "Trends in Hydraulic Tube Production, Part 2",
+                url: "https://www.thefabricator.com/tubepipejournal/article/tubepipeproduction/trends-in-hydraulic-tube-production-during-times-of-shortages-part-ii",
+              },
+            ].map((article, i) => (
+              <SectionReveal key={article.title} delay={i * 0.15}>
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block rounded-lg border border-border bg-background p-6 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                    The Fabricator — Tube &amp; Pipe Journal
+                  </p>
+                  <h3 className="font-heading font-bold text-lg text-foreground group-hover:text-primary transition-colors mb-4">
+                    {article.title}
+                  </h3>
+                  <span className="inline-flex items-center gap-1.5 text-primary text-sm font-bold">
+                    Read Article <ExternalLink className="h-4 w-4" />
+                  </span>
+                </a>
+              </SectionReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-steel-gradient py-20 lg:py-28">
         <div className="container text-center">
           <SectionReveal>
