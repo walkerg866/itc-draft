@@ -79,17 +79,6 @@ const productData = [
       "Cost-effective alternative to seamless",
     ],
   },
-  {
-    title: "Stocking Program",
-    imageKey: "product-stocking",
-    description:
-      "We understand the urgent nature of JIT business change. Indiana Tube offers stocking programs specifically designed to help high volume customers respond quickly to day-to-day OEM demand change.",
-    features: [
-      "JIT inventory",
-      "High volume programs",
-      "Quick response to demand changes",
-    ],
-  },
 ];
 
 const Products = () => {
