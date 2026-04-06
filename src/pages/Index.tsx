@@ -12,7 +12,7 @@ import facilityFallback from "@/assets/facility-aerial.jpg";
 const impactStatements = [
   {
     headline: "Complete Tubing Solutions.",
-    supporting: "From raw coil to finished assembly.",
+    supporting: "From raw coil to finished tube.",
   },
   {
     headline: "Your Specs. Delivered Exactly.",
@@ -41,7 +41,9 @@ const Index = () => {
             {impactStatements.map((statement, i) => (
               <SectionReveal key={statement.headline} delay={i * 0.1}>
                 <div className="text-center px-4">
-                  <h3 className="font-heading font-extrabold text-xl lg:text-2xl text-primary mb-2">{statement.headline}</h3>
+                  <h3 className="font-heading font-extrabold text-xl lg:text-2xl text-primary mb-2">
+                    {statement.headline}
+                  </h3>
                   <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">{statement.supporting}</p>
                 </div>
               </SectionReveal>
@@ -55,12 +57,7 @@ const Index = () => {
           <div className="container max-w-4xl">
             <SectionReveal>
               <div className="rounded-lg overflow-hidden shadow-industrial border border-border">
-                <video
-                  src={homepageVideoUrl}
-                  controls
-                  className="w-full aspect-video bg-black"
-                  preload="metadata"
-                />
+                <video src={homepageVideoUrl} controls className="w-full aspect-video bg-black" preload="metadata" />
               </div>
             </SectionReveal>
           </div>
@@ -88,14 +85,23 @@ const Index = () => {
             <SectionReveal delay={0.2}>
               <div>
                 <span className="text-primary text-sm font-bold uppercase tracking-widest">About ITC</span>
-                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-6">Built on Expertise. Driven by Service.</h2>
+                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3 mb-6">
+                  Built on Expertise. Driven by Service.
+                </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  Indiana Tube Corporation is a diversified solution provider and manufacturer of low carbon mechanical grade welded steel tubing, serving customers worldwide. Our products are used across automotive, heavy truck, energy, HVAC, and structural applications.
+                  Indiana Tube Corporation is a diversified solution provider and manufacturer of low carbon mechanical
+                  grade welded steel tubing, serving customers worldwide. Our products are used across automotive, heavy
+                  truck, energy, HVAC, and structural applications.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-8">
-                  We manufacture tubing with or without coatings from .156" to 1.75" diameter, in both standard and metric sizes. Every tube is high-frequency welded with modern steel welding technology, ensuring consistent quality and performance.
+                  We manufacture tubing with or without coatings from .156" to 1.75" diameter, in both standard and
+                  metric sizes. Every tube is high-frequency welded with modern steel welding technology, ensuring
+                  consistent quality and performance.
                 </p>
-                <Link to="/about" className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all">
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
+                >
                   Learn More About Us <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
@@ -112,13 +118,20 @@ const Index = () => {
               Ready to Discuss Your <span className="text-gradient-orange">Tubing Needs?</span>
             </h2>
             <p className="text-steel-muted text-lg max-w-xl mx-auto mb-10">
-              Our experienced team is ready to help you find the perfect tubing solution. Get in touch for a custom quote today.
+              Our experienced team is ready to help you find the perfect tubing solution. Get in touch for a custom
+              quote today.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow text-lg">
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow text-lg"
+              >
                 Request a Quote <ArrowRight className="h-5 w-5" />
               </Link>
-              <a href="tel:+18124249028" className="inline-flex items-center gap-2 px-8 py-4 border border-secondary-foreground/20 text-secondary-foreground font-heading font-bold rounded-md hover:bg-secondary-foreground/10 transition-colors text-lg">
+              <a
+                href="tel:+18124249028"
+                className="inline-flex items-center gap-2 px-8 py-4 border border-secondary-foreground/20 text-secondary-foreground font-heading font-bold rounded-md hover:bg-secondary-foreground/10 transition-colors text-lg"
+              >
                 Call (812) 424-9028
               </a>
             </div>
