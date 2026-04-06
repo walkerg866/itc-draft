@@ -110,7 +110,22 @@ const Industries = () => {
                         {app}
                       </li>
                     ))}
-                  </ul>
+                   </ul>
+                  {industry.extraSections?.map((section) => (
+                    <div key={section.title}>
+                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                        {section.title}
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                        {section.items.map((item) => (
+                          <li key={item} className="flex items-center gap-2 text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                   <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all">
                     Request a Quote <ArrowRight className="h-4 w-4" />
                   </Link>
