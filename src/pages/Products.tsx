@@ -16,19 +16,29 @@ const productData = [
       "A606 Type 4 Grade 70/80",
       "Coatings (Copper, Nickel, Aluminized)",
     ],
-    specs: {
-      title: "Industry Standard Specifications",
-      items: [
-        "SAE J526",
-        "SAE J356",
-        "ASTM 513 Type 1",
-        "ASTM 513 Type 2",
-        "STKM 11A",
-        "EN10305-3",
-        "GM-124M",
-        "JIS 3445",
-      ],
-    },
+    extraSections: [
+      {
+        title: "Industry Standard Specifications",
+        items: [
+          "SAE J526",
+          "SAE J356",
+          "ASTM 513 Type 1",
+          "ASTM 513 Type 2",
+          "STKM 11A",
+          "EN10305-3",
+          "GM-124M",
+          "JIS 3445",
+        ],
+      },
+      {
+        title: "Size Ranges",
+        items: [
+          "Outside Diameter Range: 0.156\" (3.97mm) to 1.750\" (44.45mm)",
+          "Wall Thickness Range: 0.022\" (.559mm) to 0.109\" (2.77mm)",
+        ],
+        note: "Not All Wall Thicknesses are available in all Outside Diameters",
+      },
+    ],
   },
   {
     title: "CT Spooled Tube",
@@ -151,21 +161,26 @@ const Products = () => {
                       </li>
                     ))}
                    </ul>
-                  {product.specs && (
-                    <>
+                  {product.extraSections?.map((section) => (
+                    <div key={section.title}>
                       <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
-                        {product.specs.title}
+                        {section.title}
                       </h4>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
-                        {product.specs.items.map((spec) => (
-                          <li key={spec} className="flex items-center gap-2 text-muted-foreground">
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                        {section.items.map((item) => (
+                          <li key={item} className="flex items-center gap-2 text-muted-foreground">
                             <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                            {spec}
+                            {item}
                           </li>
                         ))}
                       </ul>
-                    </>
-                  )}
+                      {section.note && (
+                        <p className="text-sm italic text-muted-foreground mb-8">
+                          ({section.note})
+                        </p>
+                      )}
+                    </div>
+                  ))}
                   <Link
                     to="/contact"
                     className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
