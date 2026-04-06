@@ -24,7 +24,7 @@ const valueProps = [
   {
     title: "Complete Solutions Provider",
     description:
-      "From raw tubing to fabricated assemblies — coiled, cut to length, or custom-built to your exact specifications.",
+      "From raw coil to finished tube, coiled, cut to length, and precision cut to your exact specifications.",
     accent: "04",
   },
 ];
