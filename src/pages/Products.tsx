@@ -150,7 +150,22 @@ const Products = () => {
                         {feature}
                       </li>
                     ))}
-                  </ul>
+                   </ul>
+                  {product.specs && (
+                    <>
+                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                        {product.specs.title}
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                        {product.specs.items.map((spec) => (
+                          <li key={spec} className="flex items-center gap-2 text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                            {spec}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                   <Link
                     to="/contact"
                     className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
