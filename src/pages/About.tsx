@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Linkedin } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
+import { supabase } from "@/integrations/supabase/client";
 import facilityFallback from "@/assets/facility-aerial.jpg";
 import steelPartnersLogo from "@/assets/steel-partners-logo.webp";
 
@@ -34,6 +36,17 @@ const milestones = [
 
 const About = () => {
   const { data: images } = useSiteImages();
+  const { data: bios = [] } = useQuery({
+    queryKey: ["executive-bios"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("executive_bios")
+        .select("*")
+        .order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
 
   return (
     <div>
@@ -196,6 +209,56 @@ const About = () => {
         </div>
       </section>
 
+      {/* Executive Leadership */}
+      {bios.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className="container">
+            <SectionReveal>
+              <div className="text-center max-w-2xl mx-auto mb-16">
+                <span className="text-primary text-sm font-bold uppercase tracking-widest">
+                  Leadership
+                </span>
+                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3">
+                  Executive Leadership
+                </h2>
+              </div>
+            </SectionReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {bios.map((bio, i) => (
+                <SectionReveal key={bio.id} delay={i * 0.1}>
+                  <div className="flex flex-col items-center text-center">
+                    {bio.linkedin_url ? (
+                      <a href={bio.linkedin_url} target="_blank" rel="noopener noreferrer" className="group relative mb-4">
+                        <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border group-hover:border-primary transition-colors">
+                          {bio.image_url ? (
+                            <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
+                          )}
+                        </div>
+                        <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-1.5 shadow-md">
+                          <Linkedin className="h-3.5 w-3.5" />
+                        </div>
+                      </a>
+                    ) : (
+                      <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border mb-4">
+                        {bio.image_url ? (
+                          <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
+                        )}
+                      </div>
+                    )}
+                    <h3 className="font-heading font-bold text-lg">{bio.name}</h3>
+                    <p className="text-muted-foreground text-sm">{bio.title}</p>
+                  </div>
+                </SectionReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Steel Partners */}
       <section className="py-20 lg:py-28">
         <div className="container">
@@ -203,11 +266,13 @@ const About = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Logo */}
               <div className="flex items-center justify-center">
-                <img
-                  src={steelPartnersLogo}
-                  alt="Steel Partners Holdings logo"
-                  className="max-w-[280px] lg:max-w-[340px] w-full"
-                />
+                <a href="https://www.steelpartners.com/" target="_blank" rel="noopener noreferrer">
+                  <img
+                    src={steelPartnersLogo}
+                    alt="Steel Partners Holdings logo"
+                    className="max-w-[280px] lg:max-w-[340px] w-full hover:opacity-80 transition-opacity"
+                  />
+                </a>
               </div>
 
               {/* Text */}
