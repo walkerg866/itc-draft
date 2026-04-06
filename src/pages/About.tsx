@@ -114,6 +114,56 @@ const About = () => {
         </div>
       </section>
 
+      {/* Executive Leadership */}
+      {bios.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className="container">
+            <SectionReveal>
+              <div className="text-center max-w-2xl mx-auto mb-16">
+                <span className="text-primary text-sm font-bold uppercase tracking-widest">
+                  Leadership
+                </span>
+                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3">
+                  Executive Leadership
+                </h2>
+              </div>
+            </SectionReveal>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {bios.map((bio, i) => (
+                <SectionReveal key={bio.id} delay={i * 0.1}>
+                  <div className="flex flex-col items-center text-center">
+                    {bio.linkedin_url ? (
+                      <a href={bio.linkedin_url} target="_blank" rel="noopener noreferrer" className="group relative mb-4">
+                        <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border group-hover:border-primary transition-colors">
+                          {bio.image_url ? (
+                            <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                          ) : (
+                            <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
+                          )}
+                        </div>
+                        <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-1.5 shadow-md">
+                          <Linkedin className="h-3.5 w-3.5" />
+                        </div>
+                      </a>
+                    ) : (
+                      <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border mb-4">
+                        {bio.image_url ? (
+                          <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                        ) : (
+                          <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
+                        )}
+                      </div>
+                    )}
+                    <h3 className="font-heading font-bold text-lg">{bio.name}</h3>
+                    <p className="text-muted-foreground text-sm">{bio.title}</p>
+                  </div>
+                </SectionReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Values Grid */}
       <section className="py-20 lg:py-28 bg-muted relative overflow-hidden">
         {/* Subtle background texture */}
@@ -208,56 +258,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* Executive Leadership */}
-      {bios.length > 0 && (
-        <section className="py-20 lg:py-28">
-          <div className="container">
-            <SectionReveal>
-              <div className="text-center max-w-2xl mx-auto mb-16">
-                <span className="text-primary text-sm font-bold uppercase tracking-widest">
-                  Leadership
-                </span>
-                <h2 className="font-heading font-extrabold text-3xl lg:text-4xl mt-3">
-                  Executive Leadership
-                </h2>
-              </div>
-            </SectionReveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {bios.map((bio, i) => (
-                <SectionReveal key={bio.id} delay={i * 0.1}>
-                  <div className="flex flex-col items-center text-center">
-                    {bio.linkedin_url ? (
-                      <a href={bio.linkedin_url} target="_blank" rel="noopener noreferrer" className="group relative mb-4">
-                        <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border group-hover:border-primary transition-colors">
-                          {bio.image_url ? (
-                            <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
-                          ) : (
-                            <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
-                          )}
-                        </div>
-                        <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-1.5 shadow-md">
-                          <Linkedin className="h-3.5 w-3.5" />
-                        </div>
-                      </a>
-                    ) : (
-                      <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border mb-4">
-                        {bio.image_url ? (
-                          <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
-                        ) : (
-                          <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
-                        )}
-                      </div>
-                    )}
-                    <h3 className="font-heading font-bold text-lg">{bio.name}</h3>
-                    <p className="text-muted-foreground text-sm">{bio.title}</p>
-                  </div>
-                </SectionReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Steel Partners */}
       <section className="py-20 lg:py-28">
