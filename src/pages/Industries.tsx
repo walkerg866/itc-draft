@@ -15,22 +15,27 @@ const industryData = [
     imageKey: "industry-automotive",
     fallback: automotiveFallback,
     description: "Our automotive tubing products are available as coiled, cut to length, and as fabricated assemblies. ITC tubing delivers exceptional value and performance for brake lines, fuel lines, transmission cooler lines, and more.",
-    applications: ["Brake lines", "Fuel lines", "Transmission cooler lines", "Power steering lines", "Vapor return lines"],
+    applications: ["A/C lines", "Fuel lines", "Transmission cooler lines", "Power steering lines", "Vapor return lines"],
   },
   {
     title: "Oil & Gas — Energy Services",
     imageKey: "industry-oil-gas",
     fallback: oilGasFallback,
     description: "Indiana Tube Corporation tubing is manufactured to meet rigorous industry standards and the most demanding customer applications in the energy sector. From downhole to surface, ITC delivers.",
-    applications: ["Control lines", "Injection tubing", "Capillary tubing", "Instrument tubing", "Umbilical components"],
+    applications: ["Clean Out/Intervention Applications", "Injection tubing", "Capillary tubing", "Cementing", "Velocity Strings", "Water Lift – Pumping Applications"],
   },
   {
     title: "HVAC & Appliance",
     imageKey: "industry-hvac",
     fallback: hvacFallback,
     description: "ITC produces clean, high-quality tubing compatible with R134a and modern refrigerants, suitable for fabrication in the appliance and heating element industries.",
-    applications: ["Refrigeration lines", "Heating elements", "Condenser tubing", "Evaporator tubing", "Appliance components"],
-    
+    applications: ["Refrigeration lines", "Heating elements", "Condenser tubing", "Evaporator tubing", "Appliance components", "Hot Water Heater Gas Lines"],
+    extraSections: [
+      {
+        title: "Refrigerants",
+        items: ["R32", "R454"],
+      },
+    ],
   },
   {
     title: "Heavy Equipment — Hydraulic & High Pressure",
@@ -105,7 +110,22 @@ const Industries = () => {
                         {app}
                       </li>
                     ))}
-                  </ul>
+                   </ul>
+                  {industry.extraSections?.map((section) => (
+                    <div key={section.title}>
+                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                        {section.title}
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
+                        {section.items.map((item) => (
+                          <li key={item} className="flex items-center gap-2 text-muted-foreground">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                   <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all">
                     Request a Quote <ArrowRight className="h-4 w-4" />
                   </Link>
