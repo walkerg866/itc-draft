@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/indiana-tube-logo.svg";
 import { CookieSettingsButton } from "@/components/CookieConsent";
 
