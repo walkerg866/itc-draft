@@ -142,23 +142,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-border">
-        <div className="container py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-base">
-            © {new Date().getFullYear()} Indiana Tube Corporation. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <Link to="/legal#privacy" className="text-muted-foreground text-base hover:text-foreground transition-colors">
-              Privacy Policy
-            </Link>
-            <Link to="/legal#terms" className="text-muted-foreground text-base hover:text-foreground transition-colors">
-              Terms of Service
-            </Link>
-            <CookieSettingsButton className="text-muted-foreground text-base hover:text-foreground transition-colors" />
-          </div>
-        </div>
-      </div>
     </footer>
   );
 };
