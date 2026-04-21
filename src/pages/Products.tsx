@@ -41,7 +41,7 @@ const productData = [
     ],
   },
   {
-    title: "CT Spooled Tube",
+    title: "Coiled Tube",
     imageKey: "product-ct-spooled",
     description:
       "Indiana Tube manufactures coiled tubing in a range of 0.625\" to 1.750\" outside diameters and .065\" to 0.109\" wall thickness, with premium A606 carbon steel to provide extended fatigue life for well applications.",
