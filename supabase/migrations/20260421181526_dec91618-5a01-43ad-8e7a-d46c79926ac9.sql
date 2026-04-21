@@ -1,0 +1,1 @@
+UPDATE public.hero_slides SET image_url = 'https://bzcsjbcnrxuqepdhjvym.supabase.co/storage/v1/object/public/site-images/hero/HVAC-hero-image2.png', updated_at = now() WHERE id = '79a951ae-b1fd-448f-b15f-50c4895204e0';
