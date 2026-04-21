@@ -102,6 +102,8 @@ const EmployeeNews = () => {
           )}
         </div>
       </section>
-
+    </div>
+  );
+};
 
 export default EmployeeNews;
