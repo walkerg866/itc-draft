@@ -188,6 +188,12 @@ const Index = () => {
               >
                 Call (812) 424-9028
               </a>
+              <a
+                href="mailto:sales@indianatube.com"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow text-lg"
+              >
+                Email Us
+              </a>
             </div>
           </SectionReveal>
         </div>
