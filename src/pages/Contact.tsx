@@ -26,10 +26,10 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Info + Form */}
+      {/* Contact Info + Portrait Map */}
       <section className="py-20 lg:py-28">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             {/* Info */}
             <SectionReveal>
               <div>
@@ -115,197 +115,22 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Map embed */}
-                <div className="mt-10 rounded-lg overflow-hidden shadow-industrial border border-border">
-                  <iframe
-                    src="https://maps.google.com/maps?q=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                    width="100%"
-                    height="250"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Indiana Tube Corporation — 2100 Lexington Avenue, Evansville, IN 47720"
-                  />
-                </div>
               </div>
             </SectionReveal>
 
-            {/* Contact Form */}
+            {/* Portrait Map */}
             <SectionReveal delay={0.2}>
-              <div className="bg-card rounded-lg p-8 lg:p-10 shadow-industrial border border-border">
-                {submitted ? (
-                  <div className="text-center py-10">
-                    <CheckCircle2 className="h-12 w-12 mx-auto mb-4 text-primary" />
-                    <h3 className="font-heading font-bold text-2xl mb-2">
-                      Thank You!
-                    </h3>
-                    <p className="text-muted-foreground">
-                      Your inquiry has been submitted. Our team will contact you
-                      within one business day.
-                    </p>
-                  </div>
-                ) : (
-                  <>
-                    <h3 className="font-heading font-bold text-2xl mb-2">
-                      Request a Quote
-                    </h3>
-                    <p className="text-muted-foreground mb-8">
-                      Fill out the form below and our team will get back to you
-                      within one business day.
-                    </p>
-
-                    <form className="space-y-5" onSubmit={handleSubmit}>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            First Name *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={form.first_name}
-                            onChange={(e) => update("first_name", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder="John"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Last Name *
-                          </label>
-                          <input
-                            type="text"
-                            required
-                            value={form.last_name}
-                            onChange={(e) => update("last_name", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder="Smith"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          Company
-                        </label>
-                        <input
-                          type="text"
-                          value={form.company}
-                          onChange={(e) => update("company", e.target.value)}
-                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                          placeholder="Your Company"
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Email *
-                          </label>
-                          <input
-                            type="email"
-                            required
-                            value={form.email}
-                            onChange={(e) => update("email", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder="john@company.com"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Phone
-                          </label>
-                          <input
-                            type="tel"
-                            value={form.phone}
-                            onChange={(e) => update("phone", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder="(555) 123-4567"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          Industry
-                        </label>
-                        <select
-                          value={form.industry}
-                          onChange={(e) => update("industry", e.target.value)}
-                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                        >
-                          <option value="">Select an industry</option>
-                          <option value="Automotive & Transportation">
-                            Automotive & Transportation
-                          </option>
-                          <option value="Oil & Gas — Energy Services">
-                            Oil & Gas — Energy Services
-                          </option>
-                          <option value="HVAC & Appliance">HVAC & Appliance</option>
-                          <option value="Heavy Equipment & Hydraulics">
-                            Heavy Equipment & Hydraulics
-                          </option>
-                          <option value="Hardware & Structural">
-                            Hardware & Structural
-                          </option>
-                          <option value="Other">Other</option>
-                        </select>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Diameter(s)
-                          </label>
-                          <input
-                            type="text"
-                            value={form.diameters}
-                            onChange={(e) => update("diameters", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder='e.g. 1/2", 3/4", 1"'
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Annual Purchase Volume
-                          </label>
-                          <input
-                            type="text"
-                            value={form.annual_volume}
-                            onChange={(e) => update("annual_volume", e.target.value)}
-                            className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow"
-                            placeholder="e.g. 50,000 feet or 10,000 units"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium mb-2">
-                          How Can We Help? *
-                        </label>
-                        <textarea
-                          required
-                          rows={5}
-                          value={form.message}
-                          onChange={(e) => update("message", e.target.value)}
-                          className="w-full px-4 py-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-shadow resize-none"
-                          placeholder="Tell us about your tubing requirements, quantities, specifications, or any questions you have..."
-                        />
-                      </div>
-
-                      <button
-                        type="submit"
-                        disabled={submitting}
-                        className="w-full px-7 py-3.5 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow disabled:opacity-50 flex items-center justify-center gap-2"
-                      >
-                        {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-                        {submitting ? "Submitting…" : "Submit Inquiry"}
-                      </button>
-                    </form>
-                  </>
-                )}
+              <div className="rounded-lg overflow-hidden shadow-industrial border border-border aspect-[3/4] w-full">
+                <iframe
+                  src="https://maps.google.com/maps?q=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, height: "100%", width: "100%" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Indiana Tube Corporation — 2100 Lexington Avenue, Evansville, IN 47720"
+                />
               </div>
             </SectionReveal>
           </div>

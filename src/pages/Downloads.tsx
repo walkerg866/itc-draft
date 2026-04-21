@@ -13,7 +13,7 @@ const SECTION_META = [
     title: "Certifications & Declarations",
     description:
       "Indiana Tube Corporation QMS is designed to ensure conformance to rigid customer requirements through continuous improvement actions to sustain and increase product efficiency and performance for our customers. We are committed to a sustainable future and the environmental well-being of the communities we serve.",
-    requestUrl: "/contact",
+    requestUrl: "/quote",
     requestLabel: "Request Specific Declaration Documentation",
   },
   {

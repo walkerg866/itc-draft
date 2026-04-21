@@ -182,7 +182,7 @@ const Products = () => {
                     </div>
                   ))}
                   <Link
-                    to="/contact"
+                    to="/quote"
                     className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all"
                   >
                     Request a Quote <ArrowRight className="h-4 w-4" />

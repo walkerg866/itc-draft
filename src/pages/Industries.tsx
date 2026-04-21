@@ -126,7 +126,7 @@ const Industries = () => {
                       </ul>
                     </div>
                   ))}
-                  <Link to="/contact" className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all">
+                  <Link to="/quote" className="inline-flex items-center gap-2 text-primary font-heading font-bold hover:gap-3 transition-all">
                     Request a Quote <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>

@@ -16,6 +16,7 @@ import Products from "./pages/Products";
 import Downloads from "./pages/Downloads";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Quote from "./pages/Quote";
 import Careers from "./pages/Careers";
 import ApplyJob from "./pages/ApplyJob";
 import EmployeeNews from "./pages/EmployeeNews";
@@ -199,6 +200,7 @@ const App = () => (
                       <Route path="/about" element={<About />} />
                       <Route path="/employee-news" element={<EmployeeNews />} />
                       <Route path="/contact" element={<Contact />} />
+                      <Route path="/quote" element={<Quote />} />
                       <Route path="/careers" element={<Careers />} />
                       <Route path="/careers/apply/:id" element={<ApplyJob />} />
                       <Route path="/legal" element={<Legal />} />
