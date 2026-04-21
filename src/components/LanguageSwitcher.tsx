@@ -35,6 +35,23 @@ const LanguageSwitcher = () => {
           },
           "google_translate_element"
         );
+
+        // Relabel default "Select Language" option to simply "Language"
+        const relabel = () => {
+          const select = document.querySelector<HTMLSelectElement>(
+            "#google_translate_element select.goog-te-combo"
+          );
+          if (select && select.options.length > 0) {
+            select.options[0].text = "Language";
+            return true;
+          }
+          return false;
+        };
+        let attempts = 0;
+        const interval = window.setInterval(() => {
+          attempts += 1;
+          if (relabel() || attempts > 20) window.clearInterval(interval);
+        }, 200);
       }
     };
 
