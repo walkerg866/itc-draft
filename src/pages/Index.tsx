@@ -180,7 +180,7 @@ const Index = () => {
                 to="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground font-heading font-bold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow text-lg"
               >
-                Request a Quote <ArrowRight className="h-5 w-5" />
+                Request a Quote
               </Link>
               <a
                 href="tel:+18124249028"
