@@ -11,12 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+const CAREERS_URL = "https://myjobs.adp.com/indianatubecareers";
+
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Industries", path: "/industries" },
   { label: "Products", path: "/products" },
   { label: "Downloads", path: "/downloads" },
-  { label: "Careers", path: "/careers" },
+  { label: "Careers", path: "/careers", external: true },
   { label: "Contact", path: "/contact" },
 ];
 
