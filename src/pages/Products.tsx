@@ -14,7 +14,7 @@ const productData = [
       "Low Carbon Grades (CS, DS, DDS, EDDS, HSLA, DP)",
       "HSLA Grades (50, 60, 70 & 80)",
       "A606 Type 4 Grade 70/80",
-      "Coatings (Copper, Nickel, Aluminized)",
+      "Coatings (Copper, Nickel)",
     ],
     extraSections: [
       {
