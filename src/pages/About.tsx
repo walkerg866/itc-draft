@@ -34,6 +34,22 @@ const milestones = [
   },
 ];
 
+const timelineData = [
+  { year: "1978", title: "Founded", description: "Indiana Tube Corporation established in Evansville, Indiana as a precision steel tubing manufacturer." },
+  { year: "1985", title: "Capacity Expansion", description: "Expanded manufacturing capacity to meet growing automotive and industrial demand." },
+  { year: "1995", title: "ISO Certified", description: "Achieved ISO certification, reinforcing commitment to world-class quality standards." },
+  { year: "2005", title: "Oil & Gas Market", description: "Entered the Oil & Gas energy sector, diversifying product applications and customer base." },
+  { year: "2015", title: "Steel Partners", description: "Joined the Steel Partners family, gaining the backing of a diversified global holding company." },
+  { year: "2020", title: "Modernization", description: "Completed major facility modernization, upgrading equipment and expanding capabilities." },
+];
+
+const didYouKnow = [
+  { accent: "01", fact: "ITC tubing is used in vehicles driven by millions of people every day across the globe." },
+  { accent: "02", fact: "Our Evansville facility spans over 200,000 square feet of advanced manufacturing space." },
+  { accent: "03", fact: "We serve customers across 5 major industries on multiple continents worldwide." },
+  { accent: "04", fact: "ITC manufactures tubing in both Standard and Metric sizes for maximum versatility." },
+];
+
 const About = () => {
   const { data: images } = useSiteImages();
   const { data: bios = [] } = useQuery({
