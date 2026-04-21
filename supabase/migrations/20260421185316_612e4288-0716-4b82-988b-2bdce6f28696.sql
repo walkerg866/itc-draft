@@ -1,0 +1,1 @@
+UPDATE public.hero_slides SET subtitle = 'Indiana Tube Corporation produces clean high quality tubing, compatible with R134a and learn more. suitable for fabrication in the Appliance / Heating Element industries. All of the tube is high frequency welded with the most modern steel welding technology.' WHERE id = '79a951ae-b1fd-448f-b15f-50c4895204e0';
