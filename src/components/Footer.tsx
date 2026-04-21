@@ -28,16 +28,27 @@ const Footer = () => {
                 { label: "Downloads", path: "/downloads" },
                 { label: "About Us", path: "/about" },
                 { label: "Employee News", path: "/employee-news" },
-                { label: "Careers", path: "/careers" },
+                { label: "Careers", path: "https://myjobs.adp.com/indianatubecareers", external: true },
                 { label: "Contact", path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-muted-foreground text-lg hover:text-foreground transition-colors"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground text-lg hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      to={link.path}
+                      className="text-muted-foreground text-lg hover:text-foreground transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

@@ -63,16 +63,14 @@ const Header = () => {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Link
-                    to={link.path}
-                    className={`px-4 py-2 text-lg font-medium rounded-md transition-colors ${
-                      location.pathname === link.path
-                        ? "text-primary"
-                        : "text-foreground/70 hover:text-foreground"
-                    }`}
+                  <a
+                    href={CAREERS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 text-lg font-medium rounded-md transition-colors text-foreground/70 hover:text-foreground"
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </span>
               );
             }
@@ -164,17 +162,15 @@ const Header = () => {
                           </Link>
                         </div>
                       )}
-                      <Link
-                        to={link.path}
+                      <a
+                        href={CAREERS_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         onClick={() => setMobileOpen(false)}
-                        className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
-                          location.pathname === link.path
-                            ? "text-primary bg-muted"
-                            : "text-foreground/70 hover:text-foreground"
-                        }`}
+                        className="px-4 py-3 text-sm font-medium rounded-md transition-colors text-foreground/70 hover:text-foreground"
                       >
                         {link.label}
-                      </Link>
+                      </a>
                     </span>
                   );
                 }
