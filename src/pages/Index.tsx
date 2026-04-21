@@ -55,9 +55,9 @@ const Index = () => {
       {/* Certification Badges */}
       <section className="bg-background border-b border-border py-12">
         <div className="container flex justify-center items-center gap-12 md:gap-16">
-          <img src="/images/badge-1.png" alt="UL Registered Firm" className="h-26 md:h-32 w-auto" style={{ height: "6.5rem" }} />
-          <img src="/images/badge-2.png" alt="Made in USA - Premium Quality" className="w-auto" style={{ height: "6.5rem" }} />
-          <img src="/images/badge-3-gold-award.png" alt="Gold Award Certification" className="w-auto" style={{ height: "6.5rem" }} />
+          <img src="/images/badge-1.png" alt="UL Registered Firm" className="h-26 md:h-32 w-auto" />
+          <img src="/images/badge-2.png" alt="Made in USA - Premium Quality" className="h-26 md:h-32 w-auto" />
+          <img src="/images/badge-3-gold-award.png" alt="Gold Award Certification" className="h-26 md:h-32 w-auto" />
         </div>
       </section>
 
