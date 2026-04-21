@@ -162,7 +162,7 @@ const Contact = () => {
                         Business Hours
                       </h4>
                       <p className="text-muted-foreground">
-                        Monday – Friday: 8:00 AM – 5:00 PM EST
+                        Monday – Friday: 8:00 AM – 5:00 PM Central Time
                       </p>
                     </div>
                   </div>
