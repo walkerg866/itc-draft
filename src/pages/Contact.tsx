@@ -91,23 +91,38 @@ const Contact = () => {
 
                 <div className="space-y-8">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Open address in Google Maps"
+                      className="w-12 h-12 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors"
+                    >
                       <MapPin className="h-5 w-5 text-primary" />
-                    </div>
+                    </a>
                     <div>
                       <h4 className="font-heading font-bold mb-1">Address</h4>
-                      <p className="text-muted-foreground">
+                      <a
+                        href="https://www.google.com/maps/search/?api=1&query=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
                         2100 Lexington Avenue
                         <br />
                         Evansville, IN 47720
-                      </p>
+                      </a>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <a
+                      href="tel:+18124249028"
+                      aria-label="Call (812) 424-9028"
+                      className="w-12 h-12 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors"
+                    >
                       <Phone className="h-5 w-5 text-primary" />
-                    </div>
+                    </a>
                     <div>
                       <h4 className="font-heading font-bold mb-1">Phone</h4>
                       <a
@@ -120,9 +135,13 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <a
+                      href="mailto:sales@indianatube.com"
+                      aria-label="Email sales@indianatube.com"
+                      className="w-12 h-12 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center shrink-0 transition-colors"
+                    >
                       <Mail className="h-5 w-5 text-primary" />
-                    </div>
+                    </a>
                     <div>
                       <h4 className="font-heading font-bold mb-1">Email</h4>
                       <a
