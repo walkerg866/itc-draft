@@ -120,7 +120,7 @@ const Contact = () => {
 
             {/* Portrait Map */}
             <SectionReveal delay={0.2}>
-              <div className="rounded-lg overflow-hidden shadow-industrial border border-border aspect-[3/4] w-full">
+              <div className="rounded-lg overflow-hidden shadow-industrial border border-border aspect-square w-full">
                 <iframe
                   src="https://maps.google.com/maps?q=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
