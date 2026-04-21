@@ -69,14 +69,6 @@ const ValuePropsSection = () => {
                   {valueProps[0].description}
                 </p>
               </div>
-              <div className="mt-6 pt-6 border-t border-secondary-foreground/10">
-                <Link
-                  to="/about"
-                  className="inline-flex items-center gap-2 text-primary font-heading font-bold text-sm hover:gap-3 transition-all"
-                >
-                  Learn about our process <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
             </div>
           </SectionReveal>
 
