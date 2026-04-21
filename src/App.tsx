@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { CookieConsent } from "@/components/CookieConsent";
 import WeatherAlert from "@/components/WeatherAlert";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ScrollToTop from "@/components/ScrollToTop";
 import Index from "./pages/Index";
 import Industries from "./pages/Industries";
 import Products from "./pages/Products";
@@ -46,6 +47,7 @@ const App = () => (
       <Sonner />
       <AuthProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             {/* Admin routes — no Header/Footer */}
             <Route path="/admin" element={<AdminLogin />} />
