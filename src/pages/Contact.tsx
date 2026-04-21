@@ -29,7 +29,7 @@ const Contact = () => {
       {/* Contact Info + Portrait Map */}
       <section className="py-20 lg:py-28">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Info */}
             <SectionReveal>
               <div>
@@ -120,7 +120,7 @@ const Contact = () => {
 
             {/* Portrait Map */}
             <SectionReveal delay={0.2}>
-              <div className="rounded-lg overflow-hidden shadow-industrial border border-border aspect-square w-full">
+              <div className="rounded-lg overflow-hidden shadow-industrial border border-border aspect-square w-full max-w-md mx-auto lg:ml-0">
                 <iframe
                   src="https://maps.google.com/maps?q=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
