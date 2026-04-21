@@ -1,59 +1,7 @@
-import { useState } from "react";
-import { Phone, Mail, MapPin, Clock, Loader2, CheckCircle2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 
 const Contact = () => {
-  const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
-    company: "",
-    email: "",
-    phone: "",
-    industry: "",
-    diameters: "",
-    annual_volume: "",
-    message: "",
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const update = (field: string, value: string) =>
-    setForm((prev) => ({ ...prev, [field]: value }));
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.first_name || !form.last_name || !form.email || !form.message) {
-      toast.error("Please fill in all required fields.");
-      return;
-    }
-    setSubmitting(true);
-    try {
-      const id = crypto.randomUUID();
-      const { error } = await supabase.from("quote_requests" as any).insert({
-        id,
-        first_name: form.first_name.trim(),
-        last_name: form.last_name.trim(),
-        company: form.company.trim() || null,
-        email: form.email.trim(),
-        phone: form.phone.trim() || null,
-        industry: form.industry || null,
-        diameters: form.diameters.trim() || null,
-        annual_volume: form.annual_volume.trim() || null,
-        message: form.message.trim(),
-      } as any);
-
-      if (error) throw error;
-
-      setSubmitted(true);
-    } catch (err: any) {
-      toast.error(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div>
       {/* Hero */}
