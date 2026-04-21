@@ -53,7 +53,7 @@ const productData = [
     ],
   },
   {
-    title: "Precision & Random Cut Length Tubing",
+    title: "Precision & Mill Direct Cut Length Tubing",
     imageKey: "product-cut-length",
     description:
       "Indiana Tube provides solutions for mill direct cut length, random cut lengths, and precision cut lengths.",
