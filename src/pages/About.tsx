@@ -35,7 +35,7 @@ const milestones = [
 ];
 
 const timelineData = [
-  { year: "1978", title: "Founded", description: "Indiana Tube Corporation established in Evansville, Indiana as a precision steel tubing manufacturer." },
+  { year: "1973", title: "Founded", description: "Indiana Tube Corporation established in Evansville, Indiana as a precision steel tubing manufacturer." },
   { year: "1985", title: "Capacity Expansion", description: "Expanded manufacturing capacity to meet growing automotive and industrial demand." },
   { year: "1995", title: "ISO Certified", description: "Achieved ISO certification, reinforcing commitment to world-class quality standards." },
   { year: "2005", title: "Oil & Gas Market", description: "Entered the Oil & Gas energy sector, diversifying product applications and customer base." },
@@ -81,7 +81,7 @@ const About = () => {
                 About Us
               </span>
               <h1 className="font-heading font-extrabold text-4xl lg:text-5xl text-secondary-foreground mt-3 mb-6 leading-tight">
-                45+ Years of{" "}
+                50+ Years of{" "}
                 <span className="text-gradient-orange">
                   Steel Tubing Excellence
                 </span>
@@ -118,7 +118,7 @@ const About = () => {
                   sizes.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  With over 45 years of experience, Indiana Tube has built a
+                  With over 50 years of experience, Indiana Tube has built a
                   reputation on very strong product knowledge, exceptional customer
                   service, and a deep dedication to understanding our customers'
                   tubing requirements. It's what makes ITC the right choice when
