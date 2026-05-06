@@ -118,7 +118,7 @@ const About = () => {
                   sizes.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  With over 45 years of experience, Indiana Tube has built a
+                  With over 50 years of experience, Indiana Tube has built a
                   reputation on very strong product knowledge, exceptional customer
                   service, and a deep dedication to understanding our customers'
                   tubing requirements. It's what makes ITC the right choice when
