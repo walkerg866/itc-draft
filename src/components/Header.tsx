@@ -216,7 +216,7 @@ const Header = () => {
                 onClick={openInterest}
                 className="mt-2 px-5 py-3 border border-primary text-primary text-sm font-semibold rounded-md text-center"
               >
-                Submit Interest
+                Submit Resume
               </button>
               <Link
                 to="/quote"
