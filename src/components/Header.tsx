@@ -10,6 +10,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import GeneralInterestForm from "@/components/GeneralInterestForm";
 
 const CAREERS_URL = "https://myjobs.adp.com/indianatubecareers";
 
@@ -19,13 +26,18 @@ const navLinks = [
   { label: "Products", path: "/products" },
   { label: "Downloads", path: "/downloads" },
   { label: "Careers", path: "/careers", external: true },
-  { label: "Contact", path: "/contact" },
 ];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [interestOpen, setInterestOpen] = useState(false);
   const location = useLocation();
+
+  const openInterest = () => {
+    setMobileOpen(false);
+    setInterestOpen(true);
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-md border-b border-border shadow-sm">
@@ -38,7 +50,7 @@ const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
-            // Insert About dropdown after Downloads
+            // Insert About dropdown before Careers
             if (link.label === "Careers") {
               return (
                 <span key="about-dropdown-and-careers" className="contents">
@@ -89,9 +101,16 @@ const Header = () => {
             );
           })}
           <LanguageSwitcher />
+          <button
+            type="button"
+            onClick={openInterest}
+            className="ml-4 px-5 py-2.5 border border-primary text-primary text-sm font-semibold rounded-md hover:bg-primary/10 transition-colors whitespace-nowrap"
+          >
+            Submit Interest
+          </button>
           <Link
             to="/quote"
-            className="ml-4 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow whitespace-nowrap"
+            className="ml-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-semibold rounded-md hover:bg-orange-deep transition-colors shadow-orange-glow whitespace-nowrap"
           >
             Request a Quote
           </Link>
@@ -192,6 +211,13 @@ const Header = () => {
               <div className="px-4 py-2">
                 <LanguageSwitcher />
               </div>
+              <button
+                type="button"
+                onClick={openInterest}
+                className="mt-2 px-5 py-3 border border-primary text-primary text-sm font-semibold rounded-md text-center"
+              >
+                Submit Interest
+              </button>
               <Link
                 to="/quote"
                 onClick={() => setMobileOpen(false)}
@@ -203,6 +229,16 @@ const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Submit Interest Dialog */}
+      <Dialog open={interestOpen} onOpenChange={setInterestOpen}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-warm-white">
+          <DialogHeader>
+            <DialogTitle className="font-heading">Submit Your Interest</DialogTitle>
+          </DialogHeader>
+          <GeneralInterestForm />
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };
