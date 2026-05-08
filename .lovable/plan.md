@@ -1,25 +1,25 @@
+# Plan: Bring back the General Interest button
 
+## Status of existing code
+Good news — the form component is still in the codebase: `src/components/GeneralInterestForm.tsx`. It's fully functional (writes to `job_applications` with `position_applied = "General Interest"`, supports optional resume upload to the `resumes` bucket, validates inputs). It's just not wired into any page anymore. We can reuse it as-is.
 
-## Migrate Careers to ADP
+## Changes
 
-Redirect all Careers navigation to the external ADP careers portal: `https://myjobs.adp.com/indianatubecareers`. The link will open in a new tab.
+### 1. `src/components/Header.tsx`
+- Remove the **Contact** entry from the `navLinks` array (it stays in the footer).
+- Add a new **"Submit Interest"** button placed immediately to the left of the existing **"Request a Quote"** button in the desktop nav, and likewise in the mobile menu.
+- Style it as a secondary/outline button so "Request a Quote" remains the primary visual CTA.
+- Clicking the button opens a shadcn `Dialog` containing `<GeneralInterestForm />`.
+- Button + dialog logic added to both desktop and mobile nav blocks. On mobile, opening the dialog also closes the mobile menu.
 
-### Changes
+### 2. No changes needed to
+- `GeneralInterestForm.tsx` (already exists and works)
+- The ADP Careers link (untouched, still opens `https://myjobs.adp.com/indianatubecareers` in a new tab)
+- Footer (Contact link already lives there)
+- Database / RLS (already supports public inserts into `job_applications`)
+- Admin viewer (`ApplicationsViewer` already lists submissions, including general interest ones)
 
-**Header (`src/components/Header.tsx`)**
-- Replace the internal `<Link to="/careers">` with an external `<a href="https://myjobs.adp.com/indianatubecareers" target="_blank" rel="noopener noreferrer">` for both desktop and mobile nav.
-
-**Footer (`src/components/Footer.tsx`)**
-- Replace the Careers entry's `Link` with an external anchor opening in a new tab.
-
-**Routing (`src/App.tsx`)**
-- Remove `/careers` and `/careers/apply/:id` routes plus the `Careers` and `ApplyJob` imports, since the in-app pages are no longer reachable.
-
-**Cleanup**
-- Delete `src/pages/Careers.tsx` and `src/pages/ApplyJob.tsx` (no longer referenced).
-- Leave the `job_listings`, `job_applications` tables and the admin Job Listings / Applications Viewer screens intact for historical data and in case the admin wants to reference past records. (Let me know if you'd rather hide those admin pages too.)
-
-### Notes / open question
-- The ADP portal handles the listings and the application flow, so the existing in-app job listings, application form, resume upload, and General Interest dialog will no longer be used on the public site.
-- Confirm you want the link to **open in a new tab** (recommended for external sites). If you'd prefer same-tab navigation, I'll drop `target="_blank"`.
-
+## UX notes
+- Desktop nav order after change: `Home · Industries · Products · Downloads · About ▾ · Careers` then on the right: `Language · [Submit Interest] · [Request a Quote]`.
+- Removing Contact frees the horizontal space needed for the second CTA at the `lg` breakpoint.
+- Dialog uses `max-w-lg`, scrollable on small screens, with the form's existing success state shown in place after submit.
