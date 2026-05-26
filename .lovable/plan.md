@@ -1,25 +1,24 @@
-# Plan: Bring back the General Interest button
+## Plan: Enable Resend email delivery for notifications
 
-## Status of existing code
-Good news — the form component is still in the codebase: `src/components/GeneralInterestForm.tsx`. It's fully functional (writes to `job_applications` with `position_applied = "General Interest"`, supports optional resume upload to the `resumes` bucket, validates inputs). It's just not wired into any page anymore. We can reuse it as-is.
+**From address:** `notification@indianatube.com` (must be verified in Resend under `indianatube.com`)
 
-## Changes
+### Steps
 
-### 1. `src/components/Header.tsx`
-- Remove the **Contact** entry from the `navLinks` array (it stays in the footer).
-- Add a new **"Submit Interest"** button placed immediately to the left of the existing **"Request a Quote"** button in the desktop nav, and likewise in the mobile menu.
-- Style it as a secondary/outline button so "Request a Quote" remains the primary visual CTA.
-- Clicking the button opens a shadcn `Dialog` containing `<GeneralInterestForm />`.
-- Button + dialog logic added to both desktop and mobile nav blocks. On mobile, opening the dialog also closes the mobile menu.
+1. **Add `RESEND_API_KEY` secret** — secure entry box will appear after plan approval.
+2. **Update `send-notification` edge function** to actually send emails via Resend:
+   - Replace the current `console.log("Would send...")` stub with a `fetch` POST to `https://api.resend.com/emails`
+   - Send one email per recipient (so addresses aren't exposed to each other)
+   - From: `Indiana Tube Notifications <notification@indianatube.com>`
+   - Reply-To: applicant/requester email (so admins can reply directly to the source)
+   - Subject lines:
+     - Job apps: `New Job Application: {First} {Last} — {Position}`
+     - Quotes: `New Quote Request: {First} {Last}{ (Company)}`
+   - Body: existing HTML template with PDF + CSV download buttons
+   - Log per-recipient success/failure; return `{ notified, failed }` counts
+3. **Remove the "Email Delivery Setup" instructional block** in `NotificationSettings.tsx` (no longer relevant — Resend is the provider).
+4. **Test** by submitting a quote request through the live form and checking edge function logs + inbox.
 
-### 2. No changes needed to
-- `GeneralInterestForm.tsx` (already exists and works)
-- The ADP Careers link (untouched, still opens `https://myjobs.adp.com/indianatubecareers` in a new tab)
-- Footer (Contact link already lives there)
-- Database / RLS (already supports public inserts into `job_applications`)
-- Admin viewer (`ApplicationsViewer` already lists submissions, including general interest ones)
-
-## UX notes
-- Desktop nav order after change: `Home · Industries · Products · Downloads · About ▾ · Careers` then on the right: `Language · [Submit Interest] · [Request a Quote]`.
-- Removing Contact frees the horizontal space needed for the second CTA at the `lg` breakpoint.
-- Dialog uses `max-w-lg`, scrollable on small screens, with the form's existing success state shown in place after submit.
+### Out of scope
+- No DNS changes (you handled domain verification in Resend).
+- No template overhaul — current HTML email body stays.
+- No queue/retry layer (Resend's own retries are sufficient for this volume).
