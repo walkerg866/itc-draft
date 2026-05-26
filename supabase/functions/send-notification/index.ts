@@ -298,18 +298,54 @@ Deno.serve(async (req) => {
         <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Download links expire in 7 days.</p>
       </div>`;
 
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY is not configured");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const replyTo = record.email || undefined;
     let notified = 0;
+    let failed = 0;
+    const failures: Array<{ email: string; error: string }> = [];
+
     for (const email of emails) {
       try {
-        console.log(`Would send notification to: ${email}, subject: ${subjectLine}`);
-        notified++;
-      } catch (emailErr) {
+        const res = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${resendApiKey}`,
+          },
+          body: JSON.stringify({
+            from: "Indiana Tube Notifications <notification@indianatube.com>",
+            to: [email],
+            reply_to: replyTo,
+            subject: subjectLine,
+            html: emailBody,
+          }),
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          console.error(`Resend failed for ${email} [${res.status}]: ${errText}`);
+          failed++;
+          failures.push({ email, error: `${res.status}: ${errText}` });
+        } else {
+          notified++;
+        }
+      } catch (emailErr: any) {
         console.error(`Failed to send to ${email}:`, emailErr);
+        failed++;
+        failures.push({ email, error: emailErr?.message || "unknown" });
       }
     }
 
     return new Response(
-      JSON.stringify({ success: true, notified, pdfUrl, csvUrl }),
+      JSON.stringify({ success: true, notified, failed, failures, pdfUrl, csvUrl }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (err) {
