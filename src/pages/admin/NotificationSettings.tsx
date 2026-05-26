@@ -4,7 +4,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Send } from "lucide-react";
 import { toast } from "sonner";
 
 interface Recipient {
