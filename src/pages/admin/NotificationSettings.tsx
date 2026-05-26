@@ -22,6 +22,26 @@ const NotificationSettings = () => {
   const [updating, setUpdating] = useState<string | null>(null);
   const [newEmail, setNewEmail] = useState("");
   const [adding, setAdding] = useState(false);
+  const [sendingTest, setSendingTest] = useState(false);
+
+  const sendTestAlert = async () => {
+    setSendingTest(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-test-notification");
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const { notified = 0, failed = 0, recipients = [] } = data || {};
+      if (failed > 0) {
+        toast.error(`Sent to ${notified}, failed ${failed}. Check edge function logs.`);
+      } else {
+        toast.success(`Test alert sent to ${notified} recipient${notified === 1 ? "" : "s"}: ${recipients.join(", ")}`);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Failed to send test alert");
+    } finally {
+      setSendingTest(false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
