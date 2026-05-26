@@ -286,6 +286,21 @@ const NotificationSettings = () => {
         Notifications include a brief summary and a PDF download link (valid for 7 days) so recipients don't need to log in.
       </p>
 
+      {isSuperAdmin && (
+        <div className="mt-8 border border-border rounded-lg p-6 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h2 className="font-heading font-bold text-lg mb-1">Verify email delivery</h2>
+            <p className="text-sm text-muted-foreground">
+              Send a test alert to every recipient above to confirm Resend is delivering to their inbox.
+            </p>
+          </div>
+          <Button onClick={sendTestAlert} disabled={sendingTest} className="gap-2">
+            {sendingTest ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            Send test alert
+          </Button>
+        </div>
+      )}
+
     </div>
   );
 };
