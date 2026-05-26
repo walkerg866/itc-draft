@@ -4,7 +4,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Send } from "lucide-react";
 import { toast } from "sonner";
 
 interface Recipient {
@@ -22,6 +22,26 @@ const NotificationSettings = () => {
   const [updating, setUpdating] = useState<string | null>(null);
   const [newEmail, setNewEmail] = useState("");
   const [adding, setAdding] = useState(false);
+  const [sendingTest, setSendingTest] = useState(false);
+
+  const sendTestAlert = async () => {
+    setSendingTest(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-test-notification");
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      const { notified = 0, failed = 0, recipients = [] } = data || {};
+      if (failed > 0) {
+        toast.error(`Sent to ${notified}, failed ${failed}. Check edge function logs.`);
+      } else {
+        toast.success(`Test alert sent to ${notified} recipient${notified === 1 ? "" : "s"}: ${recipients.join(", ")}`);
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Failed to send test alert");
+    } finally {
+      setSendingTest(false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -265,6 +285,21 @@ const NotificationSettings = () => {
       <p className="text-xs text-muted-foreground mt-4">
         Notifications include a brief summary and a PDF download link (valid for 7 days) so recipients don't need to log in.
       </p>
+
+      {isSuperAdmin && (
+        <div className="mt-8 border border-border rounded-lg p-6 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h2 className="font-heading font-bold text-lg mb-1">Verify email delivery</h2>
+            <p className="text-sm text-muted-foreground">
+              Send a test alert to every recipient above to confirm Resend is delivering to their inbox.
+            </p>
+          </div>
+          <Button onClick={sendTestAlert} disabled={sendingTest} className="gap-2">
+            {sendingTest ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+            Send test alert
+          </Button>
+        </div>
+      )}
 
     </div>
   );
