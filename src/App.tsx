@@ -187,7 +187,7 @@ const App = () => (
               path="*"
               element={
                 <>
-                  <WeatherAlert />
+                  
                   <Header />
                   <main className="min-h-screen">
                     <Routes>
