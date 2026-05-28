@@ -55,6 +55,7 @@ const About = () => {
   const { data: bios = [] } = useQuery({
     queryKey: ["executive-bios"],
     queryFn: async () => {
+      const { data, error } = await supabase
         .from("executive_bios")
         .select("*")
         .eq("is_active", true)
