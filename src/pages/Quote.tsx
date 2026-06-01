@@ -231,6 +231,7 @@ const Quote = () => {
                     <textarea
                       required
                       rows={6}
+                      maxLength={5000}
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
                       className={`${inputClass} resize-none`}
