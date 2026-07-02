@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+
 import { MessageSquareQuote, ChevronDown, ChevronUp, Loader2, Download, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import jsPDF from "jspdf";
