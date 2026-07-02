@@ -327,18 +327,31 @@ const ApplicationsViewer = () => {
                         size="sm"
                         className="gap-2"
                         onClick={async () => {
-                          const { data, error } = await supabase.storage
-                            .from("resumes")
-                            .createSignedUrl(app.resume_url!, 60);
-                          if (error || !data?.signedUrl) {
-                            alert("Could not generate download link.");
-                            return;
+                          try {
+                            const { data, error } = await supabase.storage
+                              .from("resumes")
+                              .download(app.resume_url!);
+                            if (error || !data) {
+                              alert("Could not download resume.");
+                              return;
+                            }
+                            const filename = `resume-${app.first_name}-${app.last_name}-${app.resume_url!.split("/").pop()}`;
+                            const url = URL.createObjectURL(data);
+                            const a = document.createElement("a");
+                            a.href = url;
+                            a.download = filename;
+                            document.body.appendChild(a);
+                            a.click();
+                            a.remove();
+                            URL.revokeObjectURL(url);
+                          } catch (e) {
+                            alert("Could not download resume.");
                           }
-                          window.open(data.signedUrl, "_blank");
                         }}
                       >
                         <Download className="h-4 w-4" /> Download Resume
                       </Button>
+
                     )}
                   </div>
                 </div>
