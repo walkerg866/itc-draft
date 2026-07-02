@@ -62,6 +62,12 @@ function formatQuoteRequestText(record: Record<string, any>): string {
   return lines.join("\n");
 }
 
+function safeCsvCell(v: unknown): string {
+  const s = String(v ?? "");
+  const neutralized = /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+  return `"${neutralized.replace(/"/g, '""')}"`;
+}
+
 function generateCsvContent(type: string, record: Record<string, any>): string {
   if (type === "job_application") {
     const headers = ["Name", "Email", "Phone", "Address", "Position", "Desired Pay", "Start Date", "Education", "Skills", "How Heard", "Submitted"];
@@ -73,7 +79,7 @@ function generateCsvContent(type: string, record: Record<string, any>): string {
       record.education || "", record.skills || "", record.how_heard || "",
       new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
     ];
-    return [headers, row].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    return [headers, row].map(r => r.map(safeCsvCell).join(",")).join("\n");
   } else {
     const headers = ["Name", "Company", "Email", "Phone", "Industry", "Diameters", "Annual Volume", "Message", "Submitted"];
     const row = [
@@ -83,9 +89,10 @@ function generateCsvContent(type: string, record: Record<string, any>): string {
       record.message || "",
       new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
     ];
-    return [headers, row].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    return [headers, row].map(r => r.map(safeCsvCell).join(",")).join("\n");
   }
 }
+
 
 function generatePdfBytes(text: string): Uint8Array {
   // Generate a simple text-based PDF
