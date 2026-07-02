@@ -39,6 +39,8 @@ const ApplicationsViewer = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -54,6 +56,16 @@ const ApplicationsViewer = () => {
     };
     fetchApplications();
   }, []);
+
+  useEffect(() => {
+    if (openId && applications.some((a) => a.id === openId)) {
+      setExpandedId(openId);
+      requestAnimationFrame(() => {
+        document.getElementById(`app-${openId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [openId, applications]);
+
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
