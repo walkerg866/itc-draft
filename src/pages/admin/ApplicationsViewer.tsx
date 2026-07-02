@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+
 import { FileText, ChevronDown, ChevronUp, Loader2, Download, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import jsPDF from "jspdf";
@@ -37,6 +39,8 @@ const ApplicationsViewer = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -52,6 +56,16 @@ const ApplicationsViewer = () => {
     };
     fetchApplications();
   }, []);
+
+  useEffect(() => {
+    if (openId && applications.some((a) => a.id === openId)) {
+      setExpandedId(openId);
+      requestAnimationFrame(() => {
+        document.getElementById(`app-${openId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [openId, applications]);
+
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
@@ -218,7 +232,7 @@ const ApplicationsViewer = () => {
       ) : (
         <div className="space-y-3">
           {applications.map((app) => (
-            <div key={app.id} className="bg-card rounded-lg border border-border overflow-hidden">
+            <div key={app.id} id={`app-${app.id}`} className="bg-card rounded-lg border border-border overflow-hidden scroll-mt-20">
               <button
                 onClick={() => toggle(app.id)}
                 className="w-full flex items-center gap-4 p-4 text-left hover:bg-muted/30 transition-colors"
