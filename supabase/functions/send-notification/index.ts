@@ -194,32 +194,27 @@ Deno.serve(async (req) => {
     const pdfFileName = `${type}-${fileId}.pdf`;
     const csvFileName = `${type}-${fileId}.csv`;
 
-    // Upload files to notification-pdfs bucket (create bucket if needed)
+    // Upload PDF/CSV to notification-pdfs as a backup/archival copy (not emailed).
+    // Email links point to the admin panel instead — signed storage URLs expire
+    // and get flagged by Outlook SafeLinks / Google Safe Browsing.
     const { data: buckets } = await supabase.storage.listBuckets();
     const bucketExists = buckets?.some((b: any) => b.name === "notification-pdfs");
     if (!bucketExists) {
       await supabase.storage.createBucket("notification-pdfs", { public: false });
     }
 
-    const [pdfUpload, csvUpload] = await Promise.all([
+    await Promise.all([
       supabase.storage.from("notification-pdfs").upload(pdfFileName, pdfBytes, { contentType: "application/pdf", upsert: true }),
       supabase.storage.from("notification-pdfs").upload(csvFileName, csvBytes, { contentType: "text/csv", upsert: true }),
-    ]);
+    ]).catch((e) => console.error("Archive upload failed (non-fatal):", e));
 
-    if (pdfUpload.error) throw new Error(`Failed to upload PDF: ${pdfUpload.error.message}`);
-    if (csvUpload.error) throw new Error(`Failed to upload CSV: ${csvUpload.error.message}`);
-
-    // Generate signed URLs (7 days)
-    const sevenDays = 7 * 24 * 60 * 60;
-    const [pdfSigned, csvSigned] = await Promise.all([
-      supabase.storage.from("notification-pdfs").createSignedUrl(pdfFileName, sevenDays),
-      supabase.storage.from("notification-pdfs").createSignedUrl(csvFileName, sevenDays),
-    ]);
-
-    if (pdfSigned.error) throw pdfSigned.error;
-    if (csvSigned.error) throw csvSigned.error;
-    const pdfUrl = pdfSigned.data.signedUrl;
-    const csvUrl = csvSigned.data.signedUrl;
+    // Build admin panel link on the live site (never expires, auth-gated,
+    // downloads via blob so no third-party host is flagged).
+    const siteUrl = Deno.env.get("PUBLIC_SITE_URL") || "https://indianatube.com";
+    const adminPath = type === "job_application"
+      ? `/admin/dashboard/applications?open=${encodeURIComponent(fileId)}`
+      : `/admin/dashboard/quotes?open=${encodeURIComponent(fileId)}`;
+    const adminUrl = `${siteUrl}${adminPath}`;
 
     // Look up notification preferences
     const prefColumn = type === "job_application" ? "notify_job_applications" : "notify_quote_requests";
@@ -260,13 +255,11 @@ Deno.serve(async (req) => {
       });
     }
 
-    const lovableApiKey = Deno.env.get("LOVABLE_API_KEY");
     const subjectLine = type === "job_application"
       ? `New Job Application: ${record.first_name} ${record.last_name} — ${record.position_applied}`
       : `New Quote Request: ${record.first_name} ${record.last_name}${record.company ? ` (${record.company})` : ""}`;
 
-    const btnPrimary = "display:inline-block;background:#E8600A;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold;margin-right:10px;margin-bottom:8px";
-    const btnOutline = "display:inline-block;background:white;color:#E8600A;padding:11px 23px;text-decoration:none;border-radius:6px;font-weight:bold;border:2px solid #E8600A;margin-bottom:8px";
+    const btnPrimary = "display:inline-block;background:#E8600A;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;font-weight:bold";
 
     const summaryHtml = type === "job_application"
       ? `<p>A new job application has been submitted.</p>
@@ -275,8 +268,7 @@ Deno.serve(async (req) => {
          <p><strong>Email:</strong> ${escHtml(record.email)}</p>
          <p><strong>Phone:</strong> ${escHtml(record.phone)}</p>
          <p style="margin-top:20px">
-           <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
-           <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
+           <a href="${adminUrl}" style="${btnPrimary}">View Application &amp; Download</a>
          </p>`
       : `<p>A new quote request has been submitted.</p>
          <p><strong>Name:</strong> ${escHtml(record.first_name)} ${escHtml(record.last_name)}</p>
@@ -284,8 +276,7 @@ Deno.serve(async (req) => {
          <p><strong>Email:</strong> ${escHtml(record.email)}</p>
          <p><strong>Industry:</strong> ${escHtml(record.industry) || "N/A"}</p>
          <p style="margin-top:20px">
-           <a href="${pdfUrl}" style="${btnPrimary}">Download PDF</a>
-           <a href="${csvUrl}" style="${btnOutline}">Download CSV</a>
+           <a href="${adminUrl}" style="${btnPrimary}">View Quote Request &amp; Download</a>
          </p>`;
 
     const emailBody = `
@@ -295,8 +286,9 @@ Deno.serve(async (req) => {
         </div>
         ${summaryHtml}
         <hr style="margin-top:30px;border:none;border-top:1px solid #eee" />
-        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Download links expire in 7 days.</p>
+        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Sign in to the admin panel to view the full submission and download the PDF or CSV.</p>
       </div>`;
+
 
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (!resendApiKey) {
