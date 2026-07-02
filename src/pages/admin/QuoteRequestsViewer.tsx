@@ -24,6 +24,8 @@ const QuoteRequestsViewer = () => {
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchQuotes = async () => {
@@ -39,6 +41,16 @@ const QuoteRequestsViewer = () => {
     };
     fetchQuotes();
   }, []);
+
+  useEffect(() => {
+    if (openId && quotes.some((q) => q.id === openId)) {
+      setExpandedId(openId);
+      requestAnimationFrame(() => {
+        document.getElementById(`quote-${openId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [openId, quotes]);
+
 
   const toggle = (id: string) => setExpandedId((prev) => (prev === id ? null : id));
 
