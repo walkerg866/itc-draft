@@ -86,7 +86,13 @@ const ApplicationsViewer = () => {
       new Date(a.submitted_at).toLocaleDateString(),
     ]);
 
-    const csv = [headers, ...rows].map((r) => r.map((c) => `"${c}"`).join(",")).join("\n");
+    const safeCell = (v: unknown) => {
+      const s = String(v ?? "");
+      const neutralized = /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+      return `"${neutralized.replace(/"/g, '""')}"`;
+    };
+    const csv = [headers, ...rows].map((r) => r.map(safeCell).join(",")).join("\n");
+
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
