@@ -62,7 +62,34 @@ function formatQuoteRequestText(record: Record<string, any>): string {
   return lines.join("\n");
 }
 
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+    // Validate webhook secret by reading expected value from Vault
+    const { data: vaultRow, error: vaultErr } = await supabase.rpc("get_webhook_secret");
+    const expectedSecret = vaultRow;
+    const providedSecret = req.headers.get("x-webhook-secret");
+
+    if (vaultErr || !expectedSecret || providedSecret !== expectedSecret) {
+      console.error("Unauthorized: invalid or missing webhook secret", vaultErr?.message);
+      return new Response(JSON.stringify({ error: "Unauthorized" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const payload: NotificationPayload = await req.json();
+    const { type, record } = payload;
+
     const fileId = record.id || crypto.randomUUID();
+
 
 
     // Build admin panel link on the live site (never expires, auth-gated,
