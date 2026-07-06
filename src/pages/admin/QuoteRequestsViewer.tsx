@@ -20,32 +20,66 @@ interface QuoteRequest {
   submitted_at: string;
 }
 
+const PAGE_SIZE = 50;
+
 const QuoteRequestsViewer = () => {
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const openId = searchParams.get("open");
 
-  useEffect(() => {
-    const fetchQuotes = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("quote_requests")
-          .select("*")
-          .order("submitted_at", { ascending: false });
+  const fetchPage = async (offset: number, append: boolean) => {
+    const { data, error, count } = await supabase
+      .from("quote_requests")
+      .select("*", { count: "exact" })
+      .order("submitted_at", { ascending: false })
+      .range(offset, offset + PAGE_SIZE - 1);
+    if (error) throw error;
+    if (count !== null) setTotalCount(count);
+    setQuotes((prev) =>
+      append ? [...prev, ...((data ?? []) as QuoteRequest[])] : ((data ?? []) as QuoteRequest[]),
+    );
+  };
 
-        if (error) throw error;
-        setQuotes((data ?? []) as QuoteRequest[]);
+  useEffect(() => {
+    (async () => {
+      try {
+        await fetchPage(0, false);
+        if (openId) {
+          const { data: deepLinked } = await supabase
+            .from("quote_requests")
+            .select("*")
+            .eq("id", openId)
+            .maybeSingle();
+          if (deepLinked) {
+            setQuotes((prev) =>
+              prev.some((q) => q.id === deepLinked.id) ? prev : [deepLinked as QuoteRequest, ...prev],
+            );
+          }
+        }
       } catch (err) {
         setLoadError(err instanceof Error ? err.message : "Failed to load quote requests");
       } finally {
         setLoading(false);
       }
-    };
-    fetchQuotes();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const loadMore = async () => {
+    setLoadingMore(true);
+    try {
+      await fetchPage(quotes.length, true);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Failed to load more");
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   useEffect(() => {
     if (openId && quotes.some((q) => q.id === openId)) {
