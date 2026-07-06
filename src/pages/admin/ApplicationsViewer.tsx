@@ -38,21 +38,26 @@ interface JobApplication {
 const ApplicationsViewer = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const { data, error } = await supabase
-        .from("job_applications")
-        .select("*")
-        .order("submitted_at", { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from("job_applications")
+          .select("*")
+          .order("submitted_at", { ascending: false });
 
-      if (!error && data) {
-        setApplications(data as unknown as JobApplication[]);
+        if (error) throw error;
+        setApplications((data ?? []) as unknown as JobApplication[]);
+      } catch (err) {
+        setLoadError(err instanceof Error ? err.message : "Failed to load applications");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchApplications();
   }, []);
