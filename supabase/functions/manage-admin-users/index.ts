@@ -43,7 +43,6 @@ Deno.serve(async (req) => {
     .eq("user_id", caller.id);
 
   const callerIsSuperAdmin = callerRoles?.some((r: any) => r.role === "super_admin") ?? false;
-  const callerHasAnyRole = (callerRoles?.length ?? 0) > 0;
 
   try {
     if (req.method === "GET") {
@@ -60,27 +59,32 @@ Deno.serve(async (req) => {
 
       if (rolesErr) throw rolesErr;
 
-      // Get user details for each role entry
-      const userIds = [...new Set((roles || []).map((r: any) => r.user_id))];
-      const users = [];
-
-      for (const uid of userIds) {
-        const { data: { user } } = await adminClient.auth.admin.getUserById(uid as string);
-        if (user) {
-          const userRole = roles!.find((r: any) => r.user_id === uid);
-          users.push({
-            id: user.id,
-            email: user.email,
-            role: userRole?.role,
-            created_at: userRole?.created_at,
-          });
-        }
+      // Single batched call: fetch all auth users, then join by id in-memory
+      const emailById = new Map<string, string | undefined>();
+      for (let page = 1; page <= 20; page++) {
+        const { data: list, error: listErr } = await adminClient.auth.admin.listUsers({
+          page,
+          perPage: 200,
+        });
+        if (listErr) throw listErr;
+        for (const u of list?.users ?? []) emailById.set(u.id, u.email ?? undefined);
+        if (!list?.users?.length || list.users.length < 200) break;
       }
+
+      const users = (roles ?? [])
+        .filter((r: any) => emailById.has(r.user_id))
+        .map((r: any) => ({
+          id: r.user_id,
+          email: emailById.get(r.user_id),
+          role: r.role,
+          created_at: r.created_at,
+        }));
 
       return new Response(JSON.stringify(users), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
+
 
     if (req.method === "POST") {
       const body = await req.json();
