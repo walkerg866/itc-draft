@@ -18,6 +18,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import EmployeeNews from "./pages/EmployeeNews";
+import CareersRedirect from "./pages/CareersRedirect";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import WeatherAlertManager from "./pages/admin/WeatherAlertManager";
