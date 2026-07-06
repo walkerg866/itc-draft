@@ -42,24 +42,8 @@ const UserManagement = () => {
   const [password, setPassword] = useState("");
   const [newRole, setNewRole] = useState<"admin" | "super_admin">("admin");
 
-  const callEdge = async (method: string, body?: object) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const res = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
-      {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.access_token}`,
-          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-        },
-        body: body ? JSON.stringify(body) : undefined,
-      }
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Request failed");
-    return data;
-  };
+  const callEdge = <T = unknown>(method: "GET" | "POST", body?: object) =>
+    callAdminEdge<T>(method, body);
 
   // Bootstrap check & auto-assign
   const { data: users = [], isLoading } = useQuery<AdminUser[]>({
