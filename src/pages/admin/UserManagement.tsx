@@ -48,16 +48,16 @@ const UserManagement = () => {
   // Bootstrap check & auto-assign
   const { data: users = [], isLoading } = useQuery<AdminUser[]>({
     queryKey: ["admin-users"],
-    queryFn: async () => {
+    queryFn: async (): Promise<AdminUser[]> => {
       try {
-        const list = await callEdge("GET");
+        const list = await callEdge<AdminUser[]>("GET");
         // If no users exist, bootstrap current user as super_admin
         if (Array.isArray(list) && list.length === 0) {
           await callEdge("POST", { action: "bootstrap" });
           queryClient.invalidateQueries({ queryKey: ["user-role"] });
-          return callEdge("GET");
+          return await callEdge<AdminUser[]>("GET");
         }
-        return list;
+        return list ?? [];
       } catch {
         return [];
       }
