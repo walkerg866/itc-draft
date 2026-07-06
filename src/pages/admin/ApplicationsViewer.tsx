@@ -258,7 +258,7 @@ const ApplicationsViewer = () => {
           <div>
             <h1 className="font-heading font-extrabold text-2xl">Applications</h1>
             <p className="text-muted-foreground text-sm">
-              {applications.length} submission{applications.length !== 1 ? "s" : ""}
+              {totalCount} submission{totalCount !== 1 ? "s" : ""}{applications.length < totalCount ? ` · showing ${applications.length}` : ""}
             </p>
           </div>
         </div>
