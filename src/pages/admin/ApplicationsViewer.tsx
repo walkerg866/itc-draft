@@ -36,41 +36,71 @@ interface JobApplication {
   resume_url: string | null;
 }
 
+const PAGE_SIZE = 50;
+
 const ApplicationsViewer = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const openId = searchParams.get("open");
 
-  useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("job_applications")
-          .select("*")
-          .order("submitted_at", { ascending: false });
+  const fetchPage = async (offset: number, append: boolean) => {
+    const { data, error, count } = await supabase
+      .from("job_applications")
+      .select("*", { count: "exact" })
+      .order("submitted_at", { ascending: false })
+      .range(offset, offset + PAGE_SIZE - 1);
+    if (error) throw error;
+    if (count !== null) setTotalCount(count);
+    setApplications((prev) =>
+      append ? [...prev, ...((data ?? []) as unknown as JobApplication[])] : ((data ?? []) as unknown as JobApplication[]),
+    );
+  };
 
-        if (error) throw error;
-        setApplications((data ?? []) as unknown as JobApplication[]);
+  useEffect(() => {
+    (async () => {
+      try {
+        await fetchPage(0, false);
+
+        // If a deep-link asks for a specific application not in the first page, fetch it too.
+        if (openId) {
+          const { data: deepLinked } = await supabase
+            .from("job_applications")
+            .select("*")
+            .eq("id", openId)
+            .maybeSingle();
+          if (deepLinked) {
+            setApplications((prev) =>
+              prev.some((a) => a.id === deepLinked.id)
+                ? prev
+                : [deepLinked as unknown as JobApplication, ...prev],
+            );
+          }
+        }
       } catch (err) {
         setLoadError(err instanceof Error ? err.message : "Failed to load applications");
       } finally {
         setLoading(false);
       }
-    };
-    fetchApplications();
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (openId && applications.some((a) => a.id === openId)) {
-      setExpandedId(openId);
-      requestAnimationFrame(() => {
-        document.getElementById(`app-${openId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+  const loadMore = async () => {
+    setLoadingMore(true);
+    try {
+      await fetchPage(applications.length, true);
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Failed to load more");
+    } finally {
+      setLoadingMore(false);
     }
-  }, [openId, applications]);
+  };
+
 
 
   const toggle = (id: string) => {
