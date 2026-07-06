@@ -29,7 +29,7 @@ const Footer = () => {
                 { label: "Downloads", path: "/downloads" },
                 { label: "About Us", path: "/about" },
                 { label: "Employee News", path: "/employee-news" },
-                { label: "Careers", path: "https://myjobs.adp.com/indianatubecareers", external: true },
+                { label: "Careers", path: COMPANY.urls.careers, external: true },
                 { label: "Contact", path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
