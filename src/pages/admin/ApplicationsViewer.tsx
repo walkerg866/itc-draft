@@ -38,21 +38,26 @@ interface JobApplication {
 const ApplicationsViewer = () => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const { data, error } = await supabase
-        .from("job_applications")
-        .select("*")
-        .order("submitted_at", { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from("job_applications")
+          .select("*")
+          .order("submitted_at", { ascending: false });
 
-      if (!error && data) {
-        setApplications(data as unknown as JobApplication[]);
+        if (error) throw error;
+        setApplications((data ?? []) as unknown as JobApplication[]);
+      } catch (err) {
+        setLoadError(err instanceof Error ? err.message : "Failed to load applications");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchApplications();
   }, []);
@@ -229,6 +234,10 @@ const ApplicationsViewer = () => {
       {loading ? (
         <div className="flex items-center gap-2 text-muted-foreground text-sm">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading…
+        </div>
+      ) : loadError ? (
+        <div className="text-center py-12 text-destructive text-sm">
+          Failed to load applications: {loadError}
         </div>
       ) : applications.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">

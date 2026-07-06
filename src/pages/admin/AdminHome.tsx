@@ -1,51 +1,47 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { callAdminEdge } from "@/lib/adminApi";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, FileText, MessageSquareQuote, Loader2, LayoutDashboard, Bell } from "lucide-react";
+import { Users, FileText, MessageSquareQuote, Loader2, LayoutDashboard, Bell, AlertTriangle } from "lucide-react";
 
 const AdminHome = () => {
   const [stats, setStats] = useState({ admins: 0, applications: 0, quotes: 0, recipients: 0 });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadStats = async () => {
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      const since = thirtyDaysAgo.toISOString();
+      try {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const since = thirtyDaysAgo.toISOString();
 
-      const { data: { session } } = await supabase.auth.getSession();
+        const [adminRes, appsRes, quotesRes, notifRes] = await Promise.all([
+          callAdminEdge<unknown[]>("GET").catch(() => []),
+          supabase
+            .from("job_applications")
+            .select("id", { count: "exact", head: true })
+            .gte("submitted_at", since),
+          supabase
+            .from("quote_requests")
+            .select("id", { count: "exact", head: true })
+            .gte("submitted_at", since),
+          supabase
+            .from("notification_preferences")
+            .select("id", { count: "exact", head: true }),
+        ]);
 
-      const [adminRes, appsRes, quotesRes, notifRes] = await Promise.all([
-        fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${session?.access_token}`,
-              apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            },
-          }
-        ).then((r) => r.json()).catch(() => []),
-        supabase
-          .from("job_applications")
-          .select("id", { count: "exact", head: true })
-          .gte("submitted_at", since),
-        supabase
-          .from("quote_requests")
-          .select("id", { count: "exact", head: true })
-          .gte("submitted_at", since),
-        supabase
-          .from("notification_preferences")
-          .select("id", { count: "exact", head: true }),
-      ]);
-
-      setStats({
-        admins: Array.isArray(adminRes) ? adminRes.length : 0,
-        applications: appsRes.count ?? 0,
-        quotes: quotesRes.count ?? 0,
-        recipients: notifRes.count ?? 0,
-      });
-      setLoading(false);
+        setStats({
+          admins: Array.isArray(adminRes) ? adminRes.length : 0,
+          applications: appsRes.count ?? 0,
+          quotes: quotesRes.count ?? 0,
+          recipients: notifRes.count ?? 0,
+        });
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load dashboard stats");
+      } finally {
+        setLoading(false);
+      }
     };
     loadStats();
   }, []);
@@ -54,6 +50,15 @@ const AdminHome = () => {
     return (
       <div className="flex items-center justify-center py-20">
         <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-start gap-3 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-destructive text-sm">
+        <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+        <span>{error}</span>
       </div>
     );
   }

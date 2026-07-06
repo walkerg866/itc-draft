@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { callAdminEdge } from "@/lib/adminApi";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserRole } from "@/hooks/useUserRole";
 import { Button } from "@/components/ui/button";
@@ -41,38 +42,22 @@ const UserManagement = () => {
   const [password, setPassword] = useState("");
   const [newRole, setNewRole] = useState<"admin" | "super_admin">("admin");
 
-  const callEdge = async (method: string, body?: object) => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const res = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
-      {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session?.access_token}`,
-          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-        },
-        body: body ? JSON.stringify(body) : undefined,
-      }
-    );
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Request failed");
-    return data;
-  };
+  const callEdge = async <T = unknown>(method: "GET" | "POST", body?: object): Promise<T> =>
+    callAdminEdge<T>(method, body);
 
   // Bootstrap check & auto-assign
   const { data: users = [], isLoading } = useQuery<AdminUser[]>({
     queryKey: ["admin-users"],
-    queryFn: async () => {
+    queryFn: async (): Promise<AdminUser[]> => {
       try {
-        const list = await callEdge("GET");
+        const list = await callEdge<AdminUser[]>("GET");
         // If no users exist, bootstrap current user as super_admin
         if (Array.isArray(list) && list.length === 0) {
           await callEdge("POST", { action: "bootstrap" });
           queryClient.invalidateQueries({ queryKey: ["user-role"] });
-          return callEdge("GET");
+          return await callEdge<AdminUser[]>("GET");
         }
-        return list;
+        return list ?? [];
       } catch {
         return [];
       }

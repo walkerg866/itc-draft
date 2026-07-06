@@ -23,21 +23,26 @@ interface QuoteRequest {
 const QuoteRequestsViewer = () => {
   const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const openId = searchParams.get("open");
 
   useEffect(() => {
     const fetchQuotes = async () => {
-      const { data, error } = await supabase
-        .from("quote_requests")
-        .select("*")
-        .order("submitted_at", { ascending: false });
+      try {
+        const { data, error } = await supabase
+          .from("quote_requests")
+          .select("*")
+          .order("submitted_at", { ascending: false });
 
-      if (!error && data) {
-        setQuotes(data as QuoteRequest[]);
+        if (error) throw error;
+        setQuotes((data ?? []) as QuoteRequest[]);
+      } catch (err) {
+        setLoadError(err instanceof Error ? err.message : "Failed to load quote requests");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
     fetchQuotes();
   }, []);
@@ -152,6 +157,10 @@ const QuoteRequestsViewer = () => {
       {loading ? (
         <div className="flex items-center gap-2 text-muted-foreground text-sm">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading…
+        </div>
+      ) : loadError ? (
+        <div className="text-center py-12 text-destructive text-sm">
+          Failed to load quote requests: {loadError}
         </div>
       ) : quotes.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">

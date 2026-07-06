@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Facebook, Linkedin } from "lucide-react";
 import logo from "@/assets/indiana-tube-logo.svg";
 import { CookieSettingsButton } from "@/components/CookieConsent";
+import { COMPANY } from "@/config/company";
 
 const Footer = () => {
   return (
@@ -28,7 +29,7 @@ const Footer = () => {
                 { label: "Downloads", path: "/downloads" },
                 { label: "About Us", path: "/about" },
                 { label: "Employee News", path: "/employee-news" },
-                { label: "Careers", path: "https://myjobs.adp.com/indianatubecareers", external: true },
+                { label: "Careers", path: COMPANY.urls.careers, external: true },
                 { label: "Contact", path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
@@ -88,32 +89,32 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                 <span className="text-muted-foreground text-lg">
-                  2100 Lexington Avenue<br />
-                  Evansville, IN 47720
+                  {COMPANY.address.street}<br />
+                  {COMPANY.address.city}, {COMPANY.address.state} {COMPANY.address.zip}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
                 <a
-                  href="tel:+18124249028"
+                  href={`tel:${COMPANY.phone.tel}`}
                   className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                 >
-                  (812) 424-9028
+                  {COMPANY.phone.display}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
                 <a
-                  href="mailto:sales@indianatube.com"
+                  href={`mailto:${COMPANY.email.sales}`}
                   className="text-muted-foreground text-lg hover:text-foreground transition-colors"
                 >
-                  sales@indianatube.com
+                  {COMPANY.email.sales}
                 </a>
               </li>
             </ul>
             <div className="flex items-center gap-4 mt-6">
               <a
-                href="https://www.facebook.com/IndianaTubeCorporation/"
+                href={COMPANY.urls.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
@@ -122,7 +123,7 @@ const Footer = () => {
                 <Facebook className="h-6 w-6" />
               </a>
               <a
-                href="https://www.linkedin.com/company/indiana-tube-corporation/"
+                href={COMPANY.urls.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors"
