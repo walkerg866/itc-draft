@@ -191,6 +191,7 @@ const App = () => (
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/quote" element={<Quote />} />
                       <Route path="/legal" element={<Legal />} />
+                      <Route path="/careers" element={<CareersRedirect />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>
