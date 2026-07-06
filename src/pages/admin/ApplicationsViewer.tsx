@@ -175,7 +175,7 @@ const ApplicationsViewer = () => {
 
     if (Array.isArray(app.employment_history) && app.employment_history.length > 0) {
       addSection("Employment History");
-      app.employment_history.forEach((job: any, i: number) => {
+      app.employment_history.forEach((job: EmploymentHistoryEntry, i: number) => {
         if (y > 260) { doc.addPage(); y = margin; }
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
@@ -190,7 +190,7 @@ const ApplicationsViewer = () => {
 
     if (Array.isArray(app.applicant_references) && app.applicant_references.length > 0) {
       addSection("References");
-      app.applicant_references.forEach((ref: any, i: number) => {
+      app.applicant_references.forEach((ref: ApplicantReference, i: number) => {
         if (y > 260) { doc.addPage(); y = margin; }
         doc.setFont("helvetica", "bold");
         doc.setFontSize(10);
@@ -303,7 +303,7 @@ const ApplicationsViewer = () => {
                     <div className="mt-4">
                       <h5 className="font-heading font-bold text-sm mb-2">Employment History</h5>
                       <div className="space-y-2">
-                        {app.employment_history.map((job: any, i: number) => (
+                        {app.employment_history.map((job: EmploymentHistoryEntry, i: number) => (
                           <div key={i} className="p-3 bg-muted/50 rounded-md text-sm">
                             <p className="font-medium">{job.company || "N/A"} — {job.title || "N/A"}</p>
                             <p className="text-muted-foreground text-xs">
@@ -320,7 +320,7 @@ const ApplicationsViewer = () => {
                     <div className="mt-4">
                       <h5 className="font-heading font-bold text-sm mb-2">References</h5>
                       <div className="space-y-2">
-                        {app.applicant_references.map((ref: any, i: number) => (
+                        {app.applicant_references.map((ref: ApplicantReference, i: number) => (
                           <div key={i} className="p-3 bg-muted/50 rounded-md text-sm">
                             <p className="font-medium">{ref.name || "N/A"}</p>
                             <p className="text-muted-foreground text-xs">
