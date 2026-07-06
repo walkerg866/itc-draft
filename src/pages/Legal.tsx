@@ -24,7 +24,7 @@ const Legal = () => {
             <TabsTrigger value="terms">Terms of Service</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="privacy" className="prose prose-lg max-w-none text-muted-foreground">
+          <TabsContent id="privacy" value="privacy" className="prose prose-lg max-w-none text-muted-foreground">
             <p className="text-sm italic text-muted-foreground/70 mb-6">
               Last Modified: 5/7/2026
             </p>
