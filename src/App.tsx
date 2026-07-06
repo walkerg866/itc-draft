@@ -18,6 +18,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import EmployeeNews from "./pages/EmployeeNews";
+import CareersRedirect from "./pages/CareersRedirect";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import WeatherAlertManager from "./pages/admin/WeatherAlertManager";
@@ -190,6 +191,7 @@ const App = () => (
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/quote" element={<Quote />} />
                       <Route path="/legal" element={<Legal />} />
+                      <Route path="/careers" element={<CareersRedirect />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </main>
