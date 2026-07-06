@@ -51,10 +51,16 @@ const GeneralInterestForm = () => {
       return;
     }
 
-    setSubmitting(true);
-    try {
-      let resumePath: string | null = null;
+    // Stricter email validation beyond the browser's type=email
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim());
+    if (!emailOk) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
 
+    setSubmitting(true);
+    let uploadedResumePath: string | null = null;
+    try {
       if (file) {
         const ext = file.name.split(".").pop();
         const path = `${crypto.randomUUID()}.${ext}`;
@@ -62,7 +68,7 @@ const GeneralInterestForm = () => {
           .from("resumes")
           .upload(path, file);
         if (uploadErr) throw uploadErr;
-        resumePath = path;
+        uploadedResumePath = path;
       }
 
       const applicationId = crypto.randomUUID();
@@ -74,7 +80,7 @@ const GeneralInterestForm = () => {
         phone: form.phone.trim(),
         position_applied: "General Interest",
         skills: form.roles_interest.trim() || null,
-        resume_url: resumePath,
+        resume_url: uploadedResumePath,
         address: "N/A",
         city: "N/A",
         state: "N/A",
@@ -85,6 +91,10 @@ const GeneralInterestForm = () => {
 
       setSubmitted(true);
     } catch (err: any) {
+      // Clean up orphaned resume upload if the DB insert failed
+      if (uploadedResumePath) {
+        await supabase.storage.from("resumes").remove([uploadedResumePath]).catch(() => {});
+      }
       toast.error(err.message || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
