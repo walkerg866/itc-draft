@@ -177,7 +177,7 @@ const QuoteRequestsViewer = () => {
           <div>
             <h1 className="font-heading font-extrabold text-2xl">Quote Requests</h1>
             <p className="text-muted-foreground text-sm">
-              {quotes.length} submission{quotes.length !== 1 ? "s" : ""}
+              {totalCount} submission{totalCount !== 1 ? "s" : ""}{quotes.length < totalCount ? ` · showing ${quotes.length}` : ""}
             </p>
           </div>
         </div>
