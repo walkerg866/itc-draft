@@ -1017,7 +1017,7 @@ const Legal = () => {
             <p>We currently do not provide any financial incentives.</p>
           </TabsContent>
 
-          <TabsContent value="terms" className="prose prose-lg max-w-none text-muted-foreground">
+          <TabsContent id="terms" value="terms" className="prose prose-lg max-w-none text-muted-foreground">
             <p className="text-sm italic text-muted-foreground/70 mb-6">
               Draft — subject to legal review. Last updated: {new Date().toLocaleDateString()}.
             </p>
