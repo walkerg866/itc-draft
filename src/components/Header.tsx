@@ -17,15 +17,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import GeneralInterestForm from "@/components/GeneralInterestForm";
+import { COMPANY } from "@/config/company";
 
-const CAREERS_URL = "https://myjobs.adp.com/indianatubecareers";
+const CAREERS_URL = COMPANY.urls.careers;
 
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "Industries", path: "/industries" },
   { label: "Products", path: "/products" },
   { label: "Downloads", path: "/downloads" },
-  { label: "Careers", path: "/careers", external: true },
+  { label: "Careers", path: CAREERS_URL, external: true },
 ];
 
 const Header = () => {
