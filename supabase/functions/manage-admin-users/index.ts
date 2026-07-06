@@ -109,6 +109,66 @@ Deno.serve(async (req) => {
           });
         }
 
+        // Pre-check: does an auth user with this email already exist?
+        const normalizedEmail = String(email).trim().toLowerCase();
+        let existingAuthUserId: string | null = null;
+        try {
+          // Paginate through users looking for a matching email (admin.listUsers has no email filter)
+          for (let page = 1; page <= 20; page++) {
+            const { data: list, error: listErr } = await adminClient.auth.admin.listUsers({
+              page,
+              perPage: 200,
+            });
+            if (listErr) break;
+            const match = list?.users?.find(
+              (u: any) => (u.email ?? "").toLowerCase() === normalizedEmail,
+            );
+            if (match) {
+              existingAuthUserId = match.id;
+              break;
+            }
+            if (!list?.users?.length || list.users.length < 200) break;
+          }
+        } catch (_) {
+          // fall through to createUser and let it surface any error
+        }
+
+        if (existingAuthUserId) {
+          // If they already have a role, it's a true duplicate. Otherwise, attach the requested role.
+          const { data: existingRoles } = await adminClient
+            .from("user_roles")
+            .select("role")
+            .eq("user_id", existingAuthUserId);
+
+          if (existingRoles && existingRoles.length > 0) {
+            return new Response(
+              JSON.stringify({
+                error: `${email} is already an admin user. Delete the existing account first if you want to recreate it.`,
+              }),
+              {
+                status: 409,
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+              },
+            );
+          }
+
+          const { error: attachErr } = await adminClient
+            .from("user_roles")
+            .insert({ user_id: existingAuthUserId, role });
+
+          if (attachErr) {
+            return new Response(JSON.stringify({ error: attachErr.message }), {
+              status: 400,
+              headers: { ...corsHeaders, "Content-Type": "application/json" },
+            });
+          }
+
+          return new Response(
+            JSON.stringify({ id: existingAuthUserId, email, role, attached: true }),
+            { headers: { ...corsHeaders, "Content-Type": "application/json" } },
+          );
+        }
+
         // Create user
         const { data: newUser, error: createErr } = await adminClient.auth.admin.createUser({
           email,
@@ -117,8 +177,12 @@ Deno.serve(async (req) => {
         });
 
         if (createErr) {
-          return new Response(JSON.stringify({ error: createErr.message }), {
-            status: 400,
+          const msg = createErr.message || "";
+          const friendly = /already been registered|already exists/i.test(msg)
+            ? `${email} is already registered. Delete the existing account first if you want to recreate it.`
+            : msg;
+          return new Response(JSON.stringify({ error: friendly }), {
+            status: /already/i.test(msg) ? 409 : 400,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
           });
         }
