@@ -255,6 +255,15 @@ const QuoteRequestsViewer = () => {
               )}
             </div>
           ))}
+
+          {quotes.length < totalCount && (
+            <div className="pt-4 flex justify-center">
+              <Button variant="outline" onClick={loadMore} disabled={loadingMore} className="gap-2">
+                {loadingMore && <Loader2 className="h-4 w-4 animate-spin" />}
+                {loadingMore ? "Loading…" : `Load ${Math.min(PAGE_SIZE, totalCount - quotes.length)} more`}
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>
