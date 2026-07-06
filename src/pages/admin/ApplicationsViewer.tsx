@@ -100,12 +100,19 @@ const ApplicationsViewer = () => {
       setLoadingMore(false);
     }
   };
-
-
+  useEffect(() => {
+    if (openId && applications.some((a) => a.id === openId)) {
+      setExpandedId(openId);
+      requestAnimationFrame(() => {
+        document.getElementById(`app-${openId}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }, [openId, applications]);
 
   const toggle = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
+
 
   const exportCSV = () => {
     if (applications.length === 0) return;
