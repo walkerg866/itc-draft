@@ -20,47 +20,6 @@ const escHtml = (s: unknown): string =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-function formatJobApplicationText(record: Record<string, any>): string {
-  const lines = [
-    `NEW JOB APPLICATION`,
-    `====================`,
-    ``,
-    `Name: ${record.first_name} ${record.middle_name ? record.middle_name + " " : ""}${record.last_name}`,
-    `Position: ${record.position_applied}`,
-    `Email: ${record.email}`,
-    `Phone: ${record.phone}`,
-    `Address: ${record.address}, ${record.city}, ${record.state} ${record.zip}`,
-    ``,
-  ];
-  if (record.desired_pay) lines.push(`Desired Pay: ${record.desired_pay}`);
-  if (record.available_start_date) lines.push(`Available Start: ${record.available_start_date}`);
-  if (record.education) lines.push(`Education: ${record.education}`);
-  if (record.skills) lines.push(`Skills: ${record.skills}`);
-  if (record.how_heard) lines.push(`How Heard: ${record.how_heard}`);
-  lines.push(``, `Submitted: ${new Date().toLocaleString("en-US", { timeZone: "America/New_York" })}`);
-  return lines.join("\n");
-}
-
-function formatQuoteRequestText(record: Record<string, any>): string {
-  const lines = [
-    `NEW QUOTE REQUEST`,
-    `==================`,
-    ``,
-    `Name: ${record.first_name} ${record.last_name}`,
-    `Company: ${record.company || "N/A"}`,
-    `Email: ${record.email}`,
-    `Phone: ${record.phone || "N/A"}`,
-    `Industry: ${record.industry || "N/A"}`,
-    `Diameter(s): ${record.diameters || "N/A"}`,
-    `Annual Volume: ${record.annual_volume || "N/A"}`,
-    ``,
-    `Message:`,
-    record.message,
-    ``,
-    `Submitted: ${new Date().toLocaleString("en-US", { timeZone: "America/New_York" })}`,
-  ];
-  return lines.join("\n");
-}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
