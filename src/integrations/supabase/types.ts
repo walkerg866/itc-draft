@@ -128,36 +128,6 @@ export type Database = {
         }
         Relationships: []
       }
-      image_repository: {
-        Row: {
-          alt_text: string | null
-          created_at: string
-          file_path: string
-          id: string
-          name: string
-          updated_at: string
-          url: string
-        }
-        Insert: {
-          alt_text?: string | null
-          created_at?: string
-          file_path: string
-          id?: string
-          name: string
-          updated_at?: string
-          url: string
-        }
-        Update: {
-          alt_text?: string | null
-          created_at?: string
-          file_path?: string
-          id?: string
-          name?: string
-          updated_at?: string
-          url?: string
-        }
-        Relationships: []
-      }
       job_applications: {
         Row: {
           address: string

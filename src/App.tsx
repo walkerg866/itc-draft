@@ -25,7 +25,7 @@ import JobListingsManager from "./pages/admin/JobListingsManager";
 import ApplicationsViewer from "./pages/admin/ApplicationsViewer";
 import DownloadsManager from "./pages/admin/DownloadsManager";
 import ImagesManager from "./pages/admin/ImagesManager";
-import ImageRepositoryManager from "./pages/admin/ImageRepositoryManager";
+
 import HeroSlidesManager from "./pages/admin/HeroSlidesManager";
 import VideosManager from "./pages/admin/VideosManager";
 import UserManagement from "./pages/admin/UserManagement";
@@ -117,16 +117,6 @@ const App = () => (
                 <ProtectedRoute>
                   <AdminDashboard>
                     <ImagesManager />
-                  </AdminDashboard>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/dashboard/image-repository"
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard>
-                    <ImageRepositoryManager />
                   </AdminDashboard>
                 </ProtectedRoute>
               }
