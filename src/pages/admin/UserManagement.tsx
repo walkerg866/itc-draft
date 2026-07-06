@@ -42,7 +42,7 @@ const UserManagement = () => {
   const [password, setPassword] = useState("");
   const [newRole, setNewRole] = useState<"admin" | "super_admin">("admin");
 
-  const callEdge = <T = unknown>(method: "GET" | "POST", body?: object) =>
+  const callEdge = async <T = unknown>(method: "GET" | "POST", body?: object): Promise<T> =>
     callAdminEdge<T>(method, body);
 
   // Bootstrap check & auto-assign
