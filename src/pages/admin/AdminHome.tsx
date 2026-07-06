@@ -54,6 +54,15 @@ const AdminHome = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex items-start gap-3 p-4 rounded-lg border border-destructive/30 bg-destructive/5 text-destructive text-sm">
+        <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+        <span>{error}</span>
+      </div>
+    );
+  }
+
   const cards = [
     { label: "Admin Users", value: stats.admins, icon: Users, color: "text-blue-600" },
     { label: "Job Applications (30d)", value: stats.applications, icon: FileText, color: "text-emerald-600" },
