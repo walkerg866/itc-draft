@@ -153,7 +153,7 @@ const About = () => {
                       <a href={bio.linkedin_url} target="_blank" rel="noopener noreferrer" className="group relative mb-4">
                         <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border group-hover:border-primary transition-colors">
                           {bio.image_url ? (
-                            <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                            <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" loading="lazy" />
                           ) : (
                             <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
                           )}
@@ -165,7 +165,7 @@ const About = () => {
                     ) : (
                       <div className="h-32 w-32 rounded-full overflow-hidden bg-muted border-2 border-border mb-4">
                         {bio.image_url ? (
-                          <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" />
+                          <img src={bio.image_url} alt={bio.name} className="h-full w-full object-cover" loading="lazy" />
                         ) : (
                           <div className="h-full w-full flex items-center justify-center text-3xl font-bold text-muted-foreground">{bio.name.charAt(0)}</div>
                         )}
@@ -384,6 +384,7 @@ const About = () => {
                     src={steelPartnersLogo}
                     alt="Steel Partners Holdings logo"
                     className="max-w-[280px] lg:max-w-[340px] w-full hover:opacity-80 transition-opacity"
+                    loading="lazy"
                   />
                 </a>
               </div>
