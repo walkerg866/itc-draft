@@ -235,6 +235,10 @@ const ApplicationsViewer = () => {
         <div className="flex items-center gap-2 text-muted-foreground text-sm">
           <Loader2 className="h-4 w-4 animate-spin" /> Loading…
         </div>
+      ) : loadError ? (
+        <div className="text-center py-12 text-destructive text-sm">
+          Failed to load applications: {loadError}
+        </div>
       ) : applications.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
           <FileText className="h-10 w-10 mx-auto mb-3 opacity-30" />
