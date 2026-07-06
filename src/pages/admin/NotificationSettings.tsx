@@ -17,7 +17,7 @@ interface Recipient {
 }
 
 const NotificationSettings = () => {
-  const { isSuperAdmin } = useUserRole();
+  const { isSuperAdmin, isLoading: roleLoading } = useUserRole();
   const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
@@ -44,11 +44,7 @@ const NotificationSettings = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       // Get notification preferences (these may include non-admin users)
@@ -56,21 +52,18 @@ const NotificationSettings = () => {
         .from("notification_preferences")
         .select("*");
 
-      // Get admin user emails for labeling
-      const { data: { session } } = await supabase.auth.getSession();
-      const adminData = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/manage-admin-users`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${session?.access_token}`,
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
+      // Only super admins can list admin users — skip the call otherwise to avoid a silent 403.
+      let adminMap = new Map<string, string>();
+      if (isSuperAdmin) {
+        try {
+          const adminUsers = await callAdminEdge<Array<{ id: string; email: string }>>("GET");
+          if (Array.isArray(adminUsers)) {
+            adminMap = new Map(adminUsers.map((u) => [u.id, u.email]));
+          }
+        } catch {
+          // Non-fatal — the recipient list still renders using stored emails.
         }
-      ).then((response) => response.json());
-
-      const adminUsers = Array.isArray(adminData) ? adminData : [];
-      const adminMap = new Map(adminUsers.map((u: any) => [u.id, u.email]));
+      }
 
       // Build recipients from preferences
       const merged: Recipient[] = (prefsData || []).map((p: any) => ({
@@ -88,7 +81,12 @@ const NotificationSettings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isSuperAdmin]);
+
+  useEffect(() => {
+    if (roleLoading) return;
+    fetchData();
+  }, [roleLoading, fetchData]);
 
   const togglePreference = async (
     prefId: string,
