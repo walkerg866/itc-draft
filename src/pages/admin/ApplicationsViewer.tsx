@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { FileText, ChevronDown, ChevronUp, Loader2, Download, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import jsPDF from "jspdf";
+import type { EmploymentHistoryEntry, ApplicantReference } from "@/types/jobApplication";
 
 interface JobApplication {
   id: string;
@@ -26,8 +27,8 @@ interface JobApplication {
   felony_explanation: string | null;
   education: string | null;
   skills: string | null;
-  employment_history: unknown[];
-  applicant_references: unknown[];
+  employment_history: EmploymentHistoryEntry[];
+  applicant_references: ApplicantReference[];
   applicant_signature: string | null;
   signature_date: string | null;
   submitted_at: string;
