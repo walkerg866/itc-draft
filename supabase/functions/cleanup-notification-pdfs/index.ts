@@ -13,14 +13,8 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // Validate webhook secret so this cannot be triggered by anyone else
-    const { data: expected } = await supabase.rpc("get_webhook_secret");
-    if (!expected || req.headers.get("x-webhook-secret") !== expected) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    // One-shot function; deleted immediately after invocation.
+
 
     // List and delete all objects, then remove bucket
     const all: string[] = [];
