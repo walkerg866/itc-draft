@@ -40,7 +40,7 @@ const HeroSlidesManager = () => {
     return editState[slide.id]?.[field] ?? slide[field];
   };
 
-  const setField = (id: string, field: string, value: any) => {
+  const setField = <K extends keyof HeroSlide>(id: string, field: K, value: HeroSlide[K]) => {
     setEditState((prev) => ({ ...prev, [id]: { ...prev[id], [field]: value } }));
   };
 

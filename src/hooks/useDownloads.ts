@@ -8,6 +8,7 @@ export interface DownloadItem {
   file_path: string | null;
   file_url: string | null;
   sort_order: number;
+  is_active: boolean;
 }
 
 export const useDownloads = () => {
@@ -16,7 +17,7 @@ export const useDownloads = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("downloads")
-        .select("id, section, name, file_path, file_url, sort_order")
+        .select("id, section, name, file_path, file_url, sort_order, is_active")
         .eq("is_active", true)
         .order("section")
         .order("sort_order");
