@@ -111,7 +111,7 @@ Deno.serve(async (req) => {
          <p><strong>Email:</strong> ${escHtml(record.email)}</p>
          <p><strong>Phone:</strong> ${escHtml(record.phone)}</p>
          <p style="margin-top:20px">
-           <a href="${adminUrl}" style="${btnPrimary}">View Application &amp; Download</a>
+           <a href="${adminUrl}" style="${btnPrimary}">View Application</a>
          </p>`
       : `<p>A new quote request has been submitted.</p>
          <p><strong>Name:</strong> ${escHtml(record.first_name)} ${escHtml(record.last_name)}</p>
@@ -119,7 +119,7 @@ Deno.serve(async (req) => {
          <p><strong>Email:</strong> ${escHtml(record.email)}</p>
          <p><strong>Industry:</strong> ${escHtml(record.industry) || "N/A"}</p>
          <p style="margin-top:20px">
-           <a href="${adminUrl}" style="${btnPrimary}">View Quote Request &amp; Download</a>
+           <a href="${adminUrl}" style="${btnPrimary}">View Quote Request</a>
          </p>`;
 
     const emailBody = `
@@ -129,7 +129,7 @@ Deno.serve(async (req) => {
         </div>
         ${summaryHtml}
         <hr style="margin-top:30px;border:none;border-top:1px solid #eee" />
-        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Sign in to the admin panel to view the full submission and download the PDF or CSV.</p>
+        <p style="color:#999;font-size:12px">This is an automated notification from Indiana Tube Corporation. Sign in to the admin panel to view the full submission.</p>
       </div>`;
 
 
