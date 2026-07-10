@@ -72,6 +72,10 @@ const HeroSlider = () => {
           key={slide.id}
           src={slide.image_url || heroFallback}
           alt=""
+          width={1920}
+          height={1080}
+          fetchPriority="high"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
