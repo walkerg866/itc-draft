@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import heroFallback from "@/assets/hero-steel-tubes.jpg";
@@ -99,6 +100,25 @@ const Products = () => {
   return (
     <div>
       <SEO title={"Steel Tubing Products & Specifications | Indiana Tube"} description={"Explore our precision welded steel tubing — dimensions, coatings (Galfan®, copper, nickel), grades, and fabrication capabilities."} path={"/products"} />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Indiana Tube Precision Steel Tubing Products",
+            itemListElement: productData.map((p, idx) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              item: {
+                "@type": "Product",
+                name: p.title,
+                description: p.description,
+                brand: { "@type": "Brand", name: "Indiana Tube Corporation" },
+              },
+            })),
+          })}
+        </script>
+      </Helmet>
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
