@@ -152,9 +152,9 @@ const Products = () => {
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                     {product.description}
                   </p>
-                  <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                  <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
                     Key Features
-                  </h4>
+                  </h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
                     {product.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-muted-foreground">
@@ -165,9 +165,9 @@ const Products = () => {
                    </ul>
                   {product.extraSections?.map((section) => (
                     <div key={section.title}>
-                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                      <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
                         {section.title}
-                      </h4>
+                      </h3>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
                         {section.items.map((item) => (
                           <li key={item} className="flex items-center gap-2 text-muted-foreground">

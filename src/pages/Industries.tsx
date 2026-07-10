@@ -104,7 +104,7 @@ const Industries = () => {
                 <div className={i % 2 === 1 ? "lg:order-1" : ""}>
                   <h2 className="font-heading font-extrabold text-2xl lg:text-3xl mb-4">{industry.title}</h2>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">{industry.description}</p>
-                  <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">Key Applications</h4>
+                  <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">Key Applications</h3>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
                     {industry.applications.map((app) => (
                       <li key={app} className="flex items-center gap-2 text-muted-foreground">
@@ -115,9 +115,9 @@ const Industries = () => {
                    </ul>
                   {industry.extraSections?.map((section) => (
                     <div key={section.title}>
-                      <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
+                      <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-primary mb-3">
                         {section.title}
-                      </h4>
+                      </h3>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-8">
                         {section.items.map((item) => (
                           <li key={item} className="flex items-center gap-2 text-muted-foreground">

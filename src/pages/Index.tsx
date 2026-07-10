@@ -43,9 +43,9 @@ const Index = () => {
             {impactStatements.map((statement, i) => (
               <SectionReveal key={statement.headline} delay={i * 0.1}>
                 <div className="text-center px-4">
-                  <h3 className="font-heading font-extrabold text-xl lg:text-2xl text-primary mb-2">
+                  <h2 className="font-heading font-extrabold text-xl lg:text-2xl text-primary mb-2">
                     {statement.headline}
-                  </h3>
+                  </h2>
                   <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">{statement.supporting}</p>
                 </div>
               </SectionReveal>

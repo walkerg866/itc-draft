@@ -51,7 +51,7 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Address</h4>
+                      <h3 className="font-heading font-bold mb-1">Address</h3>
                       <a
                         href="https://www.google.com/maps/search/?api=1&query=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720"
                         target="_blank"
@@ -74,7 +74,7 @@ const Contact = () => {
                       <Phone className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Phone</h4>
+                      <h3 className="font-heading font-bold mb-1">Phone</h3>
                       <a
                         href="tel:+18124249028"
                         className="text-muted-foreground hover:text-primary transition-colors"
@@ -93,7 +93,7 @@ const Contact = () => {
                       <Mail className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Email</h4>
+                      <h3 className="font-heading font-bold mb-1">Email</h3>
                       <a
                         href="mailto:sales@indianatube.com"
                         className="text-muted-foreground hover:text-primary transition-colors"
@@ -108,9 +108,9 @@ const Contact = () => {
                       <Clock className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">
+                      <h3 className="font-heading font-bold mb-1">
                         Business Hours
-                      </h4>
+                      </h3>
                       <p className="text-muted-foreground">
                         Monday – Friday: 8:00 AM – 5:00 PM Central Time
                       </p>
