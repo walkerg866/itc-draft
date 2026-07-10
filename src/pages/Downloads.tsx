@@ -5,6 +5,7 @@ import DownloadListCard from "@/components/DownloadListCard";
 import { useDownloads } from "@/hooks/useDownloads";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import heroFallback from "@/assets/hero-steel-tubes.jpg";
+import SEO from "@/components/SEO";
 
 const SECTION_META = [
   {
@@ -50,6 +51,7 @@ const Downloads = () => {
 
   return (
     <div>
+      <SEO title={"Downloads: Certifications & Data Sheets | Indiana Tube"} description={"Download product data sheets, certifications, quality declarations, and technical documents from Indiana Tube Corporation."} path={"/downloads"} />
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img

@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SectionReveal from "@/components/SectionReveal";
 import { CookieSettingsButton } from "@/components/CookieConsent";
+import SEO from "@/components/SEO";
 
 const Legal = () => {
   const { hash } = useLocation();
@@ -15,6 +16,7 @@ const Legal = () => {
 
   return (
     <div className="container py-16 max-w-4xl">
+      <SEO title={"Legal: Privacy Policy & Terms | Indiana Tube"} description={"Privacy policy and terms of service for Indiana Tube Corporation."} path={"/legal"} />
       <SectionReveal>
         <h1 className="font-heading text-4xl font-bold mb-8 text-foreground">Legal</h1>
 

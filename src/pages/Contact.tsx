@@ -1,9 +1,11 @@
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
+import SEO from "@/components/SEO";
 
 const Contact = () => {
   return (
     <div>
+      <SEO title={"Contact Indiana Tube Corporation | Evansville, IN"} description={"Reach the Indiana Tube sales and support teams — phone, email, and Evansville, Indiana facility address."} path={"/contact"} />
       {/* Hero */}
       <section className="bg-steel-gradient py-20 lg:py-28">
         <div className="container">

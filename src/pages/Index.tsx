@@ -5,6 +5,7 @@ import ValuePropsSection from "@/components/ValuePropsSection";
 import HeroSlider from "@/components/HeroSlider";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import { useSiteVideos, getVideoUrl } from "@/hooks/useSiteVideos";
+import SEO from "@/components/SEO";
 
 // Static fallbacks
 import facilityFallback from "@/assets/facility-aerial.jpg";
@@ -31,6 +32,7 @@ const Index = () => {
 
   return (
     <div>
+      <SEO title={"Indiana Tube Corporation | Precision Steel Tubing"} description={"45+ years engineering precision welded steel tubing solutions for automotive, oil & gas, HVAC, heavy equipment, and structural industries."} path={"/"} />
       {/* Hero Section */}
       <HeroSlider />
 

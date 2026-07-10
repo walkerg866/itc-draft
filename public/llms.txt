@@ -1,0 +1,18 @@
+# Indiana Tube Corporation
+
+> Indiana Tube Corporation (ITC) engineers precision welded steel tubing for automotive, oil & gas, HVAC, heavy equipment, and hardware/structural industries. 45+ years of manufacturing experience based in Evansville, Indiana.
+
+## Pages
+
+- [Home](/): Overview of ITC's precision steel tubing capabilities and industries served.
+- [Industries](/industries): Automotive, oil & gas, HVAC, heavy equipment, and hardware/structural applications.
+- [Products](/products): Product line details, dimensions, coatings (including Galfan®), and specifications.
+- [About](/about): Company history, leadership team, and parent company Steel Partners.
+- [Downloads](/downloads): Product data sheets, certifications, and technical documents.
+- [Contact](/contact): Sales contact information, phone, email, and Evansville facility address.
+- [Quote](/quote): Request a custom tubing quote — dimensions, volume, and industry inquiry form.
+- [Employee News](/employee-news): Company announcements, achievements, and timeline for employees.
+
+## Optional
+
+- [Legal](/legal): Privacy policy and terms of service.
