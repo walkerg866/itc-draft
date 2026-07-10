@@ -1,11 +1,40 @@
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import SectionReveal from "@/components/SectionReveal";
 import SEO from "@/components/SEO";
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Indiana Tube Corporation",
+  url: "https://indianatube.com/contact",
+  telephone: "+1-812-424-9028",
+  email: "sales@indianatube.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2100 Lexington Avenue",
+    addressLocality: "Evansville",
+    addressRegion: "IN",
+    postalCode: "47720",
+    addressCountry: "US",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "17:00",
+    },
+  ],
+};
 
 const Contact = () => {
   return (
     <div>
       <SEO title={"Contact Indiana Tube Corporation | Evansville, IN"} description={"Reach the Indiana Tube sales and support teams — phone, email, and Evansville, Indiana facility address."} path={"/contact"} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(localBusinessJsonLd)}</script>
+      </Helmet>
       {/* Hero */}
       <section className="bg-steel-gradient py-20 lg:py-28">
         <div className="container">
