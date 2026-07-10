@@ -87,8 +87,11 @@ const Index = () => {
                 <img
                   src={getImageUrl(images, "facility-aerial", facilityFallback)}
                   alt={getImageAlt(images, "facility-aerial", "Indiana Tube Corporation facility")}
+                  width={1600}
+                  height={1000}
                   className="w-full aspect-[16/10] object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-transparent" />
               </div>
