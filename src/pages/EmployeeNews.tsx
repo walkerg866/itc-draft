@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import facilityFallback from "@/assets/facility-aerial.jpg";
+import SEO from "@/components/SEO";
 
 interface Alert {
   id: string;
@@ -45,6 +46,7 @@ const EmployeeNews = () => {
 
   return (
     <div>
+      <SEO title={"Employee News | Indiana Tube Corporation"} description={"Company announcements, achievements, and timeline updates for Indiana Tube Corporation employees."} path={"/employee-news"} />
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img

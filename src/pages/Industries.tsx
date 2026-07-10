@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl } from "@/hooks/useSiteImages";
+import SEO from "@/components/SEO";
 
 import automotiveFallback from "@/assets/industry-automotive.jpg";
 import oilGasFallback from "@/assets/industry-oil-gas.jpg";
@@ -58,6 +59,7 @@ const Industries = () => {
 
   return (
     <div>
+      <SEO title={"Industries We Serve | Indiana Tube Corporation"} description={"Precision steel tubing for automotive, oil & gas, HVAC, heavy equipment, and hardware/structural applications worldwide."} path={"/industries"} />
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img

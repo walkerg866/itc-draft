@@ -6,6 +6,7 @@ import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import { supabase } from "@/integrations/supabase/client";
 import facilityFallback from "@/assets/facility-aerial.jpg";
 import steelPartnersLogo from "@/assets/steel-partners-logo.webp";
+import SEO from "@/components/SEO";
 
 const milestones = [
   {
@@ -67,6 +68,7 @@ const About = () => {
 
   return (
     <div>
+      <SEO title={"About Indiana Tube Corporation | 45+ Years of Tubing"} description={"Learn about Indiana Tube Corporation, our leadership, our mission, and our partnership with parent company Steel Partners."} path={"/about"} />
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img

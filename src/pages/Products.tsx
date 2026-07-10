@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import SectionReveal from "@/components/SectionReveal";
 import { useSiteImages, getImageUrl, getImageAlt } from "@/hooks/useSiteImages";
 import heroFallback from "@/assets/hero-steel-tubes.jpg";
+import SEO from "@/components/SEO";
 
 const productData = [
   {
@@ -97,6 +98,7 @@ const Products = () => {
 
   return (
     <div>
+      <SEO title={"Steel Tubing Products & Specifications | Indiana Tube"} description={"Explore our precision welded steel tubing — dimensions, coatings (Galfan®, copper, nickel), grades, and fabrication capabilities."} path={"/products"} />
       {/* Hero */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
