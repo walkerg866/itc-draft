@@ -3,6 +3,7 @@ import { Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import SectionReveal from "@/components/SectionReveal";
+import SEO from "@/components/SEO";
 
 const Quote = () => {
   const [form, setForm] = useState({
@@ -59,6 +60,11 @@ const Quote = () => {
 
   return (
     <div>
+      <SEO
+        title="Request a Quote | Indiana Tube Corporation"
+        description="Request a custom steel tubing quote. Share your dimensions, volume, and industry — our team responds within one business day."
+        path="/quote"
+      />
       {/* Thin Hero */}
       <section className="bg-steel-gradient py-12 lg:py-16">
         <div className="container">
@@ -87,9 +93,9 @@ const Quote = () => {
               {submitted ? (
                 <div className="text-center py-16">
                   <CheckCircle2 className="h-14 w-14 mx-auto mb-4 text-primary" />
-                  <h3 className="font-heading font-bold text-3xl mb-3">
+                  <h2 className="font-heading font-bold text-3xl mb-3">
                     Thank You!
-                  </h3>
+                  </h2>
                   <p className="text-muted-foreground text-lg max-w-xl mx-auto">
                     Your inquiry has been submitted. Our team will contact you
                     within one business day.
@@ -100,10 +106,11 @@ const Quote = () => {
                   {/* Row 1 */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-first-name" className="block text-sm font-medium mb-2">
                         First Name *
                       </label>
                       <input
+                        id="quote-first-name"
                         type="text"
                         required
                         value={form.first_name}
@@ -113,10 +120,11 @@ const Quote = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-last-name" className="block text-sm font-medium mb-2">
                         Last Name *
                       </label>
                       <input
+                        id="quote-last-name"
                         type="text"
                         required
                         value={form.last_name}
@@ -126,10 +134,11 @@ const Quote = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-company" className="block text-sm font-medium mb-2">
                         Company
                       </label>
                       <input
+                        id="quote-company"
                         type="text"
                         value={form.company}
                         onChange={(e) => update("company", e.target.value)}
@@ -142,10 +151,11 @@ const Quote = () => {
                   {/* Row 2 */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-email" className="block text-sm font-medium mb-2">
                         Email *
                       </label>
                       <input
+                        id="quote-email"
                         type="email"
                         required
                         value={form.email}
@@ -155,10 +165,11 @@ const Quote = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-phone" className="block text-sm font-medium mb-2">
                         Phone
                       </label>
                       <input
+                        id="quote-phone"
                         type="tel"
                         value={form.phone}
                         onChange={(e) => update("phone", e.target.value)}
@@ -167,10 +178,11 @@ const Quote = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-industry" className="block text-sm font-medium mb-2">
                         Industry
                       </label>
                       <select
+                        id="quote-industry"
                         value={form.industry}
                         onChange={(e) => update("industry", e.target.value)}
                         className={inputClass}
@@ -197,10 +209,11 @@ const Quote = () => {
                   {/* Row 3 */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-diameters" className="block text-sm font-medium mb-2">
                         Diameter(s)
                       </label>
                       <input
+                        id="quote-diameters"
                         type="text"
                         value={form.diameters}
                         onChange={(e) => update("diameters", e.target.value)}
@@ -209,10 +222,11 @@ const Quote = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label htmlFor="quote-annual-volume" className="block text-sm font-medium mb-2">
                         Annual Purchase Volume
                       </label>
                       <input
+                        id="quote-annual-volume"
                         type="text"
                         value={form.annual_volume}
                         onChange={(e) => update("annual_volume", e.target.value)}
@@ -225,10 +239,11 @@ const Quote = () => {
 
                   {/* Message */}
                   <div>
-                    <label className="block text-sm font-medium mb-2">
+                    <label htmlFor="quote-message" className="block text-sm font-medium mb-2">
                       How Can We Help? *
                     </label>
                     <textarea
+                      id="quote-message"
                       required
                       rows={6}
                       maxLength={5000}
