@@ -62,7 +62,7 @@ const Industries = () => {
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <img
           src={getImageUrl(images, "industry-key", "https://bzcsjbcnrxuqepdhjvym.supabase.co/storage/v1/object/public/site-images/repository/1770852517873-jwuew12an5.png")}
-          alt="Industries"
+          alt="Precision steel tubing products for diverse industrial applications"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-hero-overlay" />
