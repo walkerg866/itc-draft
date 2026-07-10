@@ -57,9 +57,9 @@ const Index = () => {
       {/* Certification Badges */}
       <section className="bg-background border-b border-border py-12">
         <div className="container flex justify-center items-center gap-12 md:gap-16">
-          <img src="/images/badge-ul-registered.png" alt="UL Registered Firm" className="h-28 md:h-32 w-auto" loading="lazy" />
-          <img src="/images/badge-made-in-usa.png" alt="Made in the USA - Premium Quality" className="h-28 md:h-32 w-auto" loading="lazy" />
-          <img src="/images/badge-a2l-compliant.png" alt="A3 & A2L Compliant for New Refrigerant - American Made" className="h-28 md:h-32 w-auto" loading="lazy" />
+          <img src="/images/badge-ul-registered.png" alt="UL Registered Firm" width={128} height={128} className="h-28 md:h-32 w-auto" loading="lazy" decoding="async" />
+          <img src="/images/badge-made-in-usa.png" alt="Made in the USA - Premium Quality" width={128} height={128} className="h-28 md:h-32 w-auto" loading="lazy" decoding="async" />
+          <img src="/images/badge-a2l-compliant.png" alt="A3 & A2L Compliant for New Refrigerant - American Made" width={128} height={128} className="h-28 md:h-32 w-auto" loading="lazy" decoding="async" />
         </div>
       </section>
 
@@ -87,8 +87,11 @@ const Index = () => {
                 <img
                   src={getImageUrl(images, "facility-aerial", facilityFallback)}
                   alt={getImageAlt(images, "facility-aerial", "Indiana Tube Corporation facility")}
+                  width={1600}
+                  height={1000}
                   className="w-full aspect-[16/10] object-cover"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-transparent" />
               </div>
