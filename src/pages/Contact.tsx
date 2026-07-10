@@ -1,11 +1,40 @@
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import SectionReveal from "@/components/SectionReveal";
 import SEO from "@/components/SEO";
+
+const localBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Indiana Tube Corporation",
+  url: "https://indianatube.com/contact",
+  telephone: "+1-812-424-9028",
+  email: "sales@indianatube.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "2100 Lexington Avenue",
+    addressLocality: "Evansville",
+    addressRegion: "IN",
+    postalCode: "47720",
+    addressCountry: "US",
+  },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "17:00",
+    },
+  ],
+};
 
 const Contact = () => {
   return (
     <div>
       <SEO title={"Contact Indiana Tube Corporation | Evansville, IN"} description={"Reach the Indiana Tube sales and support teams — phone, email, and Evansville, Indiana facility address."} path={"/contact"} />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(localBusinessJsonLd)}</script>
+      </Helmet>
       {/* Hero */}
       <section className="bg-steel-gradient py-20 lg:py-28">
         <div className="container">
@@ -51,7 +80,7 @@ const Contact = () => {
                       <MapPin className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Address</h4>
+                      <h3 className="font-heading font-bold mb-1">Address</h3>
                       <a
                         href="https://www.google.com/maps/search/?api=1&query=Indiana+Tube+Corporation,+2100+Lexington+Ave,+Evansville,+IN+47720"
                         target="_blank"
@@ -74,7 +103,7 @@ const Contact = () => {
                       <Phone className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Phone</h4>
+                      <h3 className="font-heading font-bold mb-1">Phone</h3>
                       <a
                         href="tel:+18124249028"
                         className="text-muted-foreground hover:text-primary transition-colors"
@@ -93,7 +122,7 @@ const Contact = () => {
                       <Mail className="h-5 w-5 text-primary" />
                     </a>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">Email</h4>
+                      <h3 className="font-heading font-bold mb-1">Email</h3>
                       <a
                         href="mailto:sales@indianatube.com"
                         className="text-muted-foreground hover:text-primary transition-colors"
@@ -108,9 +137,9 @@ const Contact = () => {
                       <Clock className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-heading font-bold mb-1">
+                      <h3 className="font-heading font-bold mb-1">
                         Business Hours
-                      </h4>
+                      </h3>
                       <p className="text-muted-foreground">
                         Monday – Friday: 8:00 AM – 5:00 PM Central Time
                       </p>
