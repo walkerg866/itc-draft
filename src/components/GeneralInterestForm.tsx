@@ -19,6 +19,15 @@ const GeneralInterestForm = () => {
     last_name: "",
     email: "",
     phone: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    desired_pay: "",
+    available_start_date: "",
+    how_heard: "",
+    legally_authorized: "" as "" | "yes" | "no",
+    education: "",
     roles_interest: "",
   });
   const [file, setFile] = useState<File | null>(null);
@@ -51,7 +60,6 @@ const GeneralInterestForm = () => {
       return;
     }
 
-    // Stricter email validation beyond the browser's type=email
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.email.trim());
     if (!emailOk) {
       toast.error("Please enter a valid email address.");
@@ -81,17 +89,26 @@ const GeneralInterestForm = () => {
         position_applied: "General Interest",
         skills: form.roles_interest.trim() || null,
         resume_url: uploadedResumePath,
-        address: "N/A",
-        city: "N/A",
-        state: "N/A",
-        zip: "N/A",
+        address: form.address.trim() || "N/A",
+        city: form.city.trim() || "N/A",
+        state: form.state.trim() || "N/A",
+        zip: form.zip.trim() || "N/A",
+        desired_pay: form.desired_pay.trim() || null,
+        available_start_date: form.available_start_date || null,
+        how_heard: form.how_heard.trim() || null,
+        legally_authorized:
+          form.legally_authorized === "yes"
+            ? true
+            : form.legally_authorized === "no"
+            ? false
+            : null,
+        education: form.education.trim() || null,
       } as any);
 
       if (error) throw error;
 
       setSubmitted(true);
     } catch (err: any) {
-      // Clean up orphaned resume upload if the DB insert failed
       if (uploadedResumePath) {
         await supabase.storage.from("resumes").remove([uploadedResumePath]).catch(() => {});
       }
@@ -170,6 +187,104 @@ const GeneralInterestForm = () => {
           onChange={(e) => update("phone", e.target.value)}
           required
           maxLength={20}
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="gi-address">Street Address</Label>
+        <Input
+          id="gi-address"
+          value={form.address}
+          onChange={(e) => update("address", e.target.value)}
+          maxLength={200}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="space-y-1.5 sm:col-span-1">
+          <Label htmlFor="gi-city">City</Label>
+          <Input
+            id="gi-city"
+            value={form.city}
+            onChange={(e) => update("city", e.target.value)}
+            maxLength={100}
+          />
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="gi-state">State</Label>
+          <Input
+            id="gi-state"
+            value={form.state}
+            onChange={(e) => update("state", e.target.value)}
+            maxLength={50}
+          />
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="gi-zip">ZIP</Label>
+          <Input
+            id="gi-zip"
+            value={form.zip}
+            onChange={(e) => update("zip", e.target.value)}
+            maxLength={20}
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-1.5">
+          <Label htmlFor="gi-pay">Desired Pay</Label>
+          <Input
+            id="gi-pay"
+            value={form.desired_pay}
+            onChange={(e) => update("desired_pay", e.target.value)}
+            placeholder="e.g. $22/hr"
+            maxLength={50}
+          />
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="gi-start">Available Start Date</Label>
+          <Input
+            id="gi-start"
+            type="date"
+            value={form.available_start_date}
+            onChange={(e) => update("available_start_date", e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="gi-how">How Did You Hear About Us?</Label>
+        <Input
+          id="gi-how"
+          value={form.how_heard}
+          onChange={(e) => update("how_heard", e.target.value)}
+          maxLength={200}
+        />
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="gi-auth">Legally Authorized to Work in the U.S.?</Label>
+        <select
+          id="gi-auth"
+          value={form.legally_authorized}
+          onChange={(e) => update("legally_authorized", e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        >
+          <option value="">Select…</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="gi-education">Education</Label>
+        <Textarea
+          id="gi-education"
+          placeholder="Highest degree, school, certifications…"
+          value={form.education}
+          onChange={(e) => update("education", e.target.value)}
+          maxLength={1000}
+          rows={2}
         />
       </div>
 
