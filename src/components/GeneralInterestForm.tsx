@@ -105,6 +105,16 @@ const GeneralInterestForm = () => {
             ? false
             : null,
         education: form.education.trim() || null,
+        felony_history:
+          form.felony_history === "yes"
+            ? true
+            : form.felony_history === "no"
+            ? false
+            : null,
+        felony_explanation:
+          form.felony_history === "yes"
+            ? form.felony_explanation.trim() || null
+            : null,
       } as any);
 
       if (error) throw error;
