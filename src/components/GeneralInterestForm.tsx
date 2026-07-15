@@ -29,6 +29,8 @@ const GeneralInterestForm = () => {
     legally_authorized: "" as "" | "yes" | "no",
     education: "",
     roles_interest: "",
+    felony_history: "" as "" | "yes" | "no",
+    felony_explanation: "",
   });
   const [file, setFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
