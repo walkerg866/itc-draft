@@ -29,6 +29,8 @@ const GeneralInterestForm = () => {
     legally_authorized: "" as "" | "yes" | "no",
     education: "",
     roles_interest: "",
+    felony_history: "" as "" | "yes" | "no",
+    felony_explanation: "",
   });
   const [file, setFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -103,6 +105,16 @@ const GeneralInterestForm = () => {
             ? false
             : null,
         education: form.education.trim() || null,
+        felony_history:
+          form.felony_history === "yes"
+            ? true
+            : form.felony_history === "no"
+            ? false
+            : null,
+        felony_explanation:
+          form.felony_history === "yes"
+            ? form.felony_explanation.trim() || null
+            : null,
       } as any);
 
       if (error) throw error;
@@ -286,6 +298,37 @@ const GeneralInterestForm = () => {
           maxLength={1000}
           rows={2}
         />
+      </div>
+
+      <div className="space-y-1.5">
+        <Label htmlFor="gi-felony">Have you ever been convicted of a felony?</Label>
+        <select
+          id="gi-felony"
+          value={form.felony_history}
+          onChange={(e) => update("felony_history", e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        >
+          <option value="">Select…</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <p className="text-xs text-muted-foreground mt-1">
+          A conviction does not automatically disqualify you from employment.
+        </p>
+        {form.felony_history === "yes" && (
+          <div className="pt-2">
+            <Label htmlFor="gi-felony-details">Please provide details</Label>
+            <Textarea
+              id="gi-felony-details"
+              placeholder="Nature of offense, date, and any relevant context…"
+              value={form.felony_explanation}
+              onChange={(e) => update("felony_explanation", e.target.value)}
+              maxLength={2000}
+              rows={3}
+              className="mt-1.5"
+            />
+          </div>
+        )}
       </div>
 
       <div className="space-y-1.5">
