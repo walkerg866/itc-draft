@@ -8,7 +8,7 @@ import SEO from "@/components/SEO";
 
 const productData = [
   {
-    title: "Steel Types & Capabilities",
+    title: "Steel Tubing Specifications & Capabilities",
     imageKey: "product-steel-types",
     description:
       "Indiana Tube uses the highest-quality low-carbon steel that meets our proprietary specification. Our steel tubing products are manufactured to tolerances which are more than twice as tight as the industry standards, making us the ideal choice for customers with the most exacting requirements for the most demanding applications.",
@@ -24,8 +24,8 @@ const productData = [
         items: [
           "SAE J526",
           "SAE J356",
-          "ASTM 513 Type 1",
-          "ASTM 513 Type 2",
+          "ASTM A513 Type 1",
+          "ASTM A513 Type 2",
           "STKM 11A",
           "EN10305-3",
           "GM-124M",
@@ -99,7 +99,7 @@ const Products = () => {
 
   return (
     <div>
-      <SEO title={"Steel Tubing Products & Specifications | Indiana Tube"} description={"Explore our precision welded steel tubing — dimensions, coatings (Galfan®, copper, nickel), grades, and fabrication capabilities."} path={"/products"} />
+      <SEO title={"Steel Tubing Products & Specifications | Indiana Tube"} description={"Precision welded steel tubing: SAE J526, ASTM A513, 0.156\"–1.750\" OD, 0.022\"–0.109\" wall. Galfan®, HSLA, cut-length & coiled tube from Indiana Tube."} path={"/products"} />
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify({
@@ -138,9 +138,10 @@ const Products = () => {
                 <span className="text-gradient-orange">Your Way</span>
               </h1>
               <p className="text-white text-lg leading-relaxed">
-                Indiana Tube is a solution provider for a wide range of precision
-                custom tubing products. We produce tubing from .156" to 1.75"
-                diameter, in both standard and metric sizes.
+                Indiana Tube is a solution provider for precision welded steel tubing
+                built to SAE J526, ASTM A513, and other industry standards. We
+                produce tubing from 0.156" to 1.750" OD and 0.022" to 0.109" wall
+                thickness, in standard and metric sizes.
               </p>
             </div>
           </SectionReveal>
