@@ -48,12 +48,17 @@ const HeroSlider = () => {
     return () => clearInterval(timer);
   }, [count, paused, next]);
 
-  // Loading state – show empty hero shell while slides load
+  // Loading / empty state – keep a stable, descriptive h1 for SEO and accessibility
   if (!activeSlides) {
     return (
       <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-secondary">
         <div className="absolute inset-0 bg-hero-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
+        <div className="container relative z-10 py-20">
+          <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-secondary-foreground leading-[1.1] max-w-2xl">
+            Precision Steel Tubing Solutions for Automotive, HVAC &amp; Heavy Equipment
+          </h1>
+        </div>
       </section>
     );
   }
