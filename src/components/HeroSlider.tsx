@@ -71,23 +71,25 @@ const HeroSlider = () => {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Background images */}
-      <AnimatePresence mode="sync">
-        <motion.img
-          key={slide.id}
-          src={slide.image_url || heroFallback}
-          alt=""
-          width={1920}
-          height={1080}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: "easeInOut" }}
-        />
-      </AnimatePresence>
+      {/* Background images: all slides stay mounted so switching never shows a blank hero */}
+      <div className="absolute inset-0 bg-secondary">
+        {activeSlides.map((s, i) => (
+          <img
+            key={s.id}
+            src={s.image_url || heroFallback}
+            alt=""
+            width={1920}
+            height={1080}
+            fetchPriority={i === 0 ? "high" : "low"}
+            loading={i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+              i === current ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+      </div>
+
 
       <div className="absolute inset-0 bg-hero-overlay" />
 
