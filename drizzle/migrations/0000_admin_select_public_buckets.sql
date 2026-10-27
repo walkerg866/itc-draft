@@ -1,0 +1,2 @@
+CREATE POLICY "Admins can read download files" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'downloads' AND (public.has_role(auth.uid(),'admin') OR public.has_role(auth.uid(),'super_admin')));
+CREATE POLICY "Admins can read site images" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'site-images' AND (public.has_role(auth.uid(),'admin') OR public.has_role(auth.uid(),'super_admin')));
